@@ -27,7 +27,7 @@
         <!--数据库连接配置-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
 
-                        connectionURL="jdbc:mysql://localhost:3306/how2java"
+                        connectionURL="jdbc:mysql://localhost:3306/frame"
                         userId="root"
                         password="123456">
 
@@ -60,7 +60,27 @@
         </javaClientGenerator>
 
         <!--指定数据表名，可以使用_和%通配符，默认生成EXAMPLE-->
-        <table tableName="Category_" domainObjectName="Category"
+        <table tableName="user" domainObjectName="User"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="role" domainObjectName="Role"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="user_role" domainObjectName="UserRole"
 
                enableCountByExample="false" enableUpdateByExample="false"
 

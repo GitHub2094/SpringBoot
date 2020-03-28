@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsm.frame.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.lsm.frame.model.entity.Role">
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="role_key" jdbcType="VARCHAR" property="roleKey" />
+    <result column="role_sort" jdbcType="INTEGER" property="roleSort" />
+    <result column="data_scope" jdbcType="CHAR" property="dataScope" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    role_id, role_name, role_key, role_sort, data_scope
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lsm.frame.model.entity.Role">
+    insert into role (role_id, role_name, role_key, 
+      role_sort, data_scope)
+    values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleKey,jdbcType=VARCHAR}, 
+      #{roleSort,jdbcType=INTEGER}, #{dataScope,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lsm.frame.model.entity.Role">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="roleKey != null">
+        role_key,
+      </if>
+      <if test="roleSort != null">
+        role_sort,
+      </if>
+      <if test="dataScope != null">
+        data_scope,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleKey != null">
+        #{roleKey,jdbcType=VARCHAR},
+      </if>
+      <if test="roleSort != null">
+        #{roleSort,jdbcType=INTEGER},
+      </if>
+      <if test="dataScope != null">
+        #{dataScope,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lsm.frame.model.entity.Role">
+    update role
+    <set>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleKey != null">
+        role_key = #{roleKey,jdbcType=VARCHAR},
+      </if>
+      <if test="roleSort != null">
+        role_sort = #{roleSort,jdbcType=INTEGER},
+      </if>
+      <if test="dataScope != null">
+        data_scope = #{dataScope,jdbcType=CHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lsm.frame.model.entity.Role">
+    update role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_key = #{roleKey,jdbcType=VARCHAR},
+      role_sort = #{roleSort,jdbcType=INTEGER},
+      data_scope = #{dataScope,jdbcType=CHAR}
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+</mapper>
