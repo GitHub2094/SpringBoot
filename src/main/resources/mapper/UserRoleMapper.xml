@@ -5,6 +5,9 @@
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <id column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
+  <sql id="Base_Column_List">
+    user_id,role_id
+  </sql>
   <delete id="deleteByPrimaryKey" parameterType="com.lsm.frame.model.entity.UserRoleKey">
     delete from user_role
     where user_id = #{userId,jdbcType=INTEGER}
@@ -33,4 +36,11 @@
       </if>
     </trim>
   </insert>
+
+  <select id="selectByUserID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_role
+    where user_id= #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>

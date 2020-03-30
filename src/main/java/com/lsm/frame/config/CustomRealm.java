@@ -1,6 +1,7 @@
 package com.lsm.frame.config;
 
 import com.lsm.frame.model.entity.User;
+import com.lsm.frame.service.intf.UserRoleService;
 import com.lsm.frame.service.intf.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -11,31 +12,41 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.security.sasl.SaslServer;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * 描述：
  *
- * @author caojing
+ * @author lsm
  * @create 2019-01-27-13:57
  */
 public class CustomRealm extends AuthorizingRealm {
 
     @Autowired
     UserService userService;
-
+    @Autowired
+    UserRoleService userRoleService;
     /**
      * 授权
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) {
+        System.out.println("------获取权限------");
+        User user = (User)pc.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Set<String> stringSet = new HashSet<>();
-        stringSet.add("user:show");
-        stringSet.add("user:admin");
-        info.setStringPermissions(stringSet);
+
+        String role =userRoleService.selectKeyByUserID(user.getUserId());
+        // 角色列表
+        Set<String>roles = new HashSet<String>();
+        // 功能列表
+        //Set<String> menus = new HashSet<String>();
+        //menus.add("system:student");
+        //info.setStringPermissions(menus);
+
+        roles.add(role);
+        info.setRoles(roles);
         return info;
     }
 
@@ -47,11 +58,6 @@ public class CustomRealm extends AuthorizingRealm {
         System.out.println("-------身份认证方法--------");
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String userName = upToken.getUsername();
-        String password = "";
-        if (upToken.getPassword() != null) {
-            password = new String(upToken.getPassword());
-        }
-
         User user = null;
         try{
             user = userService.selectByLoginName(userName);
@@ -59,6 +65,9 @@ public class CustomRealm extends AuthorizingRealm {
         }
         catch (NullPointerException e){
             throw new AuthenticationException(e.getMessage(), e);
+        }
+        catch (Exception e){
+            throw new AuthenticationException(e.getMessage(),e);
         }
         AuthenticationInfo info = new SimpleAuthenticationInfo(user,user.getPassword(),getName());
         return info;
