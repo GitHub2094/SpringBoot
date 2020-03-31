@@ -1,6 +1,7 @@
 package com.lsm.frame.controller;
 
 import com.lsm.frame.constant.enums.UserType;
+import com.lsm.frame.model.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -16,13 +17,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainController {
 
-
+    /**
+     * 页面跳转
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String defaultLogin() {
         System.out.println("加载登录页面");
         return "login";
     }
 
+    /**
+     * 登录验证
+     * @param m Model
+     * @param username 登录账号
+     * @param password 登录密码
+     * @param type  想进入的界面类型
+     * @return redirect:到相应的
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(Model m,@RequestParam("username") String username,
                         @RequestParam("password") String password,@RequestParam("type") String type) {
@@ -62,8 +74,10 @@ public class MainController {
     @RequiresRoles("root")
     //@RequiresPermissions("system:student)
     @RequestMapping("/root")
-    public String root() {
-        System.out.println("加载教师页面");
+    public String root(Model model) {
+        System.out.println("加载管理员页面");
+        User user = User.builder().userName("测试").avatar("ssss").email("qqq@cj").build();
+        model.addAttribute("user",user);
         return "root";
     }
 
