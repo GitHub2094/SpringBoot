@@ -1,4 +1,4 @@
-package com.lsm.frame.config;
+package com.lsm.frame.utils;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;

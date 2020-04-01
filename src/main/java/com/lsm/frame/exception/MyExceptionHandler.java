@@ -1,4 +1,4 @@
-package com.lsm.frame.filter;
+package com.lsm.frame.exception;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
