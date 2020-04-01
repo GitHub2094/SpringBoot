@@ -6,13 +6,14 @@
 </head>
 <body>
     <form method="post" action="/login" >
-        账号：<input name="username" type="text" />
-        密码：<input name="password" type="password" />
-        <select name="type" class="form-control" id="type" align="center">
+        <p>账号：<input name="username" type="text" /></p>
+        <p>密码：<input name="password" type="password" /></p>
+        <p><select name="type" class="form-control" id="type" align="center">
             <option value="STUDENT">学生</option>
             <option value="TEACHER">老师</option>
             <option value="ROOT">管理员</option>
-        </select>
+        </select></p>
+        <p><input type="checkbox" name="rememberMe" />记住我</p>
         <button type="submit" >提交 </button>
     </form>
     <p th:text="${message}" style="color:red;"></p>

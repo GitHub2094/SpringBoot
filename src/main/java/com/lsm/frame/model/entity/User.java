@@ -1,11 +1,13 @@
 package com.lsm.frame.model.entity;
 
+import com.fasterxml.jackson.core.SerializableString;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -13,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 
 @Builder
-public class User {
+public class User implements Serializable {
     private Integer userId;
 
     private Integer deptId;

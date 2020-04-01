@@ -9,6 +9,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -69,7 +70,7 @@ public class CustomRealm extends AuthorizingRealm {
         catch (Exception e){
             throw new AuthenticationException(e.getMessage(),e);
         }
-        AuthenticationInfo info = new SimpleAuthenticationInfo(user,user.getPassword(),getName());
+        AuthenticationInfo info = new SimpleAuthenticationInfo(user,user.getPassword(), ByteSource.Util.bytes(user.getSalt()),getName());
         return info;
     }
 }

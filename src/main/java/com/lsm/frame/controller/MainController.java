@@ -21,6 +21,10 @@ public class MainController {
      * 页面跳转
      * @return
      */
+    @RequestMapping("/")
+    public String defaultWeb(){
+        return "login";
+    }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String defaultLogin() {
         System.out.println("加载登录页面");
@@ -37,12 +41,17 @@ public class MainController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(Model m,@RequestParam("username") String username,
-                        @RequestParam("password") String password,@RequestParam("type") String type) {
+                        @RequestParam("password") String password,@RequestParam("type") String type,
+                        Boolean rememberMe) {
         System.out.println("username:"+username);
         // 从SecurityUtils里边创建一个 subject
         Subject subject = SecurityUtils.getSubject();
+        System.out.println("是否记住密码"+rememberMe);
         // 在认证提交前准备 token（令牌）
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        if (rememberMe == null) {
+            rememberMe = false;
+        }
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
 
         try {
             // 执行认证登陆
@@ -80,6 +89,21 @@ public class MainController {
         model.addAttribute("user",user);
         return "root";
     }
+
+    /**
+     * 登出
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            subject.logout();
+        }
+        System.out.println("登出账户");
+        return "login";
+    }
+
 
 
 
