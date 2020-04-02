@@ -10,6 +10,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -29,12 +31,14 @@ public class CustomRealm extends AuthorizingRealm {
     UserService userService;
     @Autowired
     UserRoleService userRoleService;
+
+    private Logger logger =  LoggerFactory.getLogger(this.getClass());
     /**
      * 授权
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) {
-        System.out.println("------获取权限------");
+        logger.info("获取权限");
         User user = (User)pc.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
@@ -56,13 +60,13 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("-------身份认证方法--------");
+        logger.info("进入身份认证");
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String userName = upToken.getUsername();
         User user = null;
         try{
             user = userService.selectByLoginName(userName);
-            System.out.println("打印通过登录账号查找到的用户"+user);
+            logger.info("查到用户"+user.getLoginName());
         }
         catch (NullPointerException e){
             throw new AuthenticationException(e.getMessage(), e);
