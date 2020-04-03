@@ -1,5 +1,6 @@
 package com.lsm.frame.controller;
 
+import com.lsm.frame.annotation.LoggerManage;
 import com.lsm.frame.model.entity.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +20,10 @@ public class TestController {
      * @return
      */
     @RequestMapping("testJson")
+    @LoggerManage(value="请求了testJson方法")
     public User testJson(){
         User user = User.builder().userName("测试").phone("123456").build();
         return user;
     }
+
 }

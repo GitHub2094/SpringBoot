@@ -41,7 +41,7 @@ public class ShiroConfig {
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
-        //配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
+        //配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了，/logout可以不用实现
         filterChainDefinitionMap.put("/logout", "logout");
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截 剩余的都需要认证
         filterChainDefinitionMap.put("/**", "user");

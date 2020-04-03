@@ -4,7 +4,7 @@
 
 **由于默认就是使用`logback`,所以只需要配置一个`logback-spring.xml`文件在`resourcs`目录下即可，项目会自动识别的**
 
-##1.xml配置
+## 1.xml配置
 #### logback-spring.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -53,7 +53,7 @@
     </root>
 </configuration>
 ```
-##2.类使用
+## 2.类使用
 ```java
 //import slf4j.Loggger
 private Logger logger =  LoggerFactory.getLogger(this.getClass());
@@ -61,7 +61,7 @@ logger.info("获取权限");
 
 ```
 
-##3.配置输出sql语句日志
+## 3.配置输出sql语句日志
 ```xml
 //在application.properties里配置sql日志输出
 #打印日志sql

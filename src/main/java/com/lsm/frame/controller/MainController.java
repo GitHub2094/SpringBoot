@@ -1,13 +1,12 @@
 package com.lsm.frame.controller;
 
+import com.lsm.frame.annotation.LoggerManage;
 import com.lsm.frame.constant.enums.UserType;
 import com.lsm.frame.model.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -94,22 +93,6 @@ public class MainController {
         model.addAttribute("user",user);
         return "root";
     }
-
-    /**
-     * 登出
-     * @return
-     */
-    @RequestMapping("/logout")
-    public String logout() {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject != null) {
-            subject.logout();
-        }
-        return "login";
-    }
-
-
-
 
 
 }
