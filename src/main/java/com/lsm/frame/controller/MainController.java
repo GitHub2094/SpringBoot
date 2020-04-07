@@ -11,10 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -90,14 +88,16 @@ public class MainController {
         return "teacher";
     }
 
-    @RequiresRoles("root")
-    //@RequiresPermissions("system:student)
-    @RequestMapping("/root")
-    public String root(Model model) {
-        logger.info("进入管理员界面");
-        User user = User.builder().userName("测试").avatar("ssss").email("qqq@cj").build();
-        model.addAttribute("user",user);
+    @RequestMapping("/system/main")
+    public String root() {
         return "root";
+    }
+
+    // 切换主题
+    @GetMapping("/system/switchSkin")
+    public String switchSkin(ModelMap mmap)
+    {
+        return "skin";
     }
 
 

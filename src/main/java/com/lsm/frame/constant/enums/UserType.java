@@ -25,7 +25,7 @@ public enum UserType implements RoleOperation{
     ROOT{
         @Override
         public String op(){
-            return "redirect:/root";
+            return "redirect:/index";
         }
     },
 
