@@ -15,4 +15,19 @@ public class UserServiceImpl implements UserService {
     public User selectByLoginName(String loginName) {
         return userMapper.selectByLoginName(loginName);
     }
+
+    @Override
+    public int updateByPrimaryKeySelective(User record) {
+        return userMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int insertSelective(User record) {
+        return userMapper.insertSelective(record);
+    }
+
+    @Override
+    public User selectByPrimaryKey(Integer userId) {
+        return userMapper.selectByPrimaryKey(userId);
+    }
 }

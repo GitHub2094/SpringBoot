@@ -74,8 +74,6 @@ public class LogAspect {
             return object;
         }
         log.info("log注解描述：{}", logAnno.desc());
-        long endTime = System.currentTimeMillis();
-        log.info("结束计时: {},  URI: {},耗时：{}", new Date(),uri,endTime - beginTime);
         //模拟异常
         //System.out.println(1/0);
         return object;

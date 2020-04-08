@@ -3,6 +3,7 @@ package com.lsm.frame.controller;
 import com.lsm.frame.annotation.LoggerManage;
 import com.lsm.frame.constant.enums.UserType;
 import com.lsm.frame.model.entity.User;
+import com.lsm.frame.utils.ShiroUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -28,13 +29,9 @@ public class MainController {
         return "login";
     }
 
-    @RequestMapping("/index")
-    public String returnIndex(){
-        return "index";
-    }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String defaultLogin() {
-        logger.info("加载登录界面");
+        logger.info("登录页面加载");
         return "login";
     }
 
@@ -72,10 +69,18 @@ public class MainController {
             return "login";
         }
     }
+    @RequiresRoles("root")
+    @RequestMapping("/index")
+    public String index(Model m) {
+        User user = ShiroUtils.getUser();
+        m.addAttribute("user",user);
+        return "index";
+    }
     @RequiresRoles("student")
     //@RequiresPermissions("system:student)
     @RequestMapping("/student")
     public String student() {
+
         logger.info("进入学生界面");
         return "student";
     }
@@ -87,6 +92,7 @@ public class MainController {
         logger.info("进入教师界面");
         return "teacher";
     }
+
 
     @RequestMapping("/system/main")
     public String root() {
