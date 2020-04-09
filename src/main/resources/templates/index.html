@@ -237,7 +237,7 @@
     // 历史访问路径缓存
     var historyPath = storage.get("historyPath");
     // 排除非左侧菜单链接
-    var excludesUrl = ["/system/user/profile"];
+    var excludesUrl = ["/user/profile"];
 
     // 本地主题优先，未设置取系统配置
     if($.common.isNotEmpty(skin)){
@@ -250,7 +250,7 @@
 
     /* 用户管理-重置密码 */
     function resetPwd() {
-        var url = ctx + 'system/user/profile/resetPwd';
+        var url = ctx + 'user/resetPwd';
         //标题，url,大小
         $.modal.open("重置密码", url, '770', '380');
     }

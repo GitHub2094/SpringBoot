@@ -1032,7 +1032,7 @@ var table = {
             	}
                 return url;
             },
-            // 保存信息 刷新表格
+            // 保存信息 刷新表格  callback回调函数
             save: function(url, data, callback) {
             	var config = {
         	        url: url,
@@ -1052,7 +1052,7 @@ var table = {
         	    };
         	    $.ajax(config)
             },
-            // 保存信息 弹出提示框
+            // 保存信息 弹出提示框 callback 回调函数
             saveModal: function(url, data, callback) {
             	var config = {
         	        url: url,

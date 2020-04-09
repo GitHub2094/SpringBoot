@@ -22,4 +22,11 @@ public interface UserService {
      *插入
      */
     int insertSelective(User record);
+    /**
+     * 密码匹配
+     */
+    boolean matches(User user,String oldPassword);
+
+    String encryptPassword(String password, String salt);
+
 }

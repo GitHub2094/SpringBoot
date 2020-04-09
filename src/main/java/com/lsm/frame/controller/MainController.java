@@ -1,6 +1,5 @@
 package com.lsm.frame.controller;
 
-import com.lsm.frame.annotation.LoggerManage;
 import com.lsm.frame.constant.enums.UserType;
 import com.lsm.frame.model.entity.User;
 import com.lsm.frame.utils.ShiroUtils;
@@ -99,12 +98,15 @@ public class MainController {
         return "root";
     }
 
-    // 切换主题
+    /**
+     *     切换主题
+     */
     @GetMapping("/system/switchSkin")
-    public String switchSkin(ModelMap mmap)
+    public String switchSkin(ModelMap  mmap)
     {
         return "skin";
     }
+
 
 
 }

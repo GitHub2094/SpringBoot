@@ -15,7 +15,7 @@ public class Test {
         int hashIterations = 1024;
         //盐值
         ByteSource credentialsSalt = ByteSource.Util.bytes("33333333");
-        Object obj = new SimpleHash(hashAlgorithName, password, credentialsSalt, hashIterations);
-        System.out.println(obj);
+        String newpassword = new SimpleHash(hashAlgorithName, password, credentialsSalt, hashIterations).toHex();
+        System.out.println(newpassword);
     }
 }
