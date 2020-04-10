@@ -20,14 +20,13 @@
         <input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-" />
     </div>
     <div class="cropped"></div>
-</div>
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: cropbox-js" />
 <script type="text/javascript">
     var cropper;
     $(window).load(function() {
-        var avatar = '[[${user.avatar}]]';
-        var options = {
+            var avatar = '[[${user.avatar}]]';
+            var options = {
             thumbBox: '.thumbBox',
             spinner: '.spinner',
             imgSrc: $.common.isEmpty(avatar) ? ctx + 'img/profile.jpg' : ctx + avatar.substr(1)
@@ -69,7 +68,7 @@
         var formdata = new FormData();
         formdata.append("avatarfile", img);
         $.ajax({
-            url: ctx + "system/user/profile/updateAvatar",
+            url: ctx + "user/updateAvatar",
             data: formdata,
             type: "post",
             processData: false,

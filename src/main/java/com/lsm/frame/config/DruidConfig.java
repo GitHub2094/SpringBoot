@@ -97,9 +97,6 @@ public class DruidConfig {
         servletRegistrationBean.addInitParameter("allow","127.0.0.1");
         //设置ip黑名单
         servletRegistrationBean.addInitParameter("deny","192.168.0.2");
-        //设置控制台管理用户__登录用户名和密码
-        servletRegistrationBean.addInitParameter("loginUsername","druid");
-        servletRegistrationBean.addInitParameter("loginPassword","123456");
         //是否可以重置数据
         servletRegistrationBean.addInitParameter("resetEnable","false");
         return servletRegistrationBean;
