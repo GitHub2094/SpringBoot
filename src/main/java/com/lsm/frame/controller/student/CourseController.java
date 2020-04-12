@@ -24,6 +24,11 @@ public class CourseController {
 
     private Logger logger =  LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * 我学的课页面
+     * @param m
+     * @return
+     */
     @RequiresRoles("student")
     //@RequiresPermissions("system:student)
     @RequestMapping("/myCourse")
@@ -33,6 +38,18 @@ public class CourseController {
         m.addAttribute("user",user);
         return "student/course/myCourse";
     }
+
+    @RequiresRoles("student")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/courseManagement")
+    public String courseManagement(Model m) {
+
+        User user = ShiroUtils.getUser();
+        m.addAttribute("user",user);
+        return "student/course/courseManagement";
+    }
+
+
 
 }
 

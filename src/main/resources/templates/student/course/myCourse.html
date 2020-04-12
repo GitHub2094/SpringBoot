@@ -10,8 +10,8 @@
         <!-- 栅格col-->
         <div class="col-sm-4">
             <!-- 卡片列表-->
-            <a th:href="@{/student/course/courserManagement}" style="color: inherit">
-            <div class="ibox">
+            <a style="color: inherit">
+            <div class="ibox" id="test11">
                 <!-- 卡片标题-->
                 <div class="ibox-title">
                     <span class="label label-primary pull-right" title="有新的作业">NEW</span>
@@ -61,5 +61,14 @@
     </div><!-- 栅格row end-->
 </div>
 <th:block th:include="include :: footer" />
+
+<script>
+
+    var prefix = ctx + "student/course/courseManagement";
+
+    $("#test11").click(function(){
+        $.modal.openTab('作业管理', prefix );
+    })
+</script>
 </body>
 </html>

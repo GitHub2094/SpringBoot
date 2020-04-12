@@ -47,15 +47,18 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-home"></i> <span class="nav-label">课程</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
+                    <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">课程</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
                         <li><a class="menuItem" th:href="@{/student/course/myCourse}">我学的课</a></li>
+                        <li><a class="menuItem" >待做作业</a></li>
+                        <li><a class="menuItem" >加入课程</a></li>
+                        <li><a class="menuItem" >我的课程</a></li>
                     </ul>
                 </li>
 
                 <li>
                     <a href="#"><i class="fa fa-inbox"></i> <span class="nav-label">收件箱</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
+                    <ul class="nav nav-second-level collapse">
                         <li><a class="menuItem" th:href="@{/druid}">通知</a></li>
                         <li><a class="menuItem" th:href="@{/druid}">信函</a></li>
                     </ul>
