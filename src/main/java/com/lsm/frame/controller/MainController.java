@@ -78,24 +78,26 @@ public class MainController {
     @RequiresRoles("student")
     //@RequiresPermissions("system:student)
     @RequestMapping("/student")
-    public String student() {
+    public String student(Model m) {
 
-        logger.info("进入学生界面");
+        User user = ShiroUtils.getUser();
+        m.addAttribute("user",user);
         return "student";
     }
 
     @RequiresRoles("teacher")
     //@RequiresPermissions("system:student)
     @RequestMapping("/teacher")
-    public String teacher() {
-        logger.info("进入教师界面");
+    public String teacher(Model m) {
+        User user = ShiroUtils.getUser();
+        m.addAttribute("user",user);
         return "teacher";
     }
 
 
     @RequestMapping("/system/main")
     public String root() {
-        return "root";
+        return "main";
     }
 
     /**
