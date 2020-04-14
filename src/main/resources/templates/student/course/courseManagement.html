@@ -1,58 +1,60 @@
 <!DOCTYPE html>
 <html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('选项卡 & 面板')" />
+    <th:block th:include="include :: header('课程管理')" />
 </head>
 <body class="gray-bg">
-<div class="wrapper wrapper-content animated fadeIn">
-    <div class="row">
-        <div class="col-sm-12">
-            <!-- 主面板 -->
-            <div class="ibox">
-                <!-- 主面板标题  -->
-                <div class="ibox-title">
-                    <span class="label label-primary pull-right" title="有新的作业">NEW</span>
-                    <h5> 概率统计与应用</h5>
-                </div><!-- 主面板标题  end-->
-                <!-- 主面板内容  -->
-                <div class="ibox-content">
-                    <!-- 栅栏分块行1 -->
-                    <div class="row">
-                        <!-- 栅栏分块列1-1 -->
-                        <div class="col-sm-4">
-                            <!-- 小面板 -->
-                            <div class="panel panel-success">
-                                <!-- 小面板头部 -->
-                                <div class="panel-heading">
-                                    <b>第一章总结</b>
-                                </div><!-- 小面板头部 end-->
-                                <!-- 小面板内容 -->
-                                <div class="panel-body">
-                                    <p><b>开始时间：</b><span>2020-03-18 22:12</span></p>
-                                    <p><b>截止时间：</b><span>2020-03-28 22:12</span></p>
-                                    <p><b>作业状态：</b><span>未完成</span></p>
-                                </div><!-- 小面板内容 end-->
-                                <!-- 小面板底部 -->
-                                <div class="panel-footer">
-                                    <button class="btn  btn-primary"  id="test12">&nbsp;查看&nbsp;</button>
-                                </div><!-- 小面板底部 end-->
-                            </div><!-- 小面板 end-->
-                        </div> <!-- 栅栏分块列1-1 end -->
-
-
-                    </div><!-- 栅栏分块行1 -->
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- 主面板 -->
+<div class="ibox">
+    <!-- 主面板标题  -->
+    <div class="ibox-title">
+        <ul class="nav nav-tabs pull-left">
+            <li><a href="#">概率论</a></li>
+        </ul>
+        <ul class="nav nav-pills pull-right">
+            <li class="disabled"><a href="#">作业</a></li>
+            <li><a href="#">通知</a></li>
+            <li><a id="task">任务</a></li>
+        </ul>
+    </div><!-- 主面板标题  end-->
+    <!-- 主面板内容  -->
+    <div class="ibox-content">
+        <!-- 栅栏分块行1 -->
+        <div class="row">
+            <!-- 栅栏分块列1-1 -->
+            <div class="col-sm-4">
+                <!-- 小面板 -->
+                <div class="panel panel-success">
+                    <!-- 小面板头部 -->
+                    <div class="panel-heading">
+                        <b>第一章总结</b>
+                    </div><!-- 小面板头部 end-->
+                    <!-- 小面板内容 -->
+                    <div class="panel-body">
+                        <p><b>开始时间：</b><span>2020-03-18 22:12</span></p>
+                        <p><b>截止时间：</b><span>2020-03-28 22:12</span></p>
+                        <p><b>作业状态：</b><span>未完成</span></p>
+                    </div><!-- 小面板内容 end-->
+                    <!-- 小面板底部 -->
+                    <div class="panel-footer">
+                        <button class="btn  btn-primary"  id="test12">&nbsp;查看&nbsp;</button>
+                    </div><!-- 小面板底部 end-->
+                </div><!-- 小面板 end-->
+            </div> <!-- 栅栏分块列1-1 end -->
+        </div><!-- 栅栏分块行1 -->
+    </div><!-- 主面板内容 end-->
+</div><!-- 主面板 end-->
 <th:block th:include="include :: footer" />
 <script>
     var prefix = ctx + "student/homework/edit";
 
     $("#test12").click(function(){
         $.modal.openTab('作业', prefix );
+    })
+
+    var URL = ctx + "student/course/task";
+    $("#task").click(function(){
+        $.modal.parentTab('课程任务', URL );
     })
 </script>
 </body>

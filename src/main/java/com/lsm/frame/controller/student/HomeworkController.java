@@ -27,7 +27,7 @@ public class HomeworkController {
     //@RequiresPermissions("system:student)
     @RequestMapping("/edit")
     public String edit(Model m) {
-
+        logger.info("编辑作业");
         User user = ShiroUtils.getUser();
         m.addAttribute("user",user);
         return "student/homework/edit";

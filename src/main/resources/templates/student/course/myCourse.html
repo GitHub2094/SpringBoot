@@ -11,7 +11,7 @@
         <div class="col-sm-4">
             <!-- 卡片列表-->
             <a style="color: inherit">
-            <div class="ibox" id="test11">
+            <div class="ibox" th:class="test11">
                 <!-- 卡片标题-->
                 <div class="ibox-title">
                     <span class="label label-primary pull-right" title="有新的作业">NEW</span>
@@ -36,7 +36,8 @@
         <!-- 栅格col-->
         <div class="col-sm-4">
             <!-- 卡片列表-->
-            <div class="ibox">
+            <a style="color: inherit" >
+            <div class="ibox" th:class="test11">
                 <!-- 卡片标题-->
                 <div class="ibox-title">
                     <span class="label label-warning pull-right" title="有作业要截止了">截止</span>
@@ -44,7 +45,7 @@
                 </div>
                 <!-- 卡片内容-->
                 <div class="ibox-content">
-                    <p><b>授课教师：</b> <span>方老师</span></p>
+                    <p><b>授课教师：</b> <span th:text="${user.getUserName()}"></span></p>
                     <p><b>课程班级：</b> <span>17级#1班</span></p>
                     <p><b>课程时间：</b> <span>2020年02月15日-2020年07月15日</span></p>
                     <div>
@@ -55,7 +56,7 @@
                         </div>
                     </div>
                 </div><!-- 卡片内容 end-->
-            </div><!-- 卡片列表 end-->
+            </div><!-- 卡片列表 end--></a>
         </div><!-- 栅格col end-->
 
     </div><!-- 栅格row end-->
@@ -63,11 +64,11 @@
 <th:block th:include="include :: footer" />
 
 <script>
-
-    var prefix = ctx + "student/course/courseManagement";
-
-    $("#test11").click(function(){
-        $.modal.openTab('作业', prefix );
+    //传值
+    var t =[[${user.getUserId()}]];
+    var prefix = ctx + "student/course/courseManagement?id=" + t;
+    $(".test11").click(function(){
+        $.modal.openTab('课程作业', prefix );
     })
 </script>
 </body>

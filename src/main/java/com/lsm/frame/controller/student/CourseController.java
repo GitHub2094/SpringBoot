@@ -39,11 +39,20 @@ public class CourseController {
     @RequiresRoles("student")
     //@RequiresPermissions("system:student)
     @RequestMapping("/courseManagement")
-    public String courseManagement(Model m) {
-
+    public String courseManagement(Model m,String id) {
+        logger.info("gg"+id);
         User user = ShiroUtils.getUser();
         m.addAttribute("user",user);
         return "student/course/courseManagement";
+    }
+
+    @RequiresRoles("student")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/task")
+    public String task(Model m) {
+        User user = ShiroUtils.getUser();
+        m.addAttribute("user",user);
+        return "student/course/task";
     }
 
 
