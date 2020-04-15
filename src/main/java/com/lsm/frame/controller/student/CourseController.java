@@ -21,7 +21,7 @@ public class CourseController {
 
     private Logger logger =  LoggerFactory.getLogger(this.getClass());
 
-    /**
+ /**
      * 我学的课页面
      * @param m
      * @return
@@ -36,6 +36,7 @@ public class CourseController {
         return "student/course/myCourse";
     }
 
+
     @RequiresRoles("student")
     //@RequiresPermissions("system:student)
     @RequestMapping("/courseManagement")
@@ -45,6 +46,31 @@ public class CourseController {
         m.addAttribute("user",user);
         return "student/course/courseManagement";
     }
+
+    @RequiresRoles("student")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/toDoHomework")
+    public String toDoHomeworkt(Model m) {
+        User user = ShiroUtils.getUser();
+        m.addAttribute("user",user);
+        return "student/course/toDoHomework";
+    }
+
+    /**
+     * 加入课程
+     * @param m
+     * @return
+     */
+    @RequiresRoles("student")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/addCourse")
+    public String addCourse(Model m) {
+
+        User user = ShiroUtils.getUser();
+        m.addAttribute("user",user);
+        return "student/course/addCourse";
+    }
+
 
     @RequiresRoles("student")
     //@RequiresPermissions("system:student)
