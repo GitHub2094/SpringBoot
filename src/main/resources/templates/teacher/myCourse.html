@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('我教的课')" />
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- 栅格row-->
+    <div class="row">
+        <!-- 栅格col-->
+        <div class="col-sm-4">
+            <!-- 卡片列表-->
+            <a style="color: inherit">
+                <div class="ibox" th:class="test11">
+                    <!-- 卡片标题-->
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right" title="有新的作业">NEW</span>
+                        <h5>概率统计与应用#1班</h5>
+                    </div>
+                    <!-- 卡片内容-->
+                    <div class="ibox-content">
+                        <p><b>课程名称：</b> <span>概率统计与应用</span></p>
+                        <p><b>隶属学院：</b> <span>软件学院</span></p>
+                        <p><b>课程时间：</b> <span>2020年02月15日-2020年07月15日</span></p>
+                        <div class="row  m-t-sm">
+                            <div class="col-sm-4">
+                                <div class="font-bold">项目</div>
+                                24
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="font-bold">周期</div>
+                                3个月
+                            </div>
+                            <div class="col-sm-4 text-right">
+                                <div class="font-bold">预算</div>
+                                &yen;190,325 <i class="fa fa-level-up text-navy"></i>
+                            </div>
+                        </div>
+                    </div><!-- 卡片内容 end-->
+                </div><!-- 卡片列表 end--></a>
+        </div><!-- 栅格col end-->
+
+        <!-- 栅格col-->
+        <div class="col-sm-4">
+            <!-- 卡片列表-->
+            <a style="color: inherit" >
+                <div class="ibox" th:class="test11">
+                    <!-- 卡片标题-->
+                    <div class="ibox-title">
+                        <span class="label label-warning pull-right" title="有作业要截止了">截止</span>
+                        <h5>XML程序设计</h5>
+                    </div>
+                    <!-- 卡片内容-->
+                    <div class="ibox-content">
+                        <p><b>授课教师：</b> <span th:text="${user.getUserName()}"></span></p>
+                        <p><b>课程班级：</b> <span>17级#1班</span></p>
+                        <p><b>课程时间：</b> <span>2020年02月15日-2020年07月15日</span></p>
+                    </div><!-- 卡片内容 end-->
+                </div><!-- 卡片列表 end--></a>
+        </div><!-- 栅格col end-->
+
+    </div><!-- 栅格row end-->
+</div>
+<th:block th:include="include :: footer" />
+
+<script>
+    var prefix = ctx + "teacher/course/courseManagement";
+    $(".test11").click(function(){
+        $.modal.openTab('课程管理', prefix );
+    })
+</script>
+</body>
+</html>
