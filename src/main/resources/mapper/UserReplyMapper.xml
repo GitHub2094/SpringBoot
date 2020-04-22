@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsm.frame.mapper.UserReplyMapper">
+  <resultMap id="BaseResultMap" type="com.lsm.frame.model.entity.UserReply">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cju_id" jdbcType="INTEGER" property="cjuId" />
+    <result column="subject" jdbcType="INTEGER" property="subject" />
+    <result column="reply" jdbcType="VARCHAR" property="reply" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cju_id, subject, reply, score, remarks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_reply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_reply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lsm.frame.model.entity.UserReply">
+    insert into user_reply (id, cju_id, subject, 
+      reply, score, remarks
+      )
+    values (#{id,jdbcType=INTEGER}, #{cjuId,jdbcType=INTEGER}, #{subject,jdbcType=INTEGER}, 
+      #{reply,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lsm.frame.model.entity.UserReply">
+    insert into user_reply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cjuId != null">
+        cju_id,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="reply != null">
+        reply,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cjuId != null">
+        #{cjuId,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=INTEGER},
+      </if>
+      <if test="reply != null">
+        #{reply,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lsm.frame.model.entity.UserReply">
+    update user_reply
+    <set>
+      <if test="cjuId != null">
+        cju_id = #{cjuId,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null">
+        subject = #{subject,jdbcType=INTEGER},
+      </if>
+      <if test="reply != null">
+        reply = #{reply,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lsm.frame.model.entity.UserReply">
+    update user_reply
+    set cju_id = #{cjuId,jdbcType=INTEGER},
+      subject = #{subject,jdbcType=INTEGER},
+      reply = #{reply,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

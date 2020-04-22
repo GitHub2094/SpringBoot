@@ -60,7 +60,7 @@
         </javaClientGenerator>
 
         <!--指定数据表名，可以使用_和%通配符，默认生成EXAMPLE-->
-        <table tableName="user" domainObjectName="User"
+        <table tableName="answer" domainObjectName="Answer"
 
                enableCountByExample="false" enableUpdateByExample="false"
 
@@ -70,7 +70,7 @@
 
         </table>
 
-        <table tableName="role" domainObjectName="Role"
+        <table tableName="college" domainObjectName="College"
 
                enableCountByExample="false" enableUpdateByExample="false"
 
@@ -80,7 +80,87 @@
 
         </table>
 
-        <table tableName="user_role" domainObjectName="UserRole"
+        <table tableName="course" domainObjectName="Course"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="course_job" domainObjectName="CourseJob"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="course_job_user" domainObjectName="CourseJobUser"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="course_user" domainObjectName="CourseUser"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="job" domainObjectName="Job"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="job_subject" domainObjectName="JobSubject"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="option" domainObjectName="Option"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="subject" domainObjectName="Subject"
+
+               enableCountByExample="false" enableUpdateByExample="false"
+
+               enableDeleteByExample="false" enableSelectByExample="false"
+
+               selectByExampleQueryId="false">
+
+        </table>
+
+        <table tableName="user_reply" domainObjectName="UserReply"
 
                enableCountByExample="false" enableUpdateByExample="false"
 

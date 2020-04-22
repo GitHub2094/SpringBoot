@@ -2,74 +2,59 @@
 <html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="include :: header('我学的课')" />
+    <style>
+        .cont{
+            overflow: hidden;/*内容超出后隐藏*/
+            text-overflow: ellipsis;/* 超出内容显示为省略号*/
+            white-space: nowrap;/*文本不进行换行*/
+        }
+    </style>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
     <!-- 栅格row-->
     <div class="row">
-        <!-- 栅格col-->
-        <div class="col-sm-4">
-            <!-- 卡片列表-->
-            <a style="color: inherit">
-            <div class="ibox" th:class="test11">
-                <!-- 卡片标题-->
-                <div class="ibox-title">
-                    <span class="label label-primary pull-right" title="有新的作业">NEW</span>
-                    <h5>概率统计与应用</h5>
-                </div>
-                <!-- 卡片内容-->
-                <div class="ibox-content">
-                    <p><b>授课教师：</b> <span>方老师</span></p>
-                    <p><b>课程班级：</b> <span>17级#1班</span></p>
-                    <p><b>课程时间：</b> <span>2020年02月15日-2020年07月15日</span></p>
-                    <div>
-                        <br>作业完成进度：</br>
-                        <div class="stat-percent">48%</div>
-                        <div class="progress progress-mini">
-                            <div style="width: 48%;" class="progress-bar"></div>
+        <div th:each="course:${courseList}">
+            <!-- 栅格col-->
+            <div class="col-sm-4">
+                <!-- 卡片列表-->
+                <span style="display: none;" th:value="${course.getId()}"></span>
+                <a style="color: inherit" th:href="@{/student/course/courseManagement(id=${course.getId()})}">
+                    <div class="ibox" th:class="test11">
+                        <!-- 卡片标题-->
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right" title="有新的作业">NEW</span>
+                            <h5 th:text="${course.getCourseName()}"></h5>
                         </div>
-                    </div>
-                </div><!-- 卡片内容 end-->
-            </div><!-- 卡片列表 end--></a>
-        </div><!-- 栅格col end-->
-
-        <!-- 栅格col-->
-        <div class="col-sm-4">
-            <!-- 卡片列表-->
-            <a style="color: inherit" >
-            <div class="ibox" th:class="test11">
-                <!-- 卡片标题-->
-                <div class="ibox-title">
-                    <span class="label label-warning pull-right" title="有作业要截止了">截止</span>
-                    <h5>XML程序设计</h5>
-                </div>
-                <!-- 卡片内容-->
-                <div class="ibox-content">
-                    <p><b>授课教师：</b> <span th:text="${user.getUserName()}"></span></p>
-                    <p><b>课程班级：</b> <span>17级#1班</span></p>
-                    <p><b>课程时间：</b> <span>2020年02月15日-2020年07月15日</span></p>
-                    <div>
-                        <br>作业完成进度：</br>
-                        <div class="stat-percent">76%</div>
-                        <div class="progress progress-mini">
-                            <div style="width: 48%;" class="progress-bar"></div>
-                        </div>
-                    </div>
-                </div><!-- 卡片内容 end-->
-            </div><!-- 卡片列表 end--></a>
-        </div><!-- 栅格col end-->
-
+                        <!-- 卡片内容-->
+                        <div class="ibox-content">
+                            <p><b>授课教师：</b> <span th:text="${course.getCreateBy()}"></span></p>
+                            <p><b>课程时间：</b> <span th:text="|${#dates.format(course.getStartTime(), 'yyyy-MM-dd')}--
+                            ${#dates.format(course.getEndTime(), 'yyyy-MM-dd')}|"></span></p>
+                            <p class="cont" th:title="${course.getRemark()}"><b>备注：</b>
+                                <span th:text="${course.getRemark()}"></span></p>
+                            <div>
+                                <br>作业完成进度：</br>
+                                <div class="stat-percent">48%</div>
+                                <div class="progress progress-mini">
+                                    <div style="width: 48%;" class="progress-bar"></div>
+                                </div>
+                            </div>
+                        </div><!-- 卡片内容 end-->
+                    </div><!-- 卡片列表 end--></a>
+            </div><!-- 栅格col end-->
+        </div>
     </div><!-- 栅格row end-->
 </div>
 <th:block th:include="include :: footer" />
 
-<script>
+<!--<script>
     //传值
     var t =[[${user.getUserId()}]];
     var prefix = ctx + "student/course/courseManagement?id=" + t;
     $(".test11").click(function(){
         $.modal.openTab('课程作业', prefix );
     })
-</script>
+</script>-->
 </body>
 </html>
