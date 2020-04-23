@@ -71,6 +71,7 @@ public class CourseController {
         String courseName = courseJobService.selectCourseByCourseId(id).getCourseName();
         m.addAttribute("jobsList",jobsList);
         m.addAttribute("courseName",courseName);
+        m.addAttribute("courseId",id);
         return "student/course/courseManagement";
     }
 
@@ -102,9 +103,10 @@ public class CourseController {
     @RequiresRoles("student")
     //@RequiresPermissions("system:student)
     @RequestMapping("/task")
-    public String task(Model m) {
+    public String task(Model m,int id) {
         User user = ShiroUtils.getUser();
         m.addAttribute("user",user);
+        m.addAttribute("courseId",id);
         return "student/course/task";
     }
 

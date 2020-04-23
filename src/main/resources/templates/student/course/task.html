@@ -97,13 +97,9 @@
 </div><!-- 主面板 end-->
 <th:block th:include="include :: footer" />
 <script>
-    var prefix = ctx + "student/homework/edit";
 
-    $("#test12").click(function(){
-        $.modal.openTab('作业', prefix );
-    })
-
-    var URL = ctx + "student/course/courseManagement";
+    var id = [[${courseId}]];
+    var URL = ctx + "student/course/courseManagement?id="+id;
     $("#task").click(function(){
         $.modal.parentTab('课程作业', URL );
     })

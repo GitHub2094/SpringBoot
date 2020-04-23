@@ -55,7 +55,8 @@
         $.modal.openTab('作业', prefix );
     })
 
-    var URL = ctx + "student/course/task";
+    var id = [[${courseId}]]
+    var URL = ctx + "student/course/task?id="+id;
     $("#task").click(function(){
         $.modal.parentTab('课程任务', URL );
     })

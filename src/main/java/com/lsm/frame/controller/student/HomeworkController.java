@@ -33,4 +33,20 @@ public class HomeworkController {
         return "student/homework/edit";
     }
 
+    /**
+     *
+     * @param m
+     * @return
+     */
+    @RequiresRoles("student")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/editUpdate")
+    public String editUpdate(Model m,String noticeContent) {
+        logger.info("编辑作业"+noticeContent);
+        User user = ShiroUtils.getUser();
+        m.addAttribute("user",user);
+        return "student/homework/edit";
+    }
+
+
 }

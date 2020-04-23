@@ -14,12 +14,12 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <!-- 栅格row-->
     <div class="row">
-        <div th:each="course:${courseList}">
+        <div th:each="course:${courseList}" th:onclick="turn([[${course.getId()}]])">
             <!-- 栅格col-->
             <div class="col-sm-4">
                 <!-- 卡片列表-->
                 <span style="display: none;" th:value="${course.getId()}"></span>
-                <a style="color: inherit" th:href="@{/student/course/courseManagement(id=${course.getId()})}">
+                <a style="color: inherit" >
                     <div class="ibox" th:class="test11">
                         <!-- 卡片标题-->
                         <div class="ibox-title">
@@ -47,14 +47,13 @@
     </div><!-- 栅格row end-->
 </div>
 <th:block th:include="include :: footer" />
-
-<!--<script>
+<script>
     //传值
-    var t =[[${user.getUserId()}]];
-    var prefix = ctx + "student/course/courseManagement?id=" + t;
-    $(".test11").click(function(){
+
+    function turn(t){
+        var prefix = ctx + "student/course/courseManagement?id=" + t;
         $.modal.openTab('课程作业', prefix );
-    })
-</script>-->
+    }
+</script>
 </body>
 </html>
