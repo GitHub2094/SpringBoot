@@ -1054,6 +1054,7 @@ var table = {
             },
             // 保存信息 弹出提示框 callback 回调函数
             saveModal: function(url, data, callback) {
+        		alert(data);
             	var config = {
         	        url: url,
         	        type: "post",
