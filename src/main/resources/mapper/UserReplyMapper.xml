@@ -103,4 +103,11 @@
       remarks = #{remarks,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByCjuId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_reply
+    where cju_id = #{cjuId,jdbcType=INTEGER}
+  </select>
 </mapper>

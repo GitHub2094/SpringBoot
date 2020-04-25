@@ -22,26 +22,28 @@
                         <h5>第一题：简答题</h5>
                     </div>
                     <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <!-- 第二层面板-->
-                                <div class="ibox float-e-margins">
-                                    <!--  第二层面板标题-->
-                                    <div class="ibox-title">
-                                        <h5>1.写出对应的XML</h5>
-                                    </div>
-                                    <!--  第二层面板内容-->
-                                    <div class="ibox-content" id="eg">
-                                        <h4>我的答案:</h4>
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <input id="noticeContent" name="noticeContent" type="hidden">
-                                                <div class="summernote"></div>
-                                            </div>
+                        <div th:each="userReply : ${userReplyList}">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <!-- 第二层面板-->
+                                    <div class="ibox float-e-margins" >
+                                        <!--  第二层面板标题-->
+                                        <div class="ibox-title">
+                                            <h5 th:text="${userReply.getSubjectModel().getStem()}" ></h5>
                                         </div>
-                                        <button type="submit" onclick="submitHandler()">提交</button>
-                                    </div>
-                                </div><!-- 第二层面板-->
+                                        <!--  第二层面板内容-->
+                                        <div class="ibox-content" id="eg">
+                                            <h4>我的答案:</h4>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <input id="noticeContent" name="noticeContent"  type="hidden">
+                                                    <div class="summernote" ></div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-sm btn-primary" onclick="submitUserInfo()"><i class="fa fa-check"></i>保 存</button>
+                                        </div>
+                                    </div><!-- 第二层面板-->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -54,23 +56,23 @@
 <th:block th:include="include :: summernote-js" />
 <script>
     var prefix = ctx + "student/homework/editUpdate";
-
     $('.summernote').summernote({
-        placeholder: '请输入你的答案',
-        height : 192,
-        lang : 'zh-CN',
-        followingToolbar: false
-    });
+            placeholder: '请输入公告内容',
+            height : 192,
+            lang : 'zh-CN',
+            followingToolbar: false,
+        });
+    $('.summernote').summernote('code','要赋的值');
 
     $("#form-notice-add").validate({
         focusCleanup: true
     });
 
-    function submitHandler() {
+    function submitUserInfo() {
         if ($.validate.form()) {
             var sHTML = $('.summernote').summernote('code');
             $("#noticeContent").val(sHTML);
-            $.operate.save(prefix , $('#form-notice-add').serialize());
+            $.operate.saveModal(prefix ,$('#form-notice-add').serialize());
         }
     }
 

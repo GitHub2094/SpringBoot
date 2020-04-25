@@ -34,12 +34,12 @@
                         <div class="panel-body">
                             <p><b>开始时间：</b><span th:text="${#dates.format(jobs.getStartTime(), 'yyyy-MM-dd HH:mm')}"></span></p>
                             <p><b>截止时间：</b><span th:text="${#dates.format(jobs.getEndTime(), 'yyyy-MM-dd HH:mm')}"></span></p>
-                            <p><b>作业状态：</b><span th:text="${jobs.getStatu()}"></span></p>
+                            <p><b>作业状态：</b><span th:text="${jobs.getCourseJobUser().getState()}"></span></p>
                         </div><!-- 小面板内容 end-->
                         <!-- 小面板底部 -->
                         <div class="panel-footer">
-                            <button class="btn  btn-primary"  id="test12">&nbsp;查看&nbsp;</button>
-                            <button class="btn btn-danger pull-right"><span th:text="${jobs.getScore()}"></span></button>
+                            <button class="btn  btn-primary" th:onclick="turn([[${jobs.getCourseJobUser().getId()}]])">&nbsp;查看&nbsp;</button>
+                            <button class="btn btn-danger pull-right"><span th:text="${jobs.getCourseJobUser().getScore()}"></span></button>
                         </div><!-- 小面板底部 end-->
                     </div><!-- 小面板 end-->
                 </div> <!-- 栅栏分块列1-1 end -->
@@ -49,11 +49,11 @@
 </div><!-- 主面板 end-->
 <th:block th:include="include :: footer" />
 <script>
-    var prefix = ctx + "student/homework/edit";
-
-    $("#test12").click(function(){
+    function turn(t){
+        var prefix = ctx + "student/homework/edit?id=" + t;
         $.modal.openTab('作业', prefix );
-    })
+    }
+
 
     var id = [[${courseId}]]
     var URL = ctx + "student/course/task?id="+id;

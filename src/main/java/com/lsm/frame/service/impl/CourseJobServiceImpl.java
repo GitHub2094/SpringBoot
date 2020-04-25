@@ -57,8 +57,7 @@ public class CourseJobServiceImpl implements CourseJobService {
             jobs.setStartTime(courseJob.getStartTime());
             jobs.setEndTime(courseJob.getEndTime());
             CourseJobUser courseJobUser = courseJobUserMapper.selectCjuBycju(courseJob.getId(),userId);
-            jobs.setScore(courseJobUser.getScore());
-            jobs.setStatu(courseJobUser.getState());
+            jobs.setCourseJobUser(courseJobUser);
             jobsList.add(jobs);
         }
         return jobsList;

@@ -1,6 +1,7 @@
 package com.lsm.frame.model.vo;
 
 
+import com.lsm.frame.model.entity.CourseJobUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +24,5 @@ public class Jobs {
 
     private Date endTime;
 
-    private String statu;
-
-    private int score;
+    private CourseJobUser courseJobUser;
 }

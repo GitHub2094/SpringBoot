@@ -16,14 +16,13 @@ import java.util.Date;
 @Builder
 public class Job {
 
-    @JSONField(name = "Id")
     private Integer id;
 
-    @JSONField(name = "Title")
     private String title;
 
     private String createBy;
 
     private Date createTime;
 
+    private Job job;
 }
