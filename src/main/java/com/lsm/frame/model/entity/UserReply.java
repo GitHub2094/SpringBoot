@@ -24,4 +24,5 @@ public class UserReply {
     private String remarks;
 
     private Subject subjectModel;
+
 }

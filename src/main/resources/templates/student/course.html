@@ -5,6 +5,7 @@
     <title>用AJAX以JSON方式提交数据</title>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <th:block th:include="include :: header('用户个人信息')" />
+    <th:block th:include="include :: summernote-css" />
 </head>
 <body>
    <div th:each="job :${jobList}" class="ddd">
@@ -25,13 +26,8 @@
            <div class="form-group">
                <label class="col-sm-2 control-label">创建人：</label>
                <div class="col-sm-10">
-                   <input type="text" class="form-control" name="createBy" th:value="${job.createBy}" placeholder="请输入创建人">
-               </div>
-           </div>
-           <div class="form-group">
-               <label class="col-sm-2 control-label">创建人：</label>
-               <div class="col-sm-10">
-                   <input type="text" class="form-control" name="job" th:value="${job.job}" placeholder="请输入创建人">
+                   <input type="text" class="form-control"  name="createBy" th:value="${job.createBy}" placeholder="请输入创建人">
+                   <div class="summernote" ></div>
                </div>
            </div>
 
@@ -46,20 +42,29 @@
        </div>
    </div>
 <th:block th:include="include :: footer" />
+<th:block th:include="include :: summernote-js" />
 <script>
+    $('.summernote').summernote({
+        placeholder: '请输入公告内容',
+        height : 192,
+        lang : 'zh-CN',
+        followingToolbar: false,
+    });
+    $(function () {
+        $.each($("body").find(".ddd"),function (){
+            var content = $(this).find("input[name='createBy']");
+            var summernote = $(this).find(".summernote");
+            summernote.summernote('code', content.val());
+        })
+    })
 
-    function submitUserInfo() {
-        var data = $("#form-user-edit").serializeArray();
-        alert(JSON.stringify(data));
-        var page="category";
-        $.operate.saveModal(ctx + "category", data);
-    }
 
 
 
-    function jobUpdate(id,title) {
+    function jobUpdate(id,title,createBy) {
             this.id=id;
             this.title=title;
+            this.createBy=createBy;
             return this;
     }
 
@@ -68,11 +73,49 @@
         $.each($("body").find(".ddd"),function () {
             var id = $(this).find("input[name='id']");
             var title= $(this).find("input[name='title']");
-            var jobs = new jobUpdate(id.val(),title.val());
+            var summernote = $(this).find(".summernote");
+            var createBy = summernote.summernote('code');
+            var jobs = new jobUpdate(id.val(),title.val(),createBy);
             list.push(jobs);
             alert(JSON.stringify(list));
         })
+
+        var data = JSON.stringify(list);
+        $.ajax({
+            url:ctx + "category",
+            type:'post',
+            data: data,
+            dataType:"json",
+            contentType:"application/json",
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
     }
+
+
+    function submitUserInfo() {
+        /* var data = $("#form-user-edit").serializeArray();
+         alert(JSON.stringify(data));
+         var page="category";
+         $.operate.saveModal(ctx + "category", data);*/
+
+
+    }
+
 
 
 

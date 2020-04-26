@@ -2,6 +2,7 @@ package com.lsm.frame.service.impl;
 
 import com.lsm.frame.mapper.SubjectMapper;
 import com.lsm.frame.mapper.UserReplyMapper;
+import com.lsm.frame.model.entity.Job;
 import com.lsm.frame.model.entity.Subject;
 import com.lsm.frame.model.entity.User;
 import com.lsm.frame.model.entity.UserReply;
@@ -10,7 +11,6 @@ import com.lsm.frame.service.intf.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +30,16 @@ public class UserReplyServiceImpl implements UserReplyService {
             userReply.setSubjectModel(subject);
         }
         return userReplyList;
+    }
+
+    @Override
+    public int insertSelective(UserReply record) {
+        return userReplyMapper.insertSelective(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(UserReply record) {
+        return userReplyMapper.updateByPrimaryKeySelective(record);
     }
 
 

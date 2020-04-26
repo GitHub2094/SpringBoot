@@ -9,7 +9,7 @@
 <div class="ibox">
     <!-- 主面板标题-->
     <div class="ibox-title">
-        <h5>第一章总结 &nbsp;&nbsp;&nbsp;<span style="color: red;">80</span></h5>
+        <h5>第一章总结 &nbsp&nbsp</h5>
     </div>
     <!-- 主面板内容-->
     <div class="ibox-content">
@@ -21,31 +21,22 @@
                     <div class="ibox-title">
                         <h5>第一题：简答题</h5>
                     </div>
-                    <div class="ibox-content">
-                        <div th:each="userReply : ${userReplyList}">
-                            <div class="row">
+                    <div class="ibox-content" id="find">
+
+                        <div th:each="userReply : ${userReplyList}" class="reply">
+                            <input  name="id" th:value="${userReply.id}" type="hidden">
+                            <h4 th:text="| ${userReply.getSubjectModel().getStem()} |" ></h4>
+                            <p style="color: red" th:text="|分数：${userReply.getSubjectModel().getScore()}
+                            得分：${userReply.getScore()}|"></p>
+                            <h4>我的答案:</h4>
+                            <div class="form-group">
                                 <div class="col-sm-12">
-                                    <!-- 第二层面板-->
-                                    <div class="ibox float-e-margins" >
-                                        <!--  第二层面板标题-->
-                                        <div class="ibox-title">
-                                            <h5 th:text="${userReply.getSubjectModel().getStem()}" ></h5>
-                                        </div>
-                                        <!--  第二层面板内容-->
-                                        <div class="ibox-content" id="eg">
-                                            <h4>我的答案:</h4>
-                                            <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    <input id="noticeContent" name="noticeContent"  type="hidden">
-                                                    <div class="summernote" ></div>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="btn btn-sm btn-primary" onclick="submitUserInfo()"><i class="fa fa-check"></i>保 存</button>
-                                        </div>
-                                    </div><!-- 第二层面板-->
+                                    <input id="reply" name="reply" th:value="${userReply.getReply()}" type="hidden">
+                                    <div class="summernote" ></div>
                                 </div>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="submitReply()"><i class="fa fa-reply-all"></i>提交 </button>
                     </div>
                 </div><!-- 第一层面板 end--></form>
             </div>
@@ -55,28 +46,64 @@
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: summernote-js" />
 <script>
-    var prefix = ctx + "student/homework/editUpdate";
+
     $('.summernote').summernote({
-            placeholder: '请输入公告内容',
-            height : 192,
-            lang : 'zh-CN',
-            followingToolbar: false,
-        });
-    $('.summernote').summernote('code','要赋的值');
-
-    $("#form-notice-add").validate({
-        focusCleanup: true
+        placeholder: '请输入公告内容',
+        height : 192,
+        lang : 'zh-CN',
+        followingToolbar: false,
     });
+    $(function () {
+        $.each($("#find").find(".reply"),function (){
+            var content = $(this).find("input[name='reply']");
+            var summernote = $(this).find(".summernote");
+            summernote.summernote('code', content.val());
+        })
+    })
 
-    function submitUserInfo() {
-        if ($.validate.form()) {
-            var sHTML = $('.summernote').summernote('code');
-            $("#noticeContent").val(sHTML);
-            $.operate.saveModal(prefix ,$('#form-notice-add').serialize());
-        }
+
+    function Reply(id,reply) {
+        this.id=id;
+        this.reply=reply;
+        return this;
     }
 
+    function submitReply() {
+        var usesReplyList =[];
+        $.each($("#find").find(".reply"),function () {
+            var id = $(this).find("input[name='id']");
+            var summernote = $(this).find(".summernote");
+            var reply = summernote.summernote('code');
+            var userReply = new Reply(id.val(),reply);
+            usesReplyList.push(userReply);
+            alert(JSON.stringify(usesReplyList));
+        })
 
+        var data = JSON.stringify(usesReplyList);
+        $.ajax({
+            url:ctx + "student/homework/editUpdate",
+            type:'post',
+            data: data,
+            dataType:"json",
+            contentType:"application/json",
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+    }
 </script>
 </body>
 </html>

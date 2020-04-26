@@ -1,5 +1,7 @@
 package com.lsm.frame.controller.student;
 
+import com.lsm.frame.model.entity.CourseJobUser;
+import com.lsm.frame.model.entity.Job;
 import com.lsm.frame.model.entity.User;
 import com.lsm.frame.model.entity.UserReply;
 import com.lsm.frame.service.intf.UserReplyService;
@@ -11,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -27,6 +31,8 @@ public class HomeworkController {
     @Autowired
     UserReplyService userReplyService;
 
+
+
     /**
      * 编辑作业页面
      * @param m
@@ -41,7 +47,9 @@ public class HomeworkController {
             logger.info("sdfs"+userReply);
         }
         User user = ShiroUtils.getUser();
+
         m.addAttribute("userReplyList",userReplyList);
+        m.addAttribute("user",user);
         return "student/homework/edit";
     }
 
@@ -53,11 +61,14 @@ public class HomeworkController {
     @RequiresRoles("student")
     //@RequiresPermissions("system:student)
     @RequestMapping("/editUpdate")
-    public AjaxResult editUpdate(Model m, String noticeContent) {
-        logger.info("编辑作业"+noticeContent);
-        User user = ShiroUtils.getUser();
-        m.addAttribute("user",user);
-        return AjaxResult.success();
+    @ResponseBody
+    public AjaxResult editUpdate(Model m,@RequestBody UserReply[] userReplies) {
+        logger.info("编辑作业"+userReplies[0]);
+        logger.info("编辑作业"+userReplies[1]);
+        for(UserReply userReply : userReplies){
+            userReplyService.updateByPrimaryKeySelective(userReply);
+        }
+        return AjaxResult.success("提交作业成功");
     }
 
 

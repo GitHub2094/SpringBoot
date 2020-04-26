@@ -37,8 +37,9 @@ public class TestController {
 
     @PostMapping("/category")
     @ResponseBody
-    public AjaxResult addCategory(Object job) throws Exception {
-        System.out.println("浏览器以JSON格式提交的数据："+job);
+    public AjaxResult addCategory(@RequestBody Job[] job) throws Exception {
+        System.out.println("浏览器以JSON格式提交的数据："+job[0]);
+        System.out.println("浏览器以JSON格式提交的数据："+job[1]);
         return AjaxResult.success("成功");
     }
 
