@@ -1,28 +1,20 @@
 package com.lsm.frame.model.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.lsm.frame.model.dto.BaseEntity;
+import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-@Builder
-public class Job {
+public class Job extends BaseEntity {
 
     private Integer id;
 
     private String title;
 
-    private String createBy;
-
-    private Date createTime;
 
 }

@@ -19,5 +19,5 @@ public interface JobMapper {
 
     int updateByPrimaryKey(Job record);
 
-    List<Job> selectByCreateBy(Job job);
+    List<Job> selectJobList(Job job);
 }

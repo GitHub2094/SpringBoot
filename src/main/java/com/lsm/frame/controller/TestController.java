@@ -45,11 +45,7 @@ public class TestController {
 
     @RequestMapping("/course")
     public String course(Model m){
-        Job job = Job.builder().id(1).title("测试").createBy("放桂皮").createTime(new Date()).build();
-        Job job1 = Job.builder().id(2).title("测试1").createBy("嘎嘎嘎").createTime(new Date()).build();
         List<Job> jobList = new ArrayList<Job>();
-        jobList.add(job);
-        jobList.add(job1);;
         m.addAttribute("jobList",jobList);
         return "student/course";
     }

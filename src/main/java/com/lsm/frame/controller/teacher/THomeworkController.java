@@ -55,14 +55,13 @@ public class THomeworkController extends BaseController{
      */
     @RequiresRoles("teacher")
     //@RequiresPermissions("system:student)
-    @RequestMapping("/t")
+    @RequestMapping("/getList")
     @ResponseBody
     public TableDataInfo getList(Job job) {
-
         startPage();
         User user = ShiroUtils.getUser();
-        job.setCreateBy(user.getUserId().toString());
-        List<Job> list = courseJobService.selectByCreateBy(job);
+        job.setCreateBy(user.getUserName());
+        List<Job> list = courseJobService.selectJobList(job);
         return getDataTable(list);
     }
 

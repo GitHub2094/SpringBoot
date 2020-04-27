@@ -69,7 +69,7 @@ public class CourseJobServiceImpl implements CourseJobService {
     }
 
     @Override
-    public List<Job> selectByCreateBy(Job job) {
-        return jobMapper.selectByCreateBy(job);
+    public List<Job> selectJobList(Job job) {
+        return jobMapper.selectJobList(job);
     }
 }

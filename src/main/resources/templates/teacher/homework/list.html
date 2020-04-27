@@ -14,10 +14,10 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                作业id：<input type="text" name="id"/>
+                                作业标题：<input type="text" name="title"/>
                             </li>
                             <li>
-                                作业标题：<input type="text" name="title"/>
+                                创建者：<input type="text" name="createBy"/>
                             </li>
                             <li class="select-time">
                                 <label>创建时间： </label>
@@ -76,7 +76,7 @@
 
     function queryList() {
         var options = {
-            url: prefix + "/t",
+            url: prefix + "/getList",
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
@@ -102,6 +102,7 @@
                 {
                     field: 'createBy',
                     title: '创建者',
+                    sortable: true
                 },
                 {
                     field: 'createTime',
