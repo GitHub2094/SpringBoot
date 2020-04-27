@@ -29,4 +29,6 @@ public interface UserService {
 
     String encryptPassword(String password, String salt);
 
+
+
 }

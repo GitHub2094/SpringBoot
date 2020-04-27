@@ -67,4 +67,9 @@ public class CourseJobServiceImpl implements CourseJobService {
     public Course selectCourseByCourseId(Integer id) {
         return courseMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public List<Job> selectByCreateBy(Job job) {
+        return jobMapper.selectByCreateBy(job);
+    }
 }

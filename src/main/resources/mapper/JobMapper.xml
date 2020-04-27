@@ -79,4 +79,19 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="selectByCreateBy" parameterType="Job" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from job
+    <where>
+      <if test="title != null and title != ''">
+        AND title like concat('%', #{title}, '%')
+      </if>
+      <if test="createBy != null and createBy != ''">
+        AND create_by like concat('%', #{createBy}, '%')
+      </if>
+    </where>
+  </select>
 </mapper>

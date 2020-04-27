@@ -22,7 +22,7 @@
 
         <ul class="nav nav-pills ">
             <li> <button class="btn btn-primary " type="button" id="addHomework"><i class="fa fa-plus"></i>&nbsp;新建</button></li>
-            <li> <button class="btn btn-success " type="button" id="homeworkSet"><i class="fa fa-paste"></i>&nbsp;&nbsp;<span class="bold">作业库</span>
+            <li> <button class="btn btn-success " type="button" id="homeworkList"><i class="fa fa-paste"></i>&nbsp;&nbsp;<span class="bold">作业库</span>
             </button></li>
         </ul>
         <hr />
@@ -70,6 +70,11 @@
     var add = ctx + "teacher/homework/add";
     $("#addHomework").click(function(){
         $.modal.openTab('添加作业', add );
+    })
+
+    var list = ctx +"teacher/homework/list";
+    $("#homeworkList").click(function(){
+        $.modal.openTab('作业库', list);
     })
 </script>
 </body>

@@ -28,4 +28,7 @@ public interface CourseJobService {
     List<Jobs> listJobsByCourseIdAndUserId(Integer id,Integer userId);
 
     Course selectCourseByCourseId(Integer id);
+
+    List<Job> selectByCreateBy(Job job);
+
 }
