@@ -10,6 +10,7 @@ import com.lsm.frame.model.entity.CourseJobUser;
 import com.lsm.frame.model.entity.Job;
 import com.lsm.frame.model.vo.Jobs;
 import com.lsm.frame.service.intf.CourseJobService;
+import com.lsm.frame.utils.string.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +72,11 @@ public class CourseJobServiceImpl implements CourseJobService {
     @Override
     public List<Job> selectJobList(Job job) {
         return jobMapper.selectJobList(job);
+    }
+
+    @Override
+    public int deleteJobByIds(String ids) {
+        Integer[] jobIds = Convert.toIntArray(ids);
+        return jobMapper.deleteJobByIds(jobIds);
     }
 }

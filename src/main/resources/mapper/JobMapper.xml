@@ -100,4 +100,11 @@
       </if>
     </where>
   </select>
+
+  <delete id="deleteJobByIds" parameterType="java.lang.Integer">
+    delete from job where id in
+    <foreach collection="array" item="jobId" open="(" separator="," close=")">
+      #{jobId}
+    </foreach>
+  </delete>
 </mapper>

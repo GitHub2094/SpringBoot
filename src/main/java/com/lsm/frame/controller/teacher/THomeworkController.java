@@ -9,7 +9,9 @@ import com.lsm.frame.model.entity.Job;
 import com.lsm.frame.model.entity.User;
 
 import com.lsm.frame.service.intf.CourseJobService;
+import com.lsm.frame.utils.AjaxResult;
 import com.lsm.frame.utils.ShiroUtils;
+import com.lsm.frame.utils.string.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +52,7 @@ public class THomeworkController extends BaseController{
 
     /**
      *
-     * @param m
-     * @return
+     * @return TableDataInfo表格信息
      */
     @RequiresRoles("teacher")
     //@RequiresPermissions("system:student)
@@ -60,7 +61,9 @@ public class THomeworkController extends BaseController{
     public TableDataInfo getList(Job job) {
         startPage();
         User user = ShiroUtils.getUser();
-        job.setCreateBy(user.getUserName());
+        if (StringUtils.isEmpty(job.getCreateBy())){
+            job.setCreateBy(user.getUserName());
+        }
         List<Job> list = courseJobService.selectJobList(job);
         return getDataTable(list);
     }
@@ -74,7 +77,20 @@ public class THomeworkController extends BaseController{
         return "teacher/homework/list";
     }
 
-
+    @RequiresRoles("teacher")
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        try
+        {
+            return toAjax(courseJobService.deleteJobByIds(ids));
+        }
+        catch (Exception e)
+        {
+            return error(e.getMessage());
+        }
+    }
 
 
 }

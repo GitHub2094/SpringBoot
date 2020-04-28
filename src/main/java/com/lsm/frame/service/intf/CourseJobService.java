@@ -31,4 +31,6 @@ public interface CourseJobService {
 
     List<Job> selectJobList(Job job);
 
+    int deleteJobByIds(String ids);
+
 }

@@ -20,4 +20,6 @@ public interface JobMapper {
     int updateByPrimaryKey(Job record);
 
     List<Job> selectJobList(Job job);
+
+    int deleteJobByIds(Integer[] ids);
 }
