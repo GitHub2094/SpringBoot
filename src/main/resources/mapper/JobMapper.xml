@@ -81,7 +81,7 @@
   </update>
 
 
-  <select id="selectJobList" parameterType="Job" resultMap="BaseResultMap">
+  <select id="selectJobList" parameterType="com.lsm.frame.model.entity.Job" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from job

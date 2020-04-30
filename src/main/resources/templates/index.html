@@ -54,9 +54,12 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-video-camera"></i> <span class="nav-label">系统监控</span> <span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-video-camera"></i> <span class="nav-label">系统管理</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="menuItem" th:href="@{/druid}">数据监控</a></li>
+                    </ul>
+                    <ul class="nav nav-second-level">
+                        <li><a class="menuItem" th:href="@{/system/dict/type}">字典管理</a></li>
                     </ul>
                 </li>
                 <li th:if="ture">

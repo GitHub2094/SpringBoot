@@ -47,13 +47,17 @@
     </div><!-- 栅格row end-->
 </div>
 <th:block th:include="include :: footer" />
-<script>
+<script th:inline="javascript">
     //传值
 
     function turn(t){
         var prefix = ctx + "student/course/courseManagement?id=" + t;
         $.modal.openTab('课程作业', prefix );
     }
+
+    alert("test");
+    var types = [[${@dict.getType('subject_type')}]];
+    alert(JSON.stringify(types));
 </script>
 </body>
 </html>
