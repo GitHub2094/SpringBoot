@@ -34,7 +34,13 @@
                         <div class="panel-body">
                             <p><b>开始时间：</b><span th:text="${#dates.format(jobs.getStartTime(), 'yyyy-MM-dd HH:mm')}"></span></p>
                             <p><b>截止时间：</b><span th:text="${#dates.format(jobs.getEndTime(), 'yyyy-MM-dd HH:mm')}"></span></p>
-                            <p><b>作业状态：</b><span th:text="${jobs.getCourseJobUser().getState()}"></span></p>
+                            <p th:with="type=${@dict.getType('job_state')}">
+                                <span th:each="dict : ${type}" >
+                                    <span th:if="${dict.dictValue}==${jobs.getCourseJobUser().getState()}">
+                                           <b>作业状态：</b><span th:text="${dict.dictLabel}"></span>
+                                    </span>
+                                </span>
+                            </p>
                         </div><!-- 小面板内容 end-->
                         <!-- 小面板底部 -->
                         <div class="panel-footer">

@@ -1,13 +1,11 @@
 package com.lsm.frame.service.impl;
 
+import com.lsm.frame.mapper.CourseMapper;
+import com.lsm.frame.mapper.OptionMapper;
 import com.lsm.frame.mapper.SubjectMapper;
 import com.lsm.frame.mapper.UserReplyMapper;
-import com.lsm.frame.model.entity.Job;
-import com.lsm.frame.model.entity.Subject;
-import com.lsm.frame.model.entity.User;
-import com.lsm.frame.model.entity.UserReply;
+import com.lsm.frame.model.entity.*;
 import com.lsm.frame.service.intf.UserReplyService;
-import com.lsm.frame.service.intf.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +20,21 @@ public class UserReplyServiceImpl implements UserReplyService {
     @Autowired
     SubjectMapper subjectMapper;
 
+    @Autowired
+    CourseMapper courseMapper;
+
+    @Autowired
+    OptionMapper optionMapper;
+
+
     @Override
     public List<UserReply> selectByCjuId(Integer id) {
         List<UserReply> userReplyList = userReplyMapper.selectByCjuId(id);
         for (UserReply userReply : userReplyList){
             Subject subject = subjectMapper.selectByPrimaryKey(userReply.getSubject());
+            subject.setCourseName(courseMapper.selectByPrimaryKey(subject.getCourseId()).getCourseName());
+            List<Option> optionList = optionMapper.selectBySubjectId(subject.getId());
+            subject.setOptions(optionList);
             userReply.setSubjectModel(subject);
         }
         return userReplyList;

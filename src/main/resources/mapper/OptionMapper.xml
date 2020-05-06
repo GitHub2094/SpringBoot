@@ -12,21 +12,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from option
+    from opt
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from option
+    delete from opt
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.lsm.frame.model.entity.Option">
-    insert into option (id, subject_id, content
+    insert into opt (id, subject_id, content
       )
     values (#{id,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.lsm.frame.model.entity.Option">
-    insert into option
+    insert into opt
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -51,7 +51,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.lsm.frame.model.entity.Option">
-    update option
+    update opt
     <set>
       <if test="subjectId != null">
         subject_id = #{subjectId,jdbcType=INTEGER},
@@ -63,9 +63,16 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lsm.frame.model.entity.Option">
-    update option
+    update opt
     set subject_id = #{subjectId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectBySubjectId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from opt
+    where subject_id = #{subjectId,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -43,13 +43,15 @@ public class HomeworkController {
     @RequestMapping("/edit")
     public String edit(Model m,int id) {
         List<UserReply> userReplyList = userReplyService.selectByCjuId(id);
+        String courseName = "";
         for (UserReply userReply: userReplyList){
             logger.info("sdfs"+userReply);
+            courseName = userReply.getSubjectModel().getCourseName();
         }
         User user = ShiroUtils.getUser();
-
         m.addAttribute("userReplyList",userReplyList);
         m.addAttribute("user",user);
+        m.addAttribute("courseName",courseName);
         return "student/homework/edit";
     }
 
@@ -64,7 +66,6 @@ public class HomeworkController {
     @ResponseBody
     public AjaxResult editUpdate(Model m,@RequestBody UserReply[] userReplies) {
         logger.info("编辑作业"+userReplies[0]);
-        logger.info("编辑作业"+userReplies[1]);
         for(UserReply userReply : userReplies){
             userReplyService.updateByPrimaryKeySelective(userReply);
         }

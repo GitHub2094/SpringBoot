@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +24,10 @@ public class Subject {
     private Integer score;
 
     private String analysis;
+
+    private String courseName;
+
+    private List<Option> options;
 
 
 }
