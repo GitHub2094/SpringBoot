@@ -22,4 +22,6 @@ public interface JobMapper {
     List<Job> selectJobList(Job job);
 
     int deleteJobByIds(Integer[] ids);
+
+    Job selectJob(Job job);
 }

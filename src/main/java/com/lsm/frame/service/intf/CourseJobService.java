@@ -31,6 +31,22 @@ public interface CourseJobService {
 
     List<Job> selectJobList(Job job);
 
+
     int deleteJobByIds(String ids);
 
+    /**
+     *  向作业库添加作业
+     */
+    int insertSelective(Job record);
+
+    /**
+     * 作业数据更新
+     */
+
+    int updateByPrimaryKeySelective(Job record);
+
+    /**
+     * 查找作业
+     */
+    Job selectJob(Job record);
 }

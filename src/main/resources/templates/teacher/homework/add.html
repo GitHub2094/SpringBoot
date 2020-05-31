@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <th:block th:include="include :: header('添加作业')" />
 </head>
 <body class="gray-bg">
    <div class="ibox">
-       <div class="ibox-title">
-            <h3>新建作业</h3>
+       <div class="ibox-title" >
+           <form id="user-form">
+               <div class="select-list" id="title">
+                   <ul>
+                       <input name="id" id="id" type="hidden" th:value="${job.getId()}">
+                       <li>
+                           作业标题：<input type="text" th:name="title" th:value="${job.getTitle()}"/>
+                       </li>
+                       <li>
+                           <a class="btn btn-sm btn-primary" onclick="submitTitle()"><i class="fa fa-check"></i>保存</a>
+                       </li>
+                   </ul>
+               </div>
+           </form>
        </div>
        <div class="ibox-content">
            <div class="row">
@@ -69,5 +81,43 @@
        </div>
    </div>
 <th:block th:include="include :: footer" />
+<script>
+
+    function Job(id,title) {
+        this.id=id;
+        this.title=title;
+        return this;
+    }
+    //提交请求，serialize序列存放表单信息
+    function submitTitle() {
+        var datas =[];
+        var id = $("input[name='id']");
+        var title = $("input[name='title']");
+        var data = new Job(id.val(),title.val());
+        datas.push(data);
+        alert(JSON.stringify(datas));
+        $.ajax({
+            url:ctx + "teacher/homework/editTitle",
+            type:'post',
+            data: data,
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+    }
+</script>
 </body>
 </html>

@@ -10,8 +10,10 @@ import com.lsm.frame.model.entity.User;
 
 import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.utils.AjaxResult;
+import com.lsm.frame.utils.DateUtils;
 import com.lsm.frame.utils.ShiroUtils;
 import com.lsm.frame.utils.string.StringUtils;
+import com.lsm.frame.utils.string.SuffixUntild;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -43,13 +47,28 @@ public class THomeworkController extends BaseController{
     //@RequiresPermissions("system:student)
     @RequestMapping("/add")
     public String add(Model m) {
-
         User user = ShiroUtils.getUser();
-        m.addAttribute("user",user);
+        Job job = new Job();
+        job.setTitle(SuffixUntild.generateSuffix());
+        job.setCreateTime(new Date());
+        job.setCreateBy(user.getUserName());
+        courseJobService.insertSelective(job);
+        Job job1 = courseJobService.selectJob(job);
+        m.addAttribute("job",job1);
         return "teacher/homework/add";
     }
 
 
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/editTitle")
+    @ResponseBody
+    public  AjaxResult editTitle(Job job) {
+        System.out.println("ss"+job);
+        job.setUpdateTime(new Date());
+        courseJobService.updateByPrimaryKeySelective(job);
+        return AjaxResult.success("保存成功");
+    }
     /**
      *
      * @return TableDataInfo表格信息

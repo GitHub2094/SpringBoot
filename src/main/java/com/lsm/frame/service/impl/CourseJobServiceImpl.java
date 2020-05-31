@@ -79,4 +79,19 @@ public class CourseJobServiceImpl implements CourseJobService {
         Integer[] jobIds = Convert.toIntArray(ids);
         return jobMapper.deleteJobByIds(jobIds);
     }
+
+    @Override
+    public int insertSelective(Job record) {
+        return jobMapper.insertSelective(record);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Job record) {
+        return jobMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public Job selectJob(Job record) {
+        return jobMapper.selectJob(record);
+    }
 }
