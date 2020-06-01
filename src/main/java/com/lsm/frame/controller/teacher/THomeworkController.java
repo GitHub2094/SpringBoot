@@ -2,11 +2,9 @@ package com.lsm.frame.controller.teacher;
 
 
 import com.lsm.frame.controller.BaseController;
+import com.lsm.frame.mapper.SubjectMapper;
 import com.lsm.frame.model.dto.TableDataInfo;
-import com.lsm.frame.model.entity.Course;
-import com.lsm.frame.model.entity.CourseJob;
-import com.lsm.frame.model.entity.Job;
-import com.lsm.frame.model.entity.User;
+import com.lsm.frame.model.entity.*;
 
 import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.utils.AjaxResult;
@@ -22,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +37,9 @@ public class THomeworkController extends BaseController{
 
     @Autowired
     CourseJobService courseJobService;
+
+    @Autowired
+    SubjectMapper subjectMapper;
     /**
      * 我学的课页面
      * @param m
@@ -111,6 +113,20 @@ public class THomeworkController extends BaseController{
         }
     }
 
+    /**
+     * 新增简答题
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/addSimpleAnswer")
+    @ResponseBody
+    public  AjaxResult addSimpleAnswer(Subject subject, HttpSession session) {
+
+        int courseId = Integer.parseInt(session.getAttribute("courseId").toString());
+        subject.setCourseId(courseId);
+        subjectMapper.insertSelective(subject);
+        return AjaxResult.success("保存成功");
+    }
 
 }
 

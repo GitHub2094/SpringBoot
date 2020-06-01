@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * @author lsm
@@ -40,9 +42,11 @@ public class TCourseController {
     @RequiresRoles("teacher")
     //@RequiresPermissions("system:student)
     @RequestMapping("/courseManagement")
-    public String courseManagement(Model m) {
+    public String courseManagement(Model m, HttpSession session) {
         User user = ShiroUtils.getUser();
         m.addAttribute("user",user);
+        int testId = 1;
+        session.setAttribute("courseId",testId);
         return "teacher/courseManagement";
     }
 

@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <th:block th:include="include :: header('添加作业')" />
+    <th:block th:include="include :: summernote-css" />
 </head>
 <body class="gray-bg">
    <div class="ibox">
@@ -26,7 +27,6 @@
                    <div class="ibox float-e-margins">
                        <div class="ibox-title">
                            <b>题量：</b><b>8</b>&nbsp;&nbsp;&nbsp;<b>总分：</b><b>100</b>
-
                            <div class="ibox-tools">
                                <a class="collapse-link">
                                    <i class="fa fa-chevron-up"></i>
@@ -54,18 +54,45 @@
                <div class="col-sm-9">
                    <div class="tabs-container">
                        <ul class="nav nav-tabs">
-                           <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 第一个选项卡</a>
+                           <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">简答题</a>
                            </li>
-                           <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">第二个选项卡</a>
+                           <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">单选题</a>
                            </li>
                        </ul>
                        <div class="tab-content">
+                           <!-- 简答题 -->
                            <div id="tab-1" class="tab-pane active">
                                <div class="panel-body">
-                                   <strong>HTML5 文档类型</strong>
-                                   <p>Bootstrap 使用到的某些 HTML 元素和 CSS 属性需要将页面设置为 HTML5 文档类型。在你项目中的每个页面都要参照下面的格式进行设置。</p>
+                                   <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+                                       <form class="form-horizontal m" id="form-notice-add">
+                                           <div class="form-group">
+                                               <label class="col-sm-1 control-label">分值：</label>
+                                               <div class="col-sm-10">
+                                                   <input id="simpleAnswerScore" name="simpleAnswerScore" class="form-control" type="text">
+                                               </div>
+                                           </div>
+                                           <div class="form-group">
+                                               <label class="col-sm-1 control-label">题干：</label>
+                                               <div class="col-sm-10">
+                                                   <input   type="hidden">
+                                                   <div class="summernote" id="simpleAnswerContent" name="simpleAnswerContent"></div>
+                                               </div>
+                                           </div>
+                                           <div class="form-group">
+                                               <div class="col-sm-4"></div>
+                                               <div class="col-sm-1">
+                                                   <button type="button" class="btn btn-sm btn-primary" onclick="submitSimpleAnswer()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                                               </div>
+                                               <div class="col-sm-1">
+                                                   <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+                                               </div>
+
+                                           </div>
+                                       </form>
+                                   </div>
                                </div>
                            </div>
+
                            <div id="tab-2" class="tab-pane">
                                <div class="panel-body">
                                    <strong>移动设备优先</strong>
@@ -81,14 +108,55 @@
        </div>
    </div>
 <th:block th:include="include :: footer" />
+<th:block th:include="include :: summernote-js" />
 <script>
+    $('.summernote').summernote({
+        placeholder: '请输入题干',
+        height : 192,
+        lang : 'zh-CN',
+        followingToolbar: false
+    });
 
-    function Job(id,title) {
-        this.id=id;
-        this.title=title;
+
+
+    function Subject(score,stem,type) {
+        this.score=score;
+        this.stem=stem;
+        this.type=type;
         return this;
     }
     //提交请求，serialize序列存放表单信息
+    function submitSimpleAnswer() {
+        var datas =[];
+        var score = $("input[name='simpleAnswerScore']");
+        var summernote = $("div[name='simpleAnswerContent']");
+        var stem = summernote.summernote('code');
+        var type = 3;
+        var data = new Subject(score.val(),stem,3);
+        datas.push(data);
+        alert(JSON.stringify(datas));
+        $.ajax({
+            url:ctx + "teacher/homework/addSimpleAnswer",
+            type:'post',
+            data: data,
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+    }
     function submitTitle() {
         var datas =[];
         var id = $("input[name='id']");
