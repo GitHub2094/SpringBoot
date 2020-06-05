@@ -2,6 +2,7 @@ package com.lsm.frame.service.intf;
 
 import com.lsm.frame.model.entity.*;
 import com.lsm.frame.model.vo.Jobs;
+import com.lsm.frame.model.vo.StudentJob;
 
 import java.util.List;
 
@@ -49,4 +50,14 @@ public interface CourseJobService {
      * 查找作业
      */
     Job selectJob(Job record);
+
+    /**
+     * 通过作业id查找作业
+     */
+    Job selectByPrimaryKey(Integer id);
+
+    /**
+     *
+     */
+    List<CourseJobUser> getList(CourseJobUser courseJobUser);
 }

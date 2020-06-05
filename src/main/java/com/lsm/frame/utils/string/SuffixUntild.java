@@ -1,5 +1,6 @@
 package com.lsm.frame.utils.string;
 
+import java.io.BufferedReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +16,11 @@ public class SuffixUntild {
         int random = new Random().nextInt(10000);
         return new StringBuffer().append(formatDate).append(
                 random).toString();
+    }
+
+    public static  String jobSuffix() {
+        String generateSuffix = SuffixUntild.generateSuffix();
+        return new StringBuilder().append("新建作业").append(generateSuffix).toString();
     }
 
 }

@@ -7,6 +7,7 @@ import com.lsm.frame.model.dto.TableDataInfo;
 import com.lsm.frame.model.entity.*;
 
 import com.lsm.frame.service.intf.CourseJobService;
+import com.lsm.frame.service.intf.SubjectService;
 import com.lsm.frame.utils.AjaxResult;
 import com.lsm.frame.utils.DateUtils;
 import com.lsm.frame.utils.ShiroUtils;
@@ -30,7 +31,7 @@ import java.util.List;
  * @author lsm
  */
 @Controller
-@RequestMapping("/teacher/homework")
+@RequestMapping("/teacher/review")
 public class THomeworkController extends BaseController{
 
     private Logger logger =  LoggerFactory.getLogger(this.getClass());
@@ -39,7 +40,7 @@ public class THomeworkController extends BaseController{
     CourseJobService courseJobService;
 
     @Autowired
-    SubjectMapper subjectMapper;
+    SubjectService subjectService;
     /**
      * 我学的课页面
      * @param m
@@ -51,7 +52,7 @@ public class THomeworkController extends BaseController{
     public String add(Model m) {
         User user = ShiroUtils.getUser();
         Job job = new Job();
-        job.setTitle(SuffixUntild.generateSuffix());
+        job.setTitle(SuffixUntild.jobSuffix());
         job.setCreateTime(new Date());
         job.setCreateBy(user.getUserName());
         courseJobService.insertSelective(job);
@@ -94,7 +95,6 @@ public class THomeworkController extends BaseController{
     //@RequiresPermissions("system:student)
     @RequestMapping("/list")
     public String list(Model m) {
-
         return "teacher/homework/list";
     }
 
@@ -123,8 +123,13 @@ public class THomeworkController extends BaseController{
     public  AjaxResult addSimpleAnswer(Subject subject, HttpSession session) {
 
         int courseId = Integer.parseInt(session.getAttribute("courseId").toString());
+        Job job = (Job) session.getAttribute("job");
         subject.setCourseId(courseId);
-        subjectMapper.insertSelective(subject);
+        subjectService.insertSelective(subject);
+        JobSubject jobSubject = new JobSubject();
+        jobSubject.setJobId(job.getId());
+        jobSubject.setSubjectId(1);
+        subjectService.insertSelective(jobSubject);
         return AjaxResult.success("保存成功");
     }
 

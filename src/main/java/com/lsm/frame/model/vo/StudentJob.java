@@ -1,7 +1,7 @@
-package com.lsm.frame.model.entity;
+package com.lsm.frame.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.lsm.frame.model.dto.BaseEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,28 +14,23 @@ import java.util.Date;
 @NoArgsConstructor
 
 @Builder
-public class CourseJobUser extends BaseEntity {
-    private Integer id;
+public class StudentJob {
+    private  int courseJobId;
 
-    private Integer courseJobId;
-
-    private Integer userId;
-
-    private String state;
-
-    private Integer score;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Date submitTime;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Date reviewTime;
-
-    private String reviewBy;
+    private int studentId;
 
     private String studentName;
 
     private String loginName;
 
+    private String state;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date summitTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date reviewTime;
+
+    private String reviewBy;
 
 }

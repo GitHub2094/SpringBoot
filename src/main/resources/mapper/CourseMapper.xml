@@ -125,4 +125,13 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectCourseByCreate" parameterType="com.lsm.frame.model.entity.Course" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from course
+    <where>
+      create_by like concat('%', #{createBy}, '%')
+    </where>
+  </select>
 </mapper>

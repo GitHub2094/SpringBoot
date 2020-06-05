@@ -1,7 +1,5 @@
 package com.lsm.frame.controller.student;
 
-import com.lsm.frame.model.entity.CourseJobUser;
-import com.lsm.frame.model.entity.Job;
 import com.lsm.frame.model.entity.User;
 import com.lsm.frame.model.entity.UserReply;
 import com.lsm.frame.service.intf.UserReplyService;

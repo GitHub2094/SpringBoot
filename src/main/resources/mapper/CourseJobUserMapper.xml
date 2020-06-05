@@ -7,9 +7,12 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="state" jdbcType="CHAR" property="state" />
     <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
+    <result column="review_time" jdbcType="TIMESTAMP" property="reviewTime" />
+    <result column="review_by" jdbcType="VARCHAR" property="reviewBy" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, course_job_id, user_id, state, score
+    id, course_job_id, user_id, state, score, submit_time, review_time, review_by
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,9 +26,11 @@
   </delete>
   <insert id="insert" parameterType="com.lsm.frame.model.entity.CourseJobUser">
     insert into course_job_user (id, course_job_id, user_id, 
-      state, score)
+      state, score, submit_time, 
+      review_time, review_by)
     values (#{id,jdbcType=INTEGER}, #{courseJobId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{state,jdbcType=CHAR}, #{score,jdbcType=INTEGER})
+      #{state,jdbcType=CHAR}, #{score,jdbcType=INTEGER}, #{submitTime,jdbcType=TIMESTAMP}, 
+      #{reviewTime,jdbcType=TIMESTAMP}, #{reviewBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lsm.frame.model.entity.CourseJobUser">
     insert into course_job_user
@@ -45,6 +50,15 @@
       <if test="score != null">
         score,
       </if>
+      <if test="submitTime != null">
+        submit_time,
+      </if>
+      <if test="reviewTime != null">
+        review_time,
+      </if>
+      <if test="reviewBy != null">
+        review_by,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -61,6 +75,15 @@
       </if>
       <if test="score != null">
         #{score,jdbcType=INTEGER},
+      </if>
+      <if test="submitTime != null">
+        #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewTime != null">
+        #{reviewTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewBy != null">
+        #{reviewBy,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -79,6 +102,15 @@
       <if test="score != null">
         score = #{score,jdbcType=INTEGER},
       </if>
+      <if test="submitTime != null">
+        submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewTime != null">
+        review_time = #{reviewTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewBy != null">
+        review_by = #{reviewBy,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -87,17 +119,42 @@
     set course_job_id = #{courseJobId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       state = #{state,jdbcType=CHAR},
-      score = #{score,jdbcType=INTEGER}
+      score = #{score,jdbcType=INTEGER},
+      submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      review_time = #{reviewTime,jdbcType=TIMESTAMP},
+      review_by = #{reviewBy,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
   <!-- 通过hid,cid查 -->
   <select id="selectCjuBycju" resultMap="BaseResultMap">
-		select
-        <include refid="Base_Column_List" />
-        from course_job_user
-         where course_job_id = #{0,jdbcType=INTEGER} and user_id = #{1,jdbcType=INTEGER}
-	</select>
+    select
+    <include refid="Base_Column_List" />
+    from course_job_user
+    where course_job_id = #{0,jdbcType=INTEGER} and user_id = #{1,jdbcType=INTEGER}
+  </select>
 
 
+  <select id="getList" parameterType="com.lsm.frame.model.entity.CourseJobUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from course_job_user
+    <where>
+      <if test="courseJobId != null and courseJobId != ''">
+        AND course_job_id like concat('%', #{courseJobId}, '%')
+      </if>
+      <if test="loginName != null and loginName != ''">
+        AND user_id like concat('%', #{loginName}, '%')
+      </if>
+      <if test="state != null and state != ''">
+        AND state like concat('%', #{state}, '%')
+      </if>
+      <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+        and date_format(submit_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+      </if>
+      <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+        and date_format(submit_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+      </if>
+    </where>
+  </select>
 </mapper>

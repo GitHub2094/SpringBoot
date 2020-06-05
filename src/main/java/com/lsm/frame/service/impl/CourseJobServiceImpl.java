@@ -9,6 +9,7 @@ import com.lsm.frame.model.entity.CourseJob;
 import com.lsm.frame.model.entity.CourseJobUser;
 import com.lsm.frame.model.entity.Job;
 import com.lsm.frame.model.vo.Jobs;
+import com.lsm.frame.model.vo.StudentJob;
 import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.utils.string.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,5 +94,15 @@ public class CourseJobServiceImpl implements CourseJobService {
     @Override
     public Job selectJob(Job record) {
         return jobMapper.selectJob(record);
+    }
+
+    @Override
+    public Job selectByPrimaryKey(Integer id) {
+        return jobMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<CourseJobUser> getList(CourseJobUser courseJobUser) {
+        return courseJobUserMapper.getList(courseJobUser);
     }
 }

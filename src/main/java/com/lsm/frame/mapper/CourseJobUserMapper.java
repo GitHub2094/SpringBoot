@@ -1,8 +1,10 @@
 package com.lsm.frame.mapper;
 
-import com.lsm.frame.model.entity.CourseJob;
 import com.lsm.frame.model.entity.CourseJobUser;
+import com.lsm.frame.model.vo.StudentJob;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface CourseJobUserMapper {
@@ -19,4 +21,6 @@ public interface CourseJobUserMapper {
     int updateByPrimaryKey(CourseJobUser record);
 
     CourseJobUser selectCjuBycju(Integer cjId,Integer userId);
+
+    List<CourseJobUser> getList(CourseJobUser courseJobUser);
 }
