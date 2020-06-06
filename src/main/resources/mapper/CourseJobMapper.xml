@@ -98,5 +98,12 @@
     where course_id = #{courseId,jdbcType=INTEGER}
   </select>
 
+  <!-- 通过hid,cid查 -->
+  <select id="selectCourseJobByCourseIdAndJobId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from course_job
+    where course_id = #{0,jdbcType=INTEGER} and job_id = #{1,jdbcType=INTEGER}
+  </select>
 
 </mapper>

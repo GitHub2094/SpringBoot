@@ -47,7 +47,7 @@
                         <!-- 小面板底部 -->
                         <div class="panel-footer">
                             <span><span style="color: red;font-size: 25px">3</span>待批</span>
-                            <button class="btn  btn-primary pull-right"  id="test12">&nbsp;查看&nbsp;</button>
+                            <button class="btn  btn-primary pull-right" th:onclick="getList([[${job.getJobId()}]])">&nbsp;查看&nbsp;</button>
 
                         </div><!-- 小面板底部 end-->
                     </div><!-- 小面板 end-->
@@ -74,10 +74,12 @@
         $.modal.openTab('作业库', list);
     })
 
-    var view = ctx+"teacher/review/getlist";
-    $("#test12").click(function(){
+
+    function getList(id){
+        var view = ctx+"teacher/review/getlist?id="+id;
+        alert(id);
         $.modal.openTab('批改作业', view);
-    })
+    }
 </script>
 </body>
 </html>

@@ -1,9 +1,6 @@
 package com.lsm.frame.service.impl;
 
-import com.lsm.frame.mapper.CourseMapper;
-import com.lsm.frame.mapper.OptionMapper;
-import com.lsm.frame.mapper.SubjectMapper;
-import com.lsm.frame.mapper.UserReplyMapper;
+import com.lsm.frame.mapper.*;
 import com.lsm.frame.model.entity.*;
 import com.lsm.frame.service.intf.UserReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,9 @@ public class UserReplyServiceImpl implements UserReplyService {
 
     @Autowired
     OptionMapper optionMapper;
+
+    @Autowired
+    CourseJobUserMapper courseJobUserMapper;
 
 
     @Override
@@ -48,6 +48,11 @@ public class UserReplyServiceImpl implements UserReplyService {
     @Override
     public int updateByPrimaryKeySelective(UserReply record) {
         return userReplyMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public CourseJobUser selectCJU(Integer id) {
+        return courseJobUserMapper.selectByPrimaryKey(id);
     }
 
 

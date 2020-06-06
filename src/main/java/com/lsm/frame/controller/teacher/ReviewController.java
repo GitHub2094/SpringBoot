@@ -3,15 +3,10 @@ package com.lsm.frame.controller.teacher;
 
 import com.lsm.frame.controller.BaseController;
 import com.lsm.frame.model.dto.TableDataInfo;
-import com.lsm.frame.model.entity.CourseJob;
-import com.lsm.frame.model.entity.CourseJobUser;
-import com.lsm.frame.model.entity.Job;
-import com.lsm.frame.model.entity.User;
-import com.lsm.frame.model.vo.StudentJob;
+import com.lsm.frame.model.entity.*;
 import com.lsm.frame.service.intf.CourseJobService;
+import com.lsm.frame.service.intf.UserReplyService;
 import com.lsm.frame.service.intf.UserService;
-import com.lsm.frame.utils.ShiroUtils;
-import com.lsm.frame.utils.string.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +30,9 @@ public class ReviewController extends BaseController {
     CourseJobService courseJobService;
 
     @Autowired
+    UserReplyService userReplyService;
+
+    @Autowired
     UserService userService;
     /**
      *
@@ -43,9 +42,10 @@ public class ReviewController extends BaseController {
     //@RequiresPermissions("system:student)
     @RequestMapping("/reviewList")
     @ResponseBody
-    public TableDataInfo getList(CourseJobUser courseJobUser) {
+    public TableDataInfo getList(CourseJobUser courseJobUser,HttpSession session) {
         startPage();
-        courseJobUser.setCourseJobId(1);
+        CourseJob courseJob = (CourseJob)session.getAttribute("courseJob");
+        courseJobUser.setCourseJobId(courseJob.getId());
         List<CourseJobUser> list = courseJobService.getList(courseJobUser);
         for (CourseJobUser cju : list){
             User user = userService.selectByPrimaryKey(cju.getUserId());
@@ -59,7 +59,28 @@ public class ReviewController extends BaseController {
     @RequiresRoles("teacher")
     //@RequiresPermissions("system:student)
     @RequestMapping("/getlist")
-    public String list(Model m) {
+    public String list(Model m, String id, HttpSession session) {
+        int courseId = (Integer) session.getAttribute("courseId");
+        logger.info("courseId"+courseId);
+        CourseJob courseJob = courseJobService.selectCourseJobByCourseIdAndJobId(courseId,Integer.parseInt(id));
+        logger.info("courseJob"+courseJob);
+        session.setAttribute("courseJob",courseJob);
         return "teacher/homework/studentJobList";
+    }
+
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/review")
+    public String review(Model m,String id) {
+        List<UserReply> userReplyList = userReplyService.selectByCjuId(Integer.parseInt(id));
+        for (UserReply userReply : userReplyList) {
+            logger.info("test"+userReply);
+        }
+        CourseJobUser courseJobUser = userReplyService.selectCJU(Integer.parseInt(id));
+        String userName = userService.selectByPrimaryKey(courseJobUser.getUserId()).getUserName();
+        logger.info("test"+courseJobUser+userName);
+        m.addAttribute("userReplyList",userReplyList);
+        m.addAttribute("userName",userName);
+        return "teacher/homework/review";
     }
 }

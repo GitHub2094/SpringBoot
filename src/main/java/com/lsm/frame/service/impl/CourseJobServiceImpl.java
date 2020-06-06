@@ -105,4 +105,9 @@ public class CourseJobServiceImpl implements CourseJobService {
     public List<CourseJobUser> getList(CourseJobUser courseJobUser) {
         return courseJobUserMapper.getList(courseJobUser);
     }
+
+    @Override
+    public CourseJob selectCourseJobByCourseIdAndJobId(Integer courseId, Integer jobId) {
+        return courseJobMapper.selectCourseJobByCourseIdAndJobId(courseId,jobId);
+    }
 }

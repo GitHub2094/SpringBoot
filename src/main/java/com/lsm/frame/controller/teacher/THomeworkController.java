@@ -31,7 +31,7 @@ import java.util.List;
  * @author lsm
  */
 @Controller
-@RequestMapping("/teacher/review")
+@RequestMapping("/teacher/homework")
 public class THomeworkController extends BaseController{
 
     private Logger logger =  LoggerFactory.getLogger(this.getClass());

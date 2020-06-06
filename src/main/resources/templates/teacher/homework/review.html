@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('Summernote富文本编辑器')" />
+    <th:block th:include="include :: summernote-css" />
+</head>
+<body class="gray-bg">
+<!-- 主面板 -->
+<div class="ibox">
+    <!-- 主面板标题-->
+    <div class="ibox-title">
+        <h5 th:text="${userName}"></h5>
+    </div>
+    <!-- 主面板内容-->
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- 第一层面板-->
+                <form class="form-horizontal m" id="form-notice-add">
+                    <div id="homeworkEdit">
+                        <div th:each="userReply : ${userReplyList}" class="reply">
+                            <div th:if="${userReply.getSubjectModel().getType()}==3">
+                                <div class="shortAnswer">
+                                    <input  name="id" th:value="${userReply.id}" type="hidden">
+                                    <h4 th:text="| ${userReply.getSubjectModel().getStem()} |" ></h4>
+                                    <p style="color: red" th:text="|分数：${userReply.getSubjectModel().getScore()}
+                                        得分：${userReply.getScore()}|"></p>
+                                    <h4>我的答案:</h4>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input id="reply" name="reply" th:value="${userReply.getReply()}" type="hidden">
+                                            <div class="summernote" ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${userReply.getSubjectModel().getType()}!=3">
+                                <div class="other">
+                                    <input  name="id" th:value="${userReply.id}" type="hidden">
+                                    <h4 th:text="| ${userReply.getSubjectModel().getStem()} |" ></h4>
+                                    <p style="color: red" th:text="|分数：${userReply.getSubjectModel().getScore()}
+                                  得分：${userReply.getScore()}|"></p>
+                                    <div class="form-group">
+                                        <h5 class="col-sm-1">选项：</h5>
+                                        <div class="col-sm-10">
+                                            <div class="radio-box" th:each="option : ${userReply.getSubjectModel().getOptions()}" >
+                                                <span th:if="${option.getContent()}==${userReply.getReply()}">
+                                                      <input type="radio"  name="reply" th:value="${option.getContent()}" checked>
+                                                </span>
+                                                <span th:if="${option.getContent()}!=${userReply.getReply()}">
+                                                      <input type="radio"  name="reply" th:value="${option.getContent()}" >
+                                                </span>
+                                                <label th:text="${option.getContent()}"></label>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="submitReply()"><i class="fa fa-reply-all"></i>提交 </button>
+                </form>
+            </div>
+        </div>
+    </div><!-- 主面板内容 end-->
+</div><!-- 主面板 end-->
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: summernote-js" />
+<script>
+
+    $('.summernote').summernote({
+        placeholder: '请输入公告内容',
+        height : 192,
+        lang : 'zh-CN',
+        followingToolbar: false,
+    });
+    $(function () {
+        $.each($("#homeworkEdit").find(".reply"),function (){
+            var content = $(this).find("input[name='reply']");
+            var summernote = $(this).find(".summernote");
+            summernote.summernote('code', content.val());
+        })
+    })
+
+
+    function Reply(id,reply) {
+        this.id=id;
+        this.reply=reply;
+        return this;
+    }
+
+    function submitReply() {
+        var usesReplyList =[];
+        $.each($("#homeworkEdit").find(".shortAnswer"),function () {
+            var id = $(this).find("input[name='id']");
+            var summernote = $(this).find(".summernote");
+            var reply = summernote.summernote('code');
+            var userReply = new Reply(id.val(),reply);
+            usesReplyList.push(userReply);
+            alert(JSON.stringify(usesReplyList));
+        })
+        $.each($("#homeworkEdit").find(".other"),function () {
+            var id = $(this).find("input[name='id']");
+            var reply = $(this).find("input[name=reply]:checked");
+            var userReply = new Reply(id.val(),reply.val());
+            usesReplyList.push(userReply);
+            alert(JSON.stringify(usesReplyList));
+        })
+
+        var data = JSON.stringify(usesReplyList);
+        $.ajax({
+            url:ctx + "student/homework/editUpdate",
+            type:'post',
+            data: data,
+            dataType:"json",
+            contentType:"application/json",
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+    }
+</script>
+</body>
+</html>

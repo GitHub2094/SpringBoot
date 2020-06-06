@@ -20,4 +20,6 @@ public interface CourseJobMapper {
     int updateByPrimaryKey(CourseJob record);
 
     List<CourseJob> selectByCourseId(Integer id);
+
+    CourseJob selectCourseJobByCourseIdAndJobId(Integer courseId,Integer jobId);
 }
