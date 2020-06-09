@@ -7,6 +7,7 @@ import com.lsm.frame.model.dto.TableDataInfo;
 import com.lsm.frame.model.entity.*;
 
 import com.lsm.frame.service.intf.CourseJobService;
+import com.lsm.frame.service.intf.CourseService;
 import com.lsm.frame.service.intf.SubjectService;
 import com.lsm.frame.utils.AjaxResult;
 import com.lsm.frame.utils.DateUtils;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -41,25 +43,10 @@ public class THomeworkController extends BaseController{
 
     @Autowired
     SubjectService subjectService;
-    /**
-     * 我学的课页面
-     * @param m
-     * @return
-     */
-    @RequiresRoles("teacher")
-    //@RequiresPermissions("system:student)
-    @RequestMapping("/add")
-    public String add(Model m) {
-        User user = ShiroUtils.getUser();
-        Job job = new Job();
-        job.setTitle(SuffixUntild.jobSuffix());
-        job.setCreateTime(new Date());
-        job.setCreateBy(user.getUserName());
-        courseJobService.insertSelective(job);
-        Job job1 = courseJobService.selectJob(job);
-        m.addAttribute("job",job1);
-        return "teacher/homework/add";
-    }
+
+    @Autowired
+    CourseService courseService;
+
 
 
     @RequiresRoles("teacher")
@@ -112,6 +99,27 @@ public class THomeworkController extends BaseController{
             return error(e.getMessage());
         }
     }
+    /**
+     * 新增作业
+     * @param m
+     * @return
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/add")
+    public String add(Model m,HttpSession session) {
+        User user = ShiroUtils.getUser();
+        Job currentJob = new Job();
+        currentJob.setTitle(SuffixUntild.jobTitleSuffix());
+        currentJob.setCreateTime(new Date());
+        currentJob.setCreateBy(user.getUserName());
+        courseJobService.insertSelective(currentJob);
+        Job job = courseJobService.selectJob(currentJob);
+        logger.info("jobtest"+job);
+        m.addAttribute("job",job);
+        session.setAttribute("jobId",job.getId());
+        return "teacher/homework/add";
+    }
 
     /**
      * 新增简答题
@@ -121,15 +129,38 @@ public class THomeworkController extends BaseController{
     @RequestMapping("/addSimpleAnswer")
     @ResponseBody
     public  AjaxResult addSimpleAnswer(Subject subject, HttpSession session) {
-
         int courseId = Integer.parseInt(session.getAttribute("courseId").toString());
-        Job job = (Job) session.getAttribute("job");
+        int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
+        logger.info("dsfsd"+jobId+"te"+courseId);
         subject.setCourseId(courseId);
+        subject.setJobId(jobId);
         subjectService.insertSelective(subject);
-        JobSubject jobSubject = new JobSubject();
-        jobSubject.setJobId(job.getId());
-        jobSubject.setSubjectId(1);
-        subjectService.insertSelective(jobSubject);
+
+        return AjaxResult.success("保存成功");
+    }
+
+    /**
+     * 新增简答题
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @GetMapping("/issue/{id}")
+    public String issue(@PathVariable("id") Integer id,Model m) {
+        User user = ShiroUtils.getUser();
+        List<Course> courseList =  courseService.selectCourseByCreate(user.getUserName());
+        logger.info("sdf"+courseList.size());
+        m.addAttribute("courseList",courseList);
+        m.addAttribute("job",courseJobService.selectJobByPrimaryKey(id));
+        return "teacher/homework/issue";
+    }
+
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/issue")
+    @ResponseBody
+    public AjaxResult issueSave(Integer courseId,Integer jobId,Date startTime,Date endTime) {
+        CourseJob courseJob = CourseJob.builder().courseId(courseId).jobId(jobId).startTime(startTime).endTime(endTime).build();
+        logger.info("st"+courseJob);
         return AjaxResult.success("保存成功");
     }
 

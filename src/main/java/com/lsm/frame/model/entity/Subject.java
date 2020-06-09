@@ -21,6 +21,8 @@ public class Subject {
 
     private Integer courseId;
 
+    private  Integer jobId;
+
     private Integer score;
 
     private String analysis;

@@ -54,7 +54,7 @@ public interface CourseJobService {
     /**
      * 通过作业id查找作业
      */
-    Job selectByPrimaryKey(Integer id);
+    Job selectJobByPrimaryKey(Integer id);
 
     /**
      *

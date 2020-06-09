@@ -11,7 +11,7 @@
  Target Server Version : 50527
  File Encoding         : 65001
 
- Date: 06/06/2020 19:24:01
+ Date: 09/06/2020 22:40:08
 */
 
 SET NAMES utf8mb4;
@@ -123,7 +123,7 @@ CREATE TABLE `course_job_user`  (
 -- ----------------------------
 -- Records of course_job_user
 -- ----------------------------
-INSERT INTO `course_job_user` VALUES (1, 1, 1, '3', 80, '2020-06-05 15:11:48', '2020-06-05 16:35:25', 'tddd');
+INSERT INTO `course_job_user` VALUES (1, 1, 1, '3', 90, '2020-06-05 15:11:48', '2020-06-05 16:35:25', 'tddd');
 INSERT INTO `course_job_user` VALUES (2, 2, 1, '2', 13, NULL, NULL, NULL);
 
 -- ----------------------------
@@ -157,34 +157,15 @@ CREATE TABLE `job`  (
   `create_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of job
 -- ----------------------------
 INSERT INTO `job` VALUES (1, '实验一', '方继潘', '2020-04-21 10:33:08');
 INSERT INTO `job` VALUES (2, '实验二', '方继潘', '2020-04-22 09:53:14');
-
--- ----------------------------
--- Table structure for job_subject
--- ----------------------------
-DROP TABLE IF EXISTS `job_subject`;
-CREATE TABLE `job_subject`  (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '流水号',
-  `job_id` int(20) NOT NULL COMMENT '作业ID',
-  `subject_id` int(20) NOT NULL COMMENT '题目ID',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `job_id`(`job_id`) USING BTREE,
-  INDEX `subject_id`(`subject_id`) USING BTREE,
-  CONSTRAINT `job_id` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `subject_id` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of job_subject
--- ----------------------------
-INSERT INTO `job_subject` VALUES (1, 1, 1);
-INSERT INTO `job_subject` VALUES (3, 1, 2);
+INSERT INTO `job` VALUES (3, '新建作业202006091998', '方继潘', '2020-06-09 16:43:01');
+INSERT INTO `job` VALUES (4, '新建作业20200609192131', '方继潘', '2020-06-09 19:21:31');
 
 -- ----------------------------
 -- Table structure for menu
@@ -269,18 +250,21 @@ CREATE TABLE `subject`  (
   `type` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型(01 02 03 04）',
   `stem` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '题干',
   `course_id` int(20) NOT NULL COMMENT '课程id',
+  `job_id` int(20) NOT NULL COMMENT '作业id',
   `score` int(5) DEFAULT 100 COMMENT '分值',
   `analysis` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '解析',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `course_subject`(`course_id`) USING BTREE,
   CONSTRAINT `course_subject` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of subject
 -- ----------------------------
-INSERT INTO `subject` VALUES (1, '1', '行政法以规范国家的（   ）关系为其内容', 1, 50, '解析');
-INSERT INTO `subject` VALUES (2, '3', '在行政法律关系中，与行政主体处于相对应的一方的公民、法人和其他组织成为（     ）。', 1, 50, '');
+INSERT INTO `subject` VALUES (1, '1', '行政法以规范国家的（   ）关系为其内容', 1, 1, 50, '解析');
+INSERT INTO `subject` VALUES (2, '3', '在行政法律关系中，与行政主体处于相对应的一方的公民、法人和其他组织成为（     ）。', 1, 1, 50, '');
+INSERT INTO `subject` VALUES (4, '3', '<p><span style=\"color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 14px; letter-spacing: 0.54px; text-align: justify;\">李某(男)深夜遇到单身女子王某，起歹意将王某强奸，事后怕王某报案欲杀人灭口，正卡王某脖子时，因有人路过，李某逃离现场，经鉴定王某脖子处构成轻伤。李某的行为属于？</span><br></p>', 1, 3, 20, NULL);
+INSERT INTO `subject` VALUES (5, '3', '<p>test</p>', 1, 4, 20, NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -402,7 +386,7 @@ CREATE TABLE `user_reply`  (
 -- Records of user_reply
 -- ----------------------------
 INSERT INTO `user_reply` VALUES (1, 1, 1, '立法', 50, '');
-INSERT INTO `user_reply` VALUES (2, 1, 2, 'tttt', 30, NULL);
+INSERT INTO `user_reply` VALUES (2, 1, 2, '<p><span style=\"font-size: 24px;\">test</span></p><p><span style=\"font-size: 24px; background-color: rgb(255, 255, 0);\">test</span></p>', 40, NULL);
 
 -- ----------------------------
 -- Table structure for user_role

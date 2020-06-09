@@ -42,11 +42,10 @@
                         <div class="panel-body">
                             <p><b>开始时间：</b><span th:text="${#dates.format(job.getStartTime(), 'yyyy-MM-dd  HH:mm:ss')}"></span></p>
                             <p><b>截止时间：</b><span th:text="${#dates.format(job.getEndTime(), 'yyyy-MM-dd  HH:mm:ss')}"></span></p>
-                            <p><b>提交数：</b><span>3/5</span></p>
                         </div><!-- 小面板内容 end-->
                         <!-- 小面板底部 -->
                         <div class="panel-footer">
-                            <span><span style="color: red;font-size: 25px">3</span>待批</span>
+                            <span><span style="color: red;font-size: 25px">x</span></span>
                             <button class="btn  btn-primary pull-right" th:onclick="getList([[${job.getJobId()}]])">&nbsp;查看&nbsp;</button>
 
                         </div><!-- 小面板底部 end-->

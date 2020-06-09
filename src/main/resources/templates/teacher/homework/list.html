@@ -83,6 +83,7 @@
             exportUrl: prefix + "/export",
             importUrl: prefix + "/importData",
             importTemplateUrl: prefix + "/importTemplate",
+            issueUrl: prefix + "/issue/{id}",
             sortName: "createTime",
             sortOrder: "desc",
             modalName: "作业库",
@@ -116,7 +117,7 @@
                         var actions = [];
                         actions.push('<a class="btn btn-primary btn-xs " href="javascript:void(0)" ><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs " href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
-                        actions.push('<a class="btn btn-info btn-xs" href="javascript:void(0)" onclick=""><i class="fa fa-key"></i>发布</a>');
+                        actions.push('<a class="btn btn-info  btn-xs" href="javascript:void(0)" onclick="$.operate.issue(\'' + row.id + '\')"><i class="fa fa-plus"></i>发布</a> ');
                         return actions.join('');
                     }
                 }]

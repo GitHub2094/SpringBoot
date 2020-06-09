@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('发布作业')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="formIssue">
+        <input type="hidden" th:value="${job.getId()}" name="jobId"   />
+        <div class="form-group">
+            <label class="col-sm-3 control-label">作业名称：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input class="form-control" type="text" readonly="true" th:value="${job.getTitle()}">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">发布对象：</label>
+            <div class="col-sm-8">
+                <select  name="courseId" class="form-control m-b">
+                    <div th:each="course:${courseList}">
+                        <option th:value="${course.getId()}" th:text="${course.getCourseName()}"></option>
+                    </div>
+                </select>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 目前版本只支持一次一班级发布</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">开始时间：</label>
+            <div class="col-sm-9">
+                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="startTime" class="form-control timePicker"  placeholder="yyyy-MM-dd HH:mm">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">截止时间：</label>
+            <div class="col-sm-9">
+                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="endTime" class="form-control timePicker"  placeholder="yyyy-MM-dd HH:mm">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<script type="text/javascript">
+    //时间控件
+    $(function () {
+        <!-- datetimepicker示例 -->
+        $(".timePicker").datetimepicker();
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+
+            laydate.render({
+                elem: '#laydate-demo-1'
+            });
+        });
+    })
+    //CourseJob方法
+    function CourseJob(courseId,jobId,startTime,endTime) {
+        this.courseId = courseId;
+        this.jobId = jobId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+    /**
+     * 弹窗确定的onclick方法名，submitHander
+     */
+    function submitHandler() {
+        var courseJob =[];
+        var courseId =$("#formIssue").find("select[name='courseId']");
+        var jobId =$("#formIssue").find("input[name='jobId']");
+        var startTime =$("#formIssue").find("input[name='startTime']");
+        var endTime =$("#formIssue").find("input[name='endTime']");
+        var currentCourseJob = new CourseJob(courseId.val(),jobId.val(),startTime.val(),endTime.val());
+        courseJob.push(currentCourseJob);
+        var data = JSON.stringify(courseJob);
+        alert(data);
+        $.ajax({
+            url:ctx + "teacher/homework/issue",
+            type:'post',
+            data: {"courseId":courseId.val(),"jobId": jobId.val(),
+                "startTime":startTime.val(),"endTime":endTime.val()},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+    }
+</script>
+</body>
+</html>

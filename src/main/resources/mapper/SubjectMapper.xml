@@ -6,11 +6,12 @@
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="stem" jdbcType="VARCHAR" property="stem" />
     <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="job_id" jdbcType="INTEGER" property="jobId" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="analysis" jdbcType="VARCHAR" property="analysis" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, type, stem, course_id, score, analysis
+    id, type, stem, course_id,job_id, score, analysis
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +25,10 @@
   </delete>
   <insert id="insert" parameterType="com.lsm.frame.model.entity.Subject">
     insert into subject (id, type, stem, 
-      course_id, score, analysis
+      course_id, job_id,score, analysis
       )
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{stem,jdbcType=VARCHAR}, 
-      #{courseId,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{analysis,jdbcType=VARCHAR}
+      #{courseId,jdbcType=INTEGER}, #{jobId,jdbcType=INTEGER},#{score,jdbcType=INTEGER}, #{analysis,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.lsm.frame.model.entity.Subject">
@@ -44,6 +45,9 @@
       </if>
       <if test="courseId != null">
         course_id,
+      </if>
+      <if test="jobId != null">
+        job_id,
       </if>
       <if test="score != null">
         score,
@@ -65,6 +69,9 @@
       <if test="courseId != null">
         #{courseId,jdbcType=INTEGER},
       </if>
+      <if test="jobId != null">
+        #{jobId,jdbcType=INTEGER},
+      </if>
       <if test="score != null">
         #{score,jdbcType=INTEGER},
       </if>
@@ -85,6 +92,9 @@
       <if test="courseId != null">
         course_id = #{courseId,jdbcType=INTEGER},
       </if>
+      <if test="jobId != null">
+        job_id = #{jobId,jdbcType=INTEGER},
+      </if>
       <if test="score != null">
         score = #{score,jdbcType=INTEGER},
       </if>
@@ -99,6 +109,7 @@
     set type = #{type,jdbcType=VARCHAR},
       stem = #{stem,jdbcType=VARCHAR},
       course_id = #{courseId,jdbcType=INTEGER},
+       job_id = #{jobId,jdbcType=INTEGER},
       score = #{score,jdbcType=INTEGER},
       analysis = #{analysis,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

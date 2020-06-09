@@ -97,7 +97,7 @@ public class CourseJobServiceImpl implements CourseJobService {
     }
 
     @Override
-    public Job selectByPrimaryKey(Integer id) {
+    public Job selectJobByPrimaryKey(Integer id) {
         return jobMapper.selectByPrimaryKey(id);
     }
 
