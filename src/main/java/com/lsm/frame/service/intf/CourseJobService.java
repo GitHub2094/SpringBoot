@@ -64,4 +64,6 @@ public interface CourseJobService {
      * 用课程id和作业id查询课程i作业d
      */
     CourseJob selectCourseJobByCourseIdAndJobId(Integer courseId,Integer jobId);
+
+    int updateByPrimaryKeySelective(CourseJobUser record);
 }

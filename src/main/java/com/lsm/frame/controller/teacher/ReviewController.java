@@ -7,12 +7,14 @@ import com.lsm.frame.model.entity.*;
 import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.service.intf.UserReplyService;
 import com.lsm.frame.service.intf.UserService;
+import com.lsm.frame.utils.AjaxResult;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -71,16 +73,41 @@ public class ReviewController extends BaseController {
     @RequiresRoles("teacher")
     //@RequiresPermissions("system:student)
     @RequestMapping("/review")
-    public String review(Model m,String id) {
+    public String review(Model m,String id,HttpSession session) {
         List<UserReply> userReplyList = userReplyService.selectByCjuId(Integer.parseInt(id));
         for (UserReply userReply : userReplyList) {
             logger.info("test"+userReply);
         }
         CourseJobUser courseJobUser = userReplyService.selectCJU(Integer.parseInt(id));
+        session.setAttribute("courseJobUser",courseJobUser);
         String userName = userService.selectByPrimaryKey(courseJobUser.getUserId()).getUserName();
         logger.info("test"+courseJobUser+userName);
         m.addAttribute("userReplyList",userReplyList);
         m.addAttribute("userName",userName);
         return "teacher/homework/review";
+    }
+
+
+    /**
+     *
+     * @param m
+     * @return
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/reviewUpdate")
+    @ResponseBody
+    public AjaxResult reviewUpdate(Model m, @RequestBody UserReply[] userReplies,HttpSession session) {
+        logger.info("提交成绩"+userReplies[0]);
+        int score = 0;
+        for(UserReply userReply : userReplies){
+            userReplyService.updateByPrimaryKeySelective(userReply);
+            score = score + userReply.getScore();
+        }
+        CourseJobUser courseJobUser = (CourseJobUser)session.getAttribute("courseJobUser");
+        courseJobUser.setScore(score);
+        logger.info("test"+courseJobUser);
+        courseJobService.updateByPrimaryKeySelective(courseJobUser);
+        return AjaxResult.success("提交成功");
     }
 }

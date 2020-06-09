@@ -110,4 +110,9 @@ public class CourseJobServiceImpl implements CourseJobService {
     public CourseJob selectCourseJobByCourseIdAndJobId(Integer courseId, Integer jobId) {
         return courseJobMapper.selectCourseJobByCourseIdAndJobId(courseId,jobId);
     }
+
+    @Override
+    public int updateByPrimaryKeySelective(CourseJobUser record) {
+        return courseJobUserMapper.updateByPrimaryKeySelective(record);
+    }
 }
