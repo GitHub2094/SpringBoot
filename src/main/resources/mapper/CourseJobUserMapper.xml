@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lsm.frame.mapper.CourseJobUserMapper">
   <resultMap id="BaseResultMap" type="com.lsm.frame.model.entity.CourseJobUser">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="course_job_id" jdbcType="INTEGER" property="courseJobId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="state" jdbcType="CHAR" property="state" />
@@ -14,21 +14,21 @@
   <sql id="Base_Column_List">
     id, course_job_id, user_id, state, score, submit_time, review_time, review_by
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from course_job_user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from course_job_user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.lsm.frame.model.entity.CourseJobUser">
     insert into course_job_user (id, course_job_id, user_id, 
       state, score, submit_time, 
       review_time, review_by)
-    values (#{id,jdbcType=INTEGER}, #{courseJobId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{courseJobId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
       #{state,jdbcType=CHAR}, #{score,jdbcType=INTEGER}, #{submitTime,jdbcType=TIMESTAMP}, 
       #{reviewTime,jdbcType=TIMESTAMP}, #{reviewBy,jdbcType=VARCHAR})
   </insert>
@@ -62,7 +62,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="courseJobId != null">
         #{courseJobId,jdbcType=INTEGER},
@@ -112,7 +112,7 @@
         review_by = #{reviewBy,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lsm.frame.model.entity.CourseJobUser">
     update course_job_user
@@ -123,7 +123,7 @@
       submit_time = #{submitTime,jdbcType=TIMESTAMP},
       review_time = #{reviewTime,jdbcType=TIMESTAMP},
       review_by = #{reviewBy,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 
   <!-- 通过hid,cid查 -->

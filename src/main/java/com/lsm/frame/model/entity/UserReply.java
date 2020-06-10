@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class UserReply {
     private Integer id;
 
-    private Integer cjuId;
+    private Long cjuId;
 
     private Integer subject;
 

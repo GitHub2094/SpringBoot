@@ -60,7 +60,7 @@ public class TCourseController {
     public String courseManagement(Model m, Integer id,HttpSession session) {
 
         User user = ShiroUtils.getUser();
-        List<Jobs> jobList = courseJobService.listJobsByCourseIdAndUserId(id,user.getUserId());
+        List<Jobs> jobList = courseJobService.listJobsByCourseIdAndTeacherId(id,user.getUserId());
         for (Jobs j : jobList){
             logger.info("jobs:"+j);
         }

@@ -19,5 +19,5 @@ public interface UserReplyMapper {
 
     int updateByPrimaryKey(UserReply record);
 
-    List<UserReply> selectByCjuId(Integer id);
+    List<UserReply> selectByCjuId(Long id);
 }

@@ -12,6 +12,7 @@ import com.lsm.frame.model.vo.Jobs;
 import com.lsm.frame.model.vo.StudentJob;
 import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.utils.string.Convert;
+import com.lsm.frame.utils.string.SuffixUntild;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,39 @@ public class CourseJobServiceImpl implements CourseJobService {
 
     @Override
     public List<Jobs> listJobsByCourseIdAndUserId(Integer id,Integer userId) {
+        List<CourseJob> courseJobList = courseJobMapper.selectByCourseId(id);
+        List<Jobs> jobsList = new ArrayList<Jobs>();
+        for (CourseJob courseJob : courseJobList){
+            Jobs jobs = new Jobs();
+            jobs.setJobId(courseJob.getJobId());
+            jobs.setJobTitle(jobMapper.selectByPrimaryKey(courseJob.getJobId()).getTitle());
+            jobs.setStartTime(courseJob.getStartTime());
+            jobs.setEndTime(courseJob.getEndTime());
+            CourseJobUser courseJobUser = courseJobUserMapper.selectCjuBycju(courseJob.getId(),userId);
+            System.out.println("ssss"+courseJobUser);
+            if (courseJobUser == null){
+                CourseJobUser courseJobUser1 = new CourseJobUser();
+                String cjuId=
+                   new StringBuilder(SuffixUntild.cjuSuffix()).append(courseJob.getCourseId())
+                           .append(courseJob.getJobId()).append(userId).toString();
+                courseJobUser1.setId(Long.parseLong(cjuId));
+                courseJobUser1.setCourseJobId(courseJob.getId());
+                courseJobUser1.setUserId(userId);
+                courseJobUser1.setScore(0);
+                courseJobUser1.setState("1");
+                courseJobUserMapper.insertSelective(courseJobUser1);
+                jobs.setCourseJobUser(courseJobUser1);
+            }else {
+                jobs.setCourseJobUser(courseJobUser);
+            }
+            jobsList.add(jobs);
+        }
+        return jobsList;
+    }
+
+    @Override
+    public List<Jobs> listJobsByCourseIdAndTeacherId(Integer id, Integer userId) {
+
         List<CourseJob> courseJobList = courseJobMapper.selectByCourseId(id);
         List<Jobs> jobsList = new ArrayList<Jobs>();
         for (CourseJob courseJob : courseJobList){
@@ -114,5 +148,10 @@ public class CourseJobServiceImpl implements CourseJobService {
     @Override
     public int updateByPrimaryKeySelective(CourseJobUser record) {
         return courseJobUserMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int insertSelective(CourseJob record) {
+        return courseJobMapper.insertSelective(record);
     }
 }

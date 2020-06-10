@@ -114,4 +114,11 @@
       analysis = #{analysis,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByJobId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from subject
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -2,10 +2,7 @@ package com.lsm.frame.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lsm.frame.model.dto.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -14,8 +11,9 @@ import java.util.Date;
 @NoArgsConstructor
 
 @Builder
+@EqualsAndHashCode(callSuper=true)
 public class CourseJobUser extends BaseEntity {
-    private Integer id;
+    private Long id;
 
     private Integer courseJobId;
 

@@ -161,7 +161,8 @@ public class THomeworkController extends BaseController{
     public AjaxResult issueSave(Integer courseId,Integer jobId,Date startTime,Date endTime) {
         CourseJob courseJob = CourseJob.builder().courseId(courseId).jobId(jobId).startTime(startTime).endTime(endTime).build();
         logger.info("st"+courseJob);
-        return AjaxResult.success("保存成功");
+        courseJobService.insertSelective(courseJob);
+        return AjaxResult.success("发布成功");
     }
 
 }

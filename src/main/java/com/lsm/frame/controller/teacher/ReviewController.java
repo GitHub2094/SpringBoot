@@ -8,6 +8,7 @@ import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.service.intf.UserReplyService;
 import com.lsm.frame.service.intf.UserService;
 import com.lsm.frame.utils.AjaxResult;
+import com.lsm.frame.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -74,11 +76,11 @@ public class ReviewController extends BaseController {
     //@RequiresPermissions("system:student)
     @RequestMapping("/review")
     public String review(Model m,String id,HttpSession session) {
-        List<UserReply> userReplyList = userReplyService.selectByCjuId(Integer.parseInt(id));
+        List<UserReply> userReplyList = userReplyService.selectByCjuId(Long.parseLong(id));
         for (UserReply userReply : userReplyList) {
             logger.info("test"+userReply);
         }
-        CourseJobUser courseJobUser = userReplyService.selectCJU(Integer.parseInt(id));
+        CourseJobUser courseJobUser = userReplyService.selectCJU(Long.parseLong(id));
         session.setAttribute("courseJobUser",courseJobUser);
         String userName = userService.selectByPrimaryKey(courseJobUser.getUserId()).getUserName();
         logger.info("test"+courseJobUser+userName);
@@ -98,6 +100,7 @@ public class ReviewController extends BaseController {
     @RequestMapping("/reviewUpdate")
     @ResponseBody
     public AjaxResult reviewUpdate(Model m, @RequestBody UserReply[] userReplies,HttpSession session) {
+        User user = ShiroUtils.getUser();
         logger.info("提交成绩"+userReplies[0]);
         int score = 0;
         for(UserReply userReply : userReplies){
@@ -106,6 +109,9 @@ public class ReviewController extends BaseController {
         }
         CourseJobUser courseJobUser = (CourseJobUser)session.getAttribute("courseJobUser");
         courseJobUser.setScore(score);
+        courseJobUser.setState("3");
+        courseJobUser.setReviewTime(new Date());
+        courseJobUser.setReviewBy(user.getUserName());
         logger.info("test"+courseJobUser);
         courseJobService.updateByPrimaryKeySelective(courseJobUser);
         return AjaxResult.success("提交成功");

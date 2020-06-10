@@ -77,7 +77,7 @@
     update user_reply
     <set>
       <if test="cjuId != null">
-        cju_id = #{cjuId,jdbcType=INTEGER},
+        cju_id = #{cjuId,jdbcType=BIGINT},
       </if>
       <if test="subject != null">
         subject = #{subject,jdbcType=INTEGER},
@@ -96,7 +96,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lsm.frame.model.entity.UserReply">
     update user_reply
-    set cju_id = #{cjuId,jdbcType=INTEGER},
+    set cju_id = #{cjuId,jdbcType=BIGINT},
       subject = #{subject,jdbcType=INTEGER},
       reply = #{reply,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER},
@@ -104,10 +104,10 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByCjuId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByCjuId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from user_reply
-    where cju_id = #{cjuId,jdbcType=INTEGER}
+    where cju_id = #{cjuId,jdbcType=BIGINT}
   </select>
 </mapper>

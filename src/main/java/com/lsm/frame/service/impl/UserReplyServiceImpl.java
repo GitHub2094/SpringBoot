@@ -6,6 +6,7 @@ import com.lsm.frame.service.intf.UserReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,10 +27,28 @@ public class UserReplyServiceImpl implements UserReplyService {
     @Autowired
     CourseJobUserMapper courseJobUserMapper;
 
+    @Autowired
+    CourseJobMapper courseJobMapper;
+
 
     @Override
-    public List<UserReply> selectByCjuId(Integer id) {
-        List<UserReply> userReplyList = userReplyMapper.selectByCjuId(id);
+    public List<UserReply> selectByCjuId(Long id) {
+        List<UserReply> userReplyList = new ArrayList<>();
+        userReplyList = userReplyMapper.selectByCjuId(id);
+        if (userReplyList.size() == 0) {
+            CourseJobUser courseJobUser = courseJobUserMapper.selectByPrimaryKey(id);
+            CourseJob courseJob = courseJobMapper.selectByPrimaryKey(courseJobUser.getCourseJobId());
+            List<Subject> subjects = subjectMapper.selectByJobId(courseJob.getJobId());
+            for (Subject subject : subjects){
+                UserReply userReply = new UserReply();
+                userReply.setSubject(subject.getId());
+                userReply.setCjuId(id);
+                userReply.setScore(0);
+                userReplyMapper.insertSelective(userReply);
+            }
+            userReplyList = userReplyMapper.selectByCjuId(id);
+        }
+
         for (UserReply userReply : userReplyList){
             Subject subject = subjectMapper.selectByPrimaryKey(userReply.getSubject());
             subject.setCourseName(courseMapper.selectByPrimaryKey(subject.getCourseId()).getCourseName());
@@ -51,8 +70,13 @@ public class UserReplyServiceImpl implements UserReplyService {
     }
 
     @Override
-    public CourseJobUser selectCJU(Integer id) {
+    public CourseJobUser selectCJU(Long id) {
         return courseJobUserMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateCourseJobUser(CourseJobUser record) {
+        return courseJobUserMapper.updateByPrimaryKeySelective(record);
     }
 
 

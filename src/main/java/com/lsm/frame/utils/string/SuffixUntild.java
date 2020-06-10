@@ -22,4 +22,13 @@ public class SuffixUntild {
         return new StringBuilder().append("新建作业").append(generateSuffix).toString();
     }
 
+
+    public static String cjuSuffix() {
+        // 获得当前时间
+        DateFormat format = new SimpleDateFormat("yyMMdd");
+        // 转换为字符串
+        String formatDate = format.format(new Date());
+        /* int random = new Random().nextInt(10000);*/
+        return new StringBuilder().append(formatDate).toString();
+    }
 }

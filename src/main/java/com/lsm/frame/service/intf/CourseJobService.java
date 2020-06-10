@@ -28,6 +28,8 @@ public interface CourseJobService {
 
     List<Jobs> listJobsByCourseIdAndUserId(Integer id,Integer userId);
 
+    List<Jobs> listJobsByCourseIdAndTeacherId(Integer id,Integer userId);
+
     Course selectCourseByCourseId(Integer id);
 
     List<Job> selectJobList(Job job);
@@ -66,4 +68,9 @@ public interface CourseJobService {
     CourseJob selectCourseJobByCourseIdAndJobId(Integer courseId,Integer jobId);
 
     int updateByPrimaryKeySelective(CourseJobUser record);
+
+    /**
+     * 灵活插入信息CourseJob
+     */
+    int insertSelective(CourseJob record);
 }

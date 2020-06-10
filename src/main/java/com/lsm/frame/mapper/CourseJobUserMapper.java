@@ -14,7 +14,7 @@ public interface CourseJobUserMapper {
 
     int insertSelective(CourseJobUser record);
 
-    CourseJobUser selectByPrimaryKey(Integer id);
+    CourseJobUser selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(CourseJobUser record);
 
