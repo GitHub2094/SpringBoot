@@ -79,6 +79,9 @@
         #{analysis,jdbcType=VARCHAR},
       </if>
     </trim>
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+      select LAST_INSERT_ID()
+    </selectKey>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.lsm.frame.model.entity.Subject">
     update subject

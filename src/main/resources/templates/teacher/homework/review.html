@@ -42,7 +42,7 @@
                             <div th:if="${userReply.getSubjectModel().getType()}!=3">
                                 <div class="other">
                                     <input  name="id" th:value="${userReply.id}" type="hidden">
-                                    <h4 th:text="| ${userReply.getSubjectModel().getStem()} |" ></h4>
+                                    <h4 th:utext="| ${userReply.getSubjectModel().getStem()} |" ></h4>
                                     <p style="color: red" th:text="|分数：${userReply.getSubjectModel().getScore()}
                                   得分：${userReply.getScore()}|"></p>
                                     <h4>选项:</h4>

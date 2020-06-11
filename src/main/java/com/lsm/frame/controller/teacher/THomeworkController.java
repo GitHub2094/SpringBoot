@@ -1,6 +1,8 @@
 package com.lsm.frame.controller.teacher;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lsm.frame.controller.BaseController;
 import com.lsm.frame.mapper.SubjectMapper;
 import com.lsm.frame.model.dto.TableDataInfo;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -129,18 +132,44 @@ public class THomeworkController extends BaseController{
     @RequestMapping("/addSimpleAnswer")
     @ResponseBody
     public  AjaxResult addSimpleAnswer(Subject subject, HttpSession session) {
+        logger.info("dshfisd"+subject);
         int courseId = Integer.parseInt(session.getAttribute("courseId").toString());
         int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
-        logger.info("dsfsd"+jobId+"te"+courseId);
         subject.setCourseId(courseId);
         subject.setJobId(jobId);
         subjectService.insertSelective(subject);
-
         return AjaxResult.success("保存成功");
     }
 
     /**
-     * 新增简答题
+     * 新增choiceSubject
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/addChoiceSubject")
+    @ResponseBody
+    public  AjaxResult addChoiceSubject(@RequestBody SubjectAndOption subjectAndOption, HttpSession session) {
+        logger.info("获取选择题"+subjectAndOption);
+        int courseId = Integer.parseInt(session.getAttribute("courseId").toString());
+        int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
+        Subject subject = subjectAndOption.getSubject();
+        List<Option> optionList = subjectAndOption.getOptionList();
+        logger.info("subject"+subject);
+        subject.setCourseId(courseId);
+        subject.setJobId(jobId);
+        subjectService.insertSelective(subject);
+        logger.info("插入后"+subject);
+        for (Option option:subjectAndOption.getOptionList()){
+            option.setSubjectId(subject.getId());
+            logger.info("选项"+option);
+        }
+        subjectService.insertOptionList(subjectAndOption.getOptionList());
+        return AjaxResult.success("保存成功");
+    }
+
+
+    /**
+     * 发布页面
      */
     @RequiresRoles("teacher")
     //@RequiresPermissions("system:student)
