@@ -55,8 +55,7 @@
                                 <div class="panel panel-default" th:each="subject:${subjectList}">
                                     <div class="panel-heading">
                                         <h5 class="panel-title">
-                                            <p class="cont" th:title="${subject.getStem()}"><b ></b>
-                                                <span th:utext="${subject.getStem()}"></span></p>
+                                            <a class="btn btn-info  btn-xs" href="javascript:void(0)" th:onclick="editSubject([[${subject.getId()}]])" th:text="${subject.getId()}"></a>
                                         </h5>
                                     </div>
                                 </div>
@@ -100,7 +99,6 @@
                                             <div class="col-sm-1">
                                                 <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
                                             </div>
-
                                         </div>
                                     </form>
                                 </div>
@@ -313,6 +311,10 @@
             "                                                  </div>\n" +
             "                                              </div>";
         $('.optionText').append(option);
+    }
+
+    function editSubject(id) {
+        $.modal.openTab("编辑",ctx+"teacher/homework/editSubject?subjectId="+id)
     }
 </script>
 </body>

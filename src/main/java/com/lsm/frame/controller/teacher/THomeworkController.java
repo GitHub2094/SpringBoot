@@ -136,6 +136,19 @@ public class THomeworkController extends BaseController{
     }
 
     /**
+     * 编辑简答题
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/editSimpleAnswer")
+    @ResponseBody
+    public  AjaxResult editSimpleAnswer(Subject subject, HttpSession session) {
+        logger.info("更新后的"+subject);
+        subjectService.updateSubjectSelective(subject);
+        return AjaxResult.success("保存成功");
+    }
+
+    /**
      * 新增choiceSubject
      */
     @RequiresRoles("teacher")
@@ -161,6 +174,21 @@ public class THomeworkController extends BaseController{
         return AjaxResult.success("保存成功");
     }
 
+    /**
+     * 新增choiceSubject
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @RequestMapping("/editChoiceSubject")
+    @ResponseBody
+    public  AjaxResult editChoiceSubject(@RequestBody SubjectAndOption subjectAndOption, HttpSession session) {
+        logger.info("获取选择题"+subjectAndOption);
+        Subject subject = subjectAndOption.getSubject();
+        subject.setOptions(subjectAndOption.getOptionList());
+        logger.info("subject="+subject);
+        subjectService.updateSubjectSelective(subject);
+        return AjaxResult.success("保存成功");
+    }
 
     /**
      * 发布页面
@@ -209,6 +237,19 @@ public class THomeworkController extends BaseController{
         m.addAttribute("number",subjectList.size());
         m.addAttribute("subjectList",subjectList);
         return "teacher/homework/edit";
+    }
+    /**
+     * 编辑subject页面
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @GetMapping("/editSubject")
+    public String editSubject(Integer subjectId,Model m,HttpSession session) {
+        logger.info("subjectId==="+subjectId);
+        Subject subject = subjectService.selectByPrimaryKey(subjectId);
+        logger.info("subject="+subject);
+        m.addAttribute("subject",subject);
+        return "teacher/homework/editSubject";
     }
 }
 

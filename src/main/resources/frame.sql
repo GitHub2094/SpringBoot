@@ -11,7 +11,7 @@
  Target Server Version : 50527
  File Encoding         : 65001
 
- Date: 11/06/2020 23:23:15
+ Date: 12/06/2020 23:40:27
 */
 
 SET NAMES utf8mb4;
@@ -101,7 +101,7 @@ INSERT INTO `course_job` VALUES (1, 1, 1, '2020-04-21 11:14:25', '2020-04-30 11:
 INSERT INTO `course_job` VALUES (2, 1, 2, '2020-04-22 09:53:32', '2020-04-30 09:53:36');
 INSERT INTO `course_job` VALUES (3, 3, 3, '2020-06-10 09:45:00', '2020-06-30 09:45:00');
 INSERT INTO `course_job` VALUES (4, 1, 3, '2020-06-10 09:50:00', '2020-06-30 09:45:00');
-INSERT INTO `course_job` VALUES (5, 1, 5, '2020-06-11 23:20:00', '2020-06-12 23:20:00');
+INSERT INTO `course_job` VALUES (5, 1, 5, '2020-06-12 15:35:00', '2020-06-26 15:35:00');
 
 -- ----------------------------
 -- Table structure for course_job_user
@@ -126,11 +126,11 @@ CREATE TABLE `course_job_user`  (
 -- ----------------------------
 -- Records of course_job_user
 -- ----------------------------
-INSERT INTO `course_job_user` VALUES (1, 1, 1, '2', 90, '2020-06-11 19:34:41', '2020-06-11 16:24:39', '方继潘');
+INSERT INTO `course_job_user` VALUES (1, 1, 1, '3', 100, '2020-06-11 19:34:41', '2020-06-12 10:00:39', '方继潘');
 INSERT INTO `course_job_user` VALUES (2, 2, 1, '2', 13, NULL, NULL, NULL);
 INSERT INTO `course_job_user` VALUES (200610131, 4, 1, '3', 20, '2020-06-10 11:44:46', '2020-06-10 11:48:17', '方继潘');
-INSERT INTO `course_job_user` VALUES (200611151, 5, 1, '3', 70, '2020-06-11 23:20:53', '2020-06-11 23:22:10', '方继潘');
 INSERT INTO `course_job_user` VALUES (200611331, 3, 1, '3', 20, '2020-06-11 08:18:34', '2020-06-11 08:20:36', '方继潘');
+INSERT INTO `course_job_user` VALUES (200612151, 5, 1, '3', 70, '2020-06-12 20:49:09', '2020-06-12 20:49:39', '方继潘');
 
 -- ----------------------------
 -- Table structure for course_user
@@ -173,7 +173,7 @@ INSERT INTO `job` VALUES (1, '实验一', '方继潘', '2020-04-21 10:33:08');
 INSERT INTO `job` VALUES (2, '实验二', '方继潘', '2020-04-22 09:53:14');
 INSERT INTO `job` VALUES (3, '新建作业202006091998', '方继潘', '2020-06-09 16:43:01');
 INSERT INTO `job` VALUES (4, '新建作业20200609192131', '方继潘', '2020-06-09 19:21:31');
-INSERT INTO `job` VALUES (5, '新建作业20200611231911', '方继潘', '2020-06-11 23:19:11');
+INSERT INTO `job` VALUES (5, 'testOPT', '方继潘', '2020-06-12 15:35:18');
 
 -- ----------------------------
 -- Table structure for menu
@@ -203,7 +203,7 @@ CREATE TABLE `opt`  (
   `subject_id` int(20) NOT NULL COMMENT '题目ID',
   `content` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '选项内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of opt
@@ -211,8 +211,13 @@ CREATE TABLE `opt`  (
 INSERT INTO `opt` VALUES (1, 1, '立法');
 INSERT INTO `opt` VALUES (2, 1, '审判');
 INSERT INTO `opt` VALUES (3, 1, '监察');
-INSERT INTO `opt` VALUES (4, 6, 'test');
-INSERT INTO `opt` VALUES (5, 6, 'test');
+INSERT INTO `opt` VALUES (4, 6, '乡镇');
+INSERT INTO `opt` VALUES (5, 6, '派出所');
+INSERT INTO `opt` VALUES (6, 6, '街道办公室');
+INSERT INTO `opt` VALUES (7, 6, '公安局');
+INSERT INTO `opt` VALUES (8, 7, '对test');
+INSERT INTO `opt` VALUES (9, 7, '错');
+INSERT INTO `opt` VALUES (10, 6, 'test');
 
 -- ----------------------------
 -- Table structure for role
@@ -266,16 +271,17 @@ CREATE TABLE `subject`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `course_subject`(`course_id`) USING BTREE,
   CONSTRAINT `course_subject` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of subject
 -- ----------------------------
 INSERT INTO `subject` VALUES (1, '1', '行政法以规范国家的（   ）关系为其内容', 1, 1, 50, '解析');
-INSERT INTO `subject` VALUES (2, '3', '在行政法律关系中，与行政主体处于相对应的一方的公民、法人和其他组织成为（     ）。', 1, 1, 50, '');
+INSERT INTO `subject` VALUES (2, '3', 'test:在行政法律关系中，与行政主体处于相对应的一方的公民、法人和其他组织成为（     ）。', 1, 1, 50, '');
 INSERT INTO `subject` VALUES (4, '3', '<p><span style=\"color: rgb(51, 51, 51); font-family: -apple-system-font, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 14px; letter-spacing: 0.54px; text-align: justify;\">李某(男)深夜遇到单身女子王某，起歹意将王某强奸，事后怕王某报案欲杀人灭口，正卡王某脖子时，因有人路过，李某逃离现场，经鉴定王某脖子处构成轻伤。李某的行为属于？</span><br></p>', 1, 3, 20, NULL);
 INSERT INTO `subject` VALUES (5, '3', '<p>test</p>', 1, 4, 20, NULL);
-INSERT INTO `subject` VALUES (6, '1', '<p>test</p>', 1, 5, 70, NULL);
+INSERT INTO `subject` VALUES (6, '1', '<p><span style=\"font-family: 宋体; font-size: 14px;\">下列各项中不具有行政主体资格的是（&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ）。</span><br></p>', 1, 5, 20, NULL);
+INSERT INTO `subject` VALUES (7, '1', '<p><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">有甲乙两盒，每盒都有</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">2</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">个红球，</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">3</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">个白球，从甲盒中取一球放入乙盒，再从乙盒中采用不放回抽样取出</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">2</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">球，则取到两个球是一红一白的概率为14/25。</span><br></p>', 1, 5, 30, NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -391,16 +397,15 @@ CREATE TABLE `user_reply`  (
   INDEX `subject`(`subject`) USING BTREE,
   CONSTRAINT `cju_id` FOREIGN KEY (`cju_id`) REFERENCES `course_job_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `subject` FOREIGN KEY (`subject`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user_reply
 -- ----------------------------
 INSERT INTO `user_reply` VALUES (1, 1, 1, '立法', 50, '');
-INSERT INTO `user_reply` VALUES (2, 1, 2, '<p><span style=\"font-size: 24px;\">test</span></p><p><span style=\"font-size: 24px; background-color: rgb(255, 255, 0);\">test</span></p>', 40, NULL);
+INSERT INTO `user_reply` VALUES (2, 1, 2, '<p><span style=\"font-size: 24px;\">test</span></p><p><span style=\"font-size: 24px; background-color: rgb(255, 255, 0);\">test</span></p>', 50, NULL);
 INSERT INTO `user_reply` VALUES (3, 200610131, 4, 'test', 20, NULL);
 INSERT INTO `user_reply` VALUES (5, 200611331, 4, '强奸未遂', 20, NULL);
-INSERT INTO `user_reply` VALUES (6, 200611151, 6, 'test', 70, NULL);
 
 -- ----------------------------
 -- Table structure for user_role

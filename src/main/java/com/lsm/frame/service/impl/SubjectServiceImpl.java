@@ -47,4 +47,26 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subjectList;
     }
+
+    @Override
+    public Subject selectByPrimaryKey(Integer id) {
+        Subject subject = subjectMapper.selectByPrimaryKey(id);
+        subject.setOptions(optionMapper.selectBySubjectId(id));
+        return subject;
+    }
+    @Override
+    public int updateSubjectSelective(Subject record) {
+        if (record.getOptions() != null){
+            for (Option option : record.getOptions()){
+                if (option.getId()==null){
+                    option.setSubjectId(record.getId());
+                    optionMapper.insertSelective(option);
+                }else {
+                    optionMapper.updateByPrimaryKeySelective(option);
+                }
+
+            }
+        }
+        return subjectMapper.updateByPrimaryKeySelective(record);
+    }
 }

@@ -15,4 +15,8 @@ public interface SubjectService {
     void insertOptionList(List<Option> optionList);
 
     List<Subject> selectByJobId(Integer id);
+
+    Subject selectByPrimaryKey(Integer id);
+
+    int updateSubjectSelective(Subject record);
 }
