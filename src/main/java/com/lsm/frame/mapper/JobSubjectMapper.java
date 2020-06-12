@@ -16,4 +16,6 @@ public interface JobSubjectMapper {
     int updateByPrimaryKeySelective(JobSubject record);
 
     int updateByPrimaryKey(JobSubject record);
+
+
 }

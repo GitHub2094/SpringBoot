@@ -35,16 +35,22 @@ public class UserReplyServiceImpl implements UserReplyService {
     public List<UserReply> selectByCjuId(Long id) {
         List<UserReply> userReplyList = new ArrayList<>();
         userReplyList = userReplyMapper.selectByCjuId(id);
-        if (userReplyList.size() == 0) {
-            CourseJobUser courseJobUser = courseJobUserMapper.selectByPrimaryKey(id);
-            CourseJob courseJob = courseJobMapper.selectByPrimaryKey(courseJobUser.getCourseJobId());
-            List<Subject> subjects = subjectMapper.selectByJobId(courseJob.getJobId());
+        CourseJobUser courseJobUser = courseJobUserMapper.selectByPrimaryKey(id);
+        CourseJob courseJob = courseJobMapper.selectByPrimaryKey(courseJobUser.getCourseJobId());
+        List<Subject> subjects = subjectMapper.selectByJobId(courseJob.getJobId());
+        if (userReplyList.size() < subjects.size()) {
+            int i =0;
+            int j = userReplyList.size();
             for (Subject subject : subjects){
-                UserReply userReply = new UserReply();
-                userReply.setSubject(subject.getId());
-                userReply.setCjuId(id);
-                userReply.setScore(0);
-                userReplyMapper.insertSelective(userReply);
+                if (i>=j) {
+                    UserReply userReply = new UserReply();
+                    userReply.setSubject(subject.getId());
+                    userReply.setCjuId(id);
+                    userReply.setScore(0);
+                    userReplyMapper.insertSelective(userReply);
+                }else{
+                    i++;
+                }
             }
             userReplyList = userReplyMapper.selectByCjuId(id);
         }

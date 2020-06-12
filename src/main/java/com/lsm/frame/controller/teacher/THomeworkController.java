@@ -1,10 +1,8 @@
 package com.lsm.frame.controller.teacher;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+
 import com.lsm.frame.controller.BaseController;
-import com.lsm.frame.mapper.SubjectMapper;
 import com.lsm.frame.model.dto.TableDataInfo;
 import com.lsm.frame.model.entity.*;
 
@@ -12,7 +10,6 @@ import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.service.intf.CourseService;
 import com.lsm.frame.service.intf.SubjectService;
 import com.lsm.frame.utils.AjaxResult;
-import com.lsm.frame.utils.DateUtils;
 import com.lsm.frame.utils.ShiroUtils;
 import com.lsm.frame.utils.string.StringUtils;
 import com.lsm.frame.utils.string.SuffixUntild;
@@ -22,13 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -193,6 +187,28 @@ public class THomeworkController extends BaseController{
         courseJobService.insertSelective(courseJob);
         return AjaxResult.success("发布成功");
     }
-
+    /**
+     * 编辑页面
+     */
+    @RequiresRoles("teacher")
+    //@RequiresPermissions("system:student)
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id,Model m,HttpSession session) {
+        Job job = courseJobService.selectJobByJobId(id);
+        session.setAttribute("jobId",id);
+        logger.info("编辑作业："+job);
+        m.addAttribute("job",job);
+        int score = 0;
+        List<Subject> subjectList = subjectService.selectByJobId(job.getId());
+        for (Subject subject: subjectList){
+            logger.info("查到的作业："+subject);
+            score += subject.getScore();
+        }
+        logger.info("score:"+score);
+        m.addAttribute("score",score);
+        m.addAttribute("number",subjectList.size());
+        m.addAttribute("subjectList",subjectList);
+        return "teacher/homework/edit";
+    }
 }
 

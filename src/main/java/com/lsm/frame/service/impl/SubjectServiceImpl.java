@@ -38,4 +38,13 @@ public class SubjectServiceImpl implements SubjectService {
             optionMapper.insert(option);
         }
     }
+
+    @Override
+    public List<Subject> selectByJobId(Integer id) {
+        List<Subject> subjectList = subjectMapper.selectByJobId(id);
+        for (Subject subject:subjectList){
+            subject.setOptions(optionMapper.selectBySubjectId(subject.getId()));
+        }
+        return subjectList;
+    }
 }

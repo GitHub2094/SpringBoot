@@ -13,4 +13,6 @@ public interface SubjectService {
     int insertSelective(JobSubject record);
 
     void insertOptionList(List<Option> optionList);
+
+    List<Subject> selectByJobId(Integer id);
 }

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('添加作业')" />
+    <th:block th:include="include :: summernote-css" />
+    <style>
+        .cont{
+            overflow: hidden;/*内容超出后隐藏*/
+            text-overflow: ellipsis;/* 超出内容显示为省略号*/
+            white-space: nowrap;/*文本不进行换行*/
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div class="ibox">
+    <div class="ibox-title" >
+        <form id="user-form">
+            <div class="select-list" id="title">
+                <ul>
+                    <input name="id" id="id" type="hidden" th:value="${job.getId()}">
+                    <li>
+                        作业标题：<input type="text" th:name="title" th:value="${job.getTitle()}"/>
+                    </li>
+                    <li>
+                        <a class="btn btn-sm btn-primary" onclick="submitTitle()"><i class="fa fa-check"></i>保存</a>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <b>题量：</b><b th:text="${number}"></b>&nbsp;&nbsp;&nbsp;<b>总分：</b><b th:text="${score}"></b>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="tabs_panels.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="panel-body">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default" th:each="subject:${subjectList}">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">
+                                            <p class="cont" th:title="${subject.getStem()}"><b ></b>
+                                                <span th:utext="${subject.getStem()}"></span></p>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">简答题</a>
+                        </li>
+                        <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">选择题</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- 简答题 -->
+                        <div id="tab-1" class="tab-pane active">
+                            <div class="panel-body">
+                                <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+                                    <form class="form-horizontal m" id="choiceSubject">
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">分值：</label>
+                                            <div class="col-sm-10">
+                                                <input id="simpleAnswerScore" name="simpleAnswerScore" class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">题干：</label>
+                                            <div class="col-sm-10">
+                                                <input   type="hidden">
+                                                <div class="summernote" id="simpleAnswerContent" name="simpleAnswerContent"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-1">
+                                                <button type="button" class="btn btn-sm btn-primary" onclick="submitSimpleAnswer()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab-2" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+                                    <form class="form-horizontal m" id="form-notice-add">
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">分值：</label>
+                                            <div class="col-sm-10">
+                                                <input id="Score" name="Score" class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">题干：</label>
+                                            <div class="col-sm-10">
+                                                <input   type="hidden">
+                                                <div class="summernote" id="Content" name="Content"></div>
+                                            </div>
+                                        </div>
+                                        <div class="optionText">
+                                            <div class="form-group optionInput">
+                                                <label class="col-sm-1 control-label">选项：</label>
+                                                <div class="col-sm-10">
+                                                    <input  name="option" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group optionInput">
+                                                <label class="col-sm-1 control-label">选项：</label>
+                                                <div class="col-sm-10">
+                                                    <input  name="option" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:add()">新增一个选项</a>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-4"></div>
+                                            <div class="col-sm-1">
+                                                <button type="button" class="btn btn-sm btn-primary" onclick="submitChoiceSubject()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: summernote-js" />
+<script>
+    $('.summernote').summernote({
+        placeholder: '请输入题干',
+        height : 192,
+        lang : 'zh-CN',
+        followingToolbar: false
+    });
+
+    function Job(id,title) {
+        this.id=id;
+        this.title=title;
+        return this;
+    }
+
+    function Subject(score,stem,type) {
+        this.score=score;
+        this.stem=stem;
+        this.type=type;
+        return this;
+    }
+
+    function ChoiceSubject(score,stem,type,optionList) {
+        this.score=score;
+        this.stem=stem;
+        this.type=type;
+        this.optionList = optionList;
+        return this;
+    }
+    function Option(content ) {
+        this.content = content;
+        return this;
+    }
+
+    //提交请求，serialize序列存放表单信息
+    function submitSimpleAnswer() {
+        var score = $("input[name='simpleAnswerScore']");
+        var summernote = $("div[name='simpleAnswerContent']");
+        var stem = summernote.summernote('code');
+        var type = 3;
+        var data = new Subject(score.val(),stem,3);
+        $.ajax({
+            url:ctx + "teacher/homework/addSimpleAnswer",
+            type:'post',
+            data: data,
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+    }
+    function submitTitle() {
+        var datas =[];
+        var id = $("input[name='id']");
+        var title = $("input[name='title']");
+        var data = new Job(id.val(),title.val());
+        datas.push(data);
+        alert(JSON.stringify(datas));
+        $.ajax({
+            url:ctx + "teacher/homework/editTitle",
+            type:'post',
+            data: data,
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+    }
+
+    //提交选择类型题目
+    function submitChoiceSubject() {
+        var score = $("input[name='Score']");
+        var summernote = $("div[name='Content']");
+        var stem = summernote.summernote('code');
+        var type = 1;
+        var subject={
+            "stem":stem,
+            "type":type,
+            "score": score.val()
+        }
+        var optList = new Array();
+        $.each($(".optionText").find(".optionInput"),function () {
+            var content = $(this).find("input[name='option']");
+            var  option ={
+                "content": content.val()
+            }
+            optList.push(option);
+            alert(JSON.stringify(optList));
+        })
+        var data = {
+            "subject":subject,
+            "optionList":optList
+        }
+        alert(JSON.stringify(data));
+        $.ajax({
+            url:ctx + "teacher/homework/addChoiceSubject",
+            type:'post',
+            data:JSON.stringify(data),
+            contentType:"application/json",
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.alertSuccess(result.msg)
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+
+    }
+
+    function add(){
+        var  option = "<div class=\"form-group optionInput\">\n" +
+            "                                                  <label class=\"col-sm-1 control-label\">选项：</label>\n" +
+            "                                                  <div class=\"col-sm-10\">\n" +
+            "                                                      <input  name=\"option\" class=\"form-control\" type=\"text\">\n" +
+            "                                                  </div>\n" +
+            "                                              </div>";
+        $('.optionText').append(option);
+    }
+</script>
+</body>
+</html>
