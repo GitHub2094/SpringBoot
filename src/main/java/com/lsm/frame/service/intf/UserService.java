@@ -2,6 +2,8 @@ package com.lsm.frame.service.intf;
 
 import com.lsm.frame.model.entity.User;
 
+import java.util.List;
+
 public interface UserService {
     /**
      * 通过登录账号查找用户
@@ -29,6 +31,8 @@ public interface UserService {
 
     String encryptPassword(String password, String salt);
 
-
-
+    /**
+     * 用户表
+     */
+    List<User> selectUserTable(User user);
 }

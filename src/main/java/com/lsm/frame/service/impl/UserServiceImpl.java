@@ -9,6 +9,8 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -49,5 +51,10 @@ public class UserServiceImpl implements UserService {
         ByteSource credentialsSalt = ByteSource.Util.bytes(salt);
         String newPassword = new SimpleHash(hashAlgorithName, password,credentialsSalt, hashIterations).toHex();
         return newPassword;
+    }
+
+    @Override
+    public List<User> selectUserTable(User user) {
+        return userMapper.selectUserTable(user);
     }
 }

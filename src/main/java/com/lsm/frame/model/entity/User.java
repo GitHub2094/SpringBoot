@@ -1,11 +1,10 @@
 package com.lsm.frame.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.SerializableString;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.lsm.frame.model.dto.BaseEntity;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,9 +12,10 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 
 @Builder
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
     private Integer userId;
 
     private Integer deptId;
@@ -47,7 +47,7 @@ public class User implements Serializable {
     private Date loginDate;
 
     private String createBy;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     private String updateBy;

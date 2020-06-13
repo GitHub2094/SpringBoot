@@ -3,6 +3,8 @@ package com.lsm.frame.mapper;
 import com.lsm.frame.model.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userId);
@@ -18,4 +20,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User selectByLoginName(String loginName);
+
+    List<User> selectUserTable(User user);
 }

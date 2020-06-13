@@ -275,4 +275,31 @@
     from user
     where login_name = #{loginName,jdbcType=VARCHAR}
   </select>
+
+
+  <select id="selectUserTable" parameterType="com.lsm.frame.model.entity.User" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <where>
+      <if test="userName != null and userName != ''">
+        AND userName like concat('%', #{userName}, '%')
+      </if>
+      <if test="loginName != null and loginName != ''">
+        AND login_name like concat('%', #{loginName}, '%')
+      </if>
+      <if test="userType != null and userType != ''">
+        AND user_type like concat('%', #{userType}, '%')
+      </if>
+      <if test="sex != null and sex != ''">
+        AND sex = #{sex,jdbcType=CHAR}
+      </if>
+      <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+        and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+      </if>
+      <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+        and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+      </if>
+    </where>
+  </select>
 </mapper>
