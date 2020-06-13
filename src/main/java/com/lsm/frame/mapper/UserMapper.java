@@ -22,4 +22,6 @@ public interface UserMapper {
     User selectByLoginName(String loginName);
 
     List<User> selectUserTable(User user);
+
+    int deleteUserByIds(Integer[] ids);
 }

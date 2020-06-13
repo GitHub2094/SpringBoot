@@ -35,4 +35,9 @@ public interface UserService {
      * 用户表
      */
     List<User> selectUserTable(User user);
+
+    /**
+     * 批量删除用户
+     */
+    int deleteUserByIds(String ids);
 }

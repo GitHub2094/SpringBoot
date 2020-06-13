@@ -94,10 +94,9 @@
             exportUrl: prefix + "/export",
             importUrl: prefix + "/importData",
             importTemplateUrl: prefix + "/importTemplate",
-            issueUrl: prefix + "/issue/{id}",
             sortName: "createTime",
             sortOrder: "desc",
-            modalName: "作业库",
+            modalName: "用户",
             columns: [{
                 checkbox: true
             },
@@ -147,9 +146,9 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-primary btn-xs " href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs " href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
-                        actions.push('<a class="btn btn-info  btn-xs" href="javascript:void(0)" onclick="$.operate.issue(\'' + row.id + '\')"><i class="fa fa-plus"></i>发布</a> ');
+                        actions.push('<a class="btn btn-primary btn-xs " href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.userId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs " href="javascript:void(0)" onclick="$.operate.remove(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                        actions.push('<a class="btn btn-info btn-xs" href="javascript:void(0)" onclick="resetPwd(\'' + row.userId + '\')"><i class="fa fa-key"></i>重置</a>');
                         return actions.join('');
                     }
                 }]
@@ -157,7 +156,11 @@
         $.table.init(options);
     }
 
-
+    /* 用户管理-重置密码 */
+    function resetPwd(userId) {
+        var url = prefix + '/resetPwd/' + userId;
+        $.modal.open("重置密码", url, '800', '300');
+    }
 
 
 </script>

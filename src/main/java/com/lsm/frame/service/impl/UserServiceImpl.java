@@ -3,6 +3,7 @@ package com.lsm.frame.service.impl;
 import com.lsm.frame.mapper.UserMapper;
 import com.lsm.frame.model.entity.User;
 import com.lsm.frame.service.intf.UserService;
+import com.lsm.frame.utils.string.Convert;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -56,5 +57,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> selectUserTable(User user) {
         return userMapper.selectUserTable(user);
+    }
+
+    @Override
+    public int deleteUserByIds(String ids) {
+        Integer[] userIds = Convert.toIntArray(ids);
+        return userMapper.deleteUserByIds(userIds);
     }
 }
