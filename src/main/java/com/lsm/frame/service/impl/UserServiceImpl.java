@@ -1,7 +1,10 @@
 package com.lsm.frame.service.impl;
 
 import com.lsm.frame.mapper.UserMapper;
+import com.lsm.frame.mapper.UserRoleMapper;
 import com.lsm.frame.model.entity.User;
+import com.lsm.frame.model.entity.UserRoleKey;
+import com.lsm.frame.service.intf.UserRoleService;
 import com.lsm.frame.service.intf.UserService;
 import com.lsm.frame.utils.string.Convert;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -17,6 +20,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    UserRoleMapper userRoleMapper;
+
     @Override
     public User selectByLoginName(String loginName) {
         return userMapper.selectByLoginName(loginName);
@@ -29,7 +36,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insertSelective(User record) {
-        return userMapper.insertSelective(record);
+        userMapper.insertSelective(record);
+
+        String student = "01";
+        String teacher = "02";
+        String root = "01";
+        UserRoleKey userRole = new UserRoleKey();
+        userRole.setUserId(record.getUserId());
+        if(record.getUserType().equals(student)){
+            userRole.setRoleId(2);
+            return userRoleMapper.insertSelective(userRole);
+        }else if (record.getUserType().equals(teacher)){
+            userRole.setRoleId(3);
+            return userRoleMapper.insertSelective(userRole);
+        }else if(record.getUserType().equals(root)){
+            userRole.setRoleId(1);
+            return userRoleMapper.insertSelective(userRole);
+        }
+        return 0;
     }
 
     @Override
@@ -62,6 +86,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deleteUserByIds(String ids) {
         Integer[] userIds = Convert.toIntArray(ids);
+        for (Integer id : userIds){
+            userRoleMapper.deleteByUserId(id);
+        }
         return userMapper.deleteUserByIds(userIds);
     }
 }

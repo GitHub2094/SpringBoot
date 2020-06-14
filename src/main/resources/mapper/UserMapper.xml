@@ -180,6 +180,9 @@
         #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
+    <selectKey resultType="java.lang.Integer" keyProperty="userId" order="AFTER">
+      select LAST_INSERT_ID()
+    </selectKey>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.lsm.frame.model.entity.User">
     update user

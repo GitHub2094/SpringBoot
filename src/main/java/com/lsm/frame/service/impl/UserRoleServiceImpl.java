@@ -27,4 +27,14 @@ public class UserRoleServiceImpl implements UserRoleService {
         logger.info("获取到的角色Role:"+role);
         return role.getRoleKey();
     }
+
+    @Override
+    public int updateByUserId(UserRoleKey userRoleKey) {
+        return userRoleMapper.updateByUserId(userRoleKey);
+    }
+
+    @Override
+    public int insert(UserRoleKey record) {
+        return userRoleMapper.insertSelective(record);
+    }
 }

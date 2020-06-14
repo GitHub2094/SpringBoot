@@ -43,4 +43,19 @@
     from user_role
     where user_id= #{userId,jdbcType=INTEGER}
   </select>
+
+
+
+  <update id="updateByUserId" parameterType="com.lsm.frame.model.entity.UserRoleKey">
+    update user_role
+    set role_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{roleId,jdbcType=INTEGER}
+  </update>
+
+
+  <delete id="deleteByUserId" parameterType="java.lang.Integer">
+    delete from user_role
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+
 </mapper>
