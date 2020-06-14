@@ -11,7 +11,7 @@
  Target Server Version : 50527
  File Encoding         : 65001
 
- Date: 12/06/2020 23:40:27
+ Date: 14/06/2020 15:55:22
 */
 
 SET NAMES utf8mb4;
@@ -215,7 +215,7 @@ INSERT INTO `opt` VALUES (4, 6, '乡镇');
 INSERT INTO `opt` VALUES (5, 6, '派出所');
 INSERT INTO `opt` VALUES (6, 6, '街道办公室');
 INSERT INTO `opt` VALUES (7, 6, '公安局');
-INSERT INTO `opt` VALUES (8, 7, '对test');
+INSERT INTO `opt` VALUES (8, 7, '对');
 INSERT INTO `opt` VALUES (9, 7, '错');
 INSERT INTO `opt` VALUES (10, 6, 'test');
 
@@ -284,6 +284,29 @@ INSERT INTO `subject` VALUES (6, '1', '<p><span style=\"font-family: 宋体; fon
 INSERT INTO `subject` VALUES (7, '1', '<p><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">有甲乙两盒，每盒都有</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">2</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">个红球，</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">3</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">个白球，从甲盒中取一球放入乙盒，再从乙盒中采用不放回抽样取出</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">2</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">球，则取到两个球是一红一白的概率为14/25。</span><br></p>', 1, 5, 30, NULL);
 
 -- ----------------------------
+-- Table structure for sys_config
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_config`;
+CREATE TABLE `sys_config`  (
+  `config_id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '参数主键',
+  `config_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '参数名称',
+  `config_key` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '参数键名',
+  `config_value` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '参数键值',
+  `config_type` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '系统内置（Y是 N否）',
+  `create_by` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`config_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of sys_config
+-- ----------------------------
+INSERT INTO `sys_config` VALUES (00001, '账号初始密码', 'sys.user.initPassword', '111111', 'Y', 'root1', '2020-06-14 15:00:12', NULL, NULL, '初始化密码 111111');
+
+-- ----------------------------
 -- Table structure for sys_dict_data
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict_data`;
@@ -303,7 +326,7 @@ CREATE TABLE `sys_dict_data`  (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典数据表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典数据表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -319,6 +342,12 @@ INSERT INTO `sys_dict_data` VALUES (31, 4, '判断题', '4', 'subject_type', '',
 INSERT INTO `sys_dict_data` VALUES (32, 1, '未完成', '1', 'job_state', NULL, 'danger', 'Y', '0', 'root1', '2020-05-06 08:50:11', '', NULL, '作业状态-未完成');
 INSERT INTO `sys_dict_data` VALUES (33, 2, '待批阅', '2', 'job_state', NULL, 'warning', 'Y', '0', 'root1', '2020-05-06 08:50:45', '', NULL, '作业状态-待批阅');
 INSERT INTO `sys_dict_data` VALUES (34, 3, '已完成', '3', 'job_state', NULL, 'success', 'Y', '0', 'root1', '2020-05-06 08:51:33', '', NULL, '作业状态-已完成');
+INSERT INTO `sys_dict_data` VALUES (35, 1, 'root', '00', 'user_type', '', 'danger', 'Y', '0', 'root1', '2020-06-13 16:39:01', 'root1', '2020-06-13 16:40:00', '系统管理员');
+INSERT INTO `sys_dict_data` VALUES (36, 2, 'student', '01', 'user_type', NULL, 'primary', 'Y', '0', 'root1', '2020-06-13 16:39:51', '', NULL, '学生用户');
+INSERT INTO `sys_dict_data` VALUES (37, 3, 'teacher', '02', 'user_type', NULL, 'success', 'Y', '0', 'root1', '2020-06-13 16:40:35', '', NULL, '教师用户');
+INSERT INTO `sys_dict_data` VALUES (38, 1, '男', '0', 'user_sex', NULL, 'success', 'Y', '0', 'root1', '2020-06-13 17:02:51', '', NULL, '男性');
+INSERT INTO `sys_dict_data` VALUES (39, 2, '女', '1', 'user_sex', NULL, 'danger', 'Y', '0', 'root1', '2020-06-13 17:03:12', '', NULL, '女性');
+INSERT INTO `sys_dict_data` VALUES (40, 3, '不明', '2', 'user_sex', NULL, 'warning', 'Y', '0', 'root1', '2020-06-13 17:03:44', '', NULL, '不明性别');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -336,7 +365,7 @@ CREATE TABLE `sys_dict_type`  (
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_id`) USING BTREE,
   UNIQUE INDEX `dict_type`(`dict_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典类型表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典类型表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -345,6 +374,8 @@ INSERT INTO `sys_dict_type` VALUES (1, '题目类型', 'subject_type', '0', 'lsm
 INSERT INTO `sys_dict_type` VALUES (2, '系统开关', 'sys_normal_disable', '0', 'admin', '2020-04-30 11:33:00', 'ry', '2020-04-30 11:33:00', '系统开关列表');
 INSERT INTO `sys_dict_type` VALUES (3, '系统是否', 'sys_yes_no', '0', 'admin', '2020-04-30 11:33:00', 'ry', '2020-04-30 11:33:00', '系统是否列表');
 INSERT INTO `sys_dict_type` VALUES (13, '作业状态', 'job_state', '0', 'root1', '2020-05-06 08:48:43', 'root1', '2020-05-06 08:48:57', '作业状态列表');
+INSERT INTO `sys_dict_type` VALUES (14, '用户类型', 'user_type', '0', 'root1', '2020-06-13 16:37:33', 'root1', '2020-06-13 17:01:48', '用户类型\r\n');
+INSERT INTO `sys_dict_type` VALUES (15, '用户性别', 'user_sex', '0', 'root1', '2020-06-13 17:01:40', '', NULL, '用户性别');
 
 -- ----------------------------
 -- Table structure for user
@@ -372,14 +403,17 @@ CREATE TABLE `user`  (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 101, 'student1', '沈安北', '01', 'shenanbei@qq.com', '13954878648', '0', '', 'ee3fdd6689856a7f2f689f6ec1730f60', '11111111', '0', '0', '', '2020-03-28 23:09:55', 'lsm', '2020-03-28 23:09:10', '', NULL, NULL);
+INSERT INTO `user` VALUES (1, 101, 'student1', '沈安北', '01', 'shenanbei@qq.com', '13954878648', '0', '', '86e09d11ca67bc71b990232c935d8298', 'e5a08d', '0', '0', '', '2020-03-28 23:09:55', 'lsm', '2020-03-28 23:09:10', 'lsm', '2020-06-13 19:59:54', 'tttt');
 INSERT INTO `user` VALUES (2, 102, 'teacher1', '方继潘', '02', 'fangjipan@qq.com', '13959554873', '1', NULL, '0721e5e85ee6f94092ff0951ba2b97c3', '22222222', '0', '0', NULL, NULL, 'lsm', '2020-03-28 23:11:06', NULL, NULL, NULL);
 INSERT INTO `user` VALUES (3, 100, 'root1', 'lsm', '00', '184544849@qq.com', '18354879187', '0', '', '15eb6048f347628cabd0be96c0427382', 'f9dfee', '0', '0', NULL, NULL, 'lsm', '2020-03-28 23:13:29', NULL, NULL, NULL);
+INSERT INTO `user` VALUES (4, NULL, 'dufu', '杜甫', '01', 'dufu@qq.com', '14332423423', '0', NULL, '3fda89500a4c0fb110113c4f79d619e3', '151c19', '0', '0', NULL, NULL, 'lsm', '2020-06-14 15:43:47', 'lsm', '2020-06-14 15:44:09', '测试账号');
+INSERT INTO `user` VALUES (5, NULL, 'libai', '李白', '01', 'libai@qq.com', '14332423423', '0', NULL, 'e56da1924f8e623f9a145d9c6970450e', '22ae70', '0', '0', NULL, NULL, 'lsm', '2020-06-14 15:45:33', NULL, NULL, '测试账号');
+INSERT INTO `user` VALUES (6, NULL, 'liqinzhao', '李清照', '02', 'liqinzhao@qq.com', '14332423423', '1', NULL, 'b7ac5fda4444f13711a87482ae07aa30', 'bc0e12', '1', '0', NULL, NULL, 'lsm', '2020-06-14 15:47:28', NULL, NULL, '测试账号--教师');
 
 -- ----------------------------
 -- Table structure for user_reply
@@ -397,7 +431,7 @@ CREATE TABLE `user_reply`  (
   INDEX `subject`(`subject`) USING BTREE,
   CONSTRAINT `cju_id` FOREIGN KEY (`cju_id`) REFERENCES `course_job_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `subject` FOREIGN KEY (`subject`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user_reply
@@ -423,5 +457,8 @@ CREATE TABLE `user_role`  (
 INSERT INTO `user_role` VALUES (1, 2);
 INSERT INTO `user_role` VALUES (2, 3);
 INSERT INTO `user_role` VALUES (3, 1);
+INSERT INTO `user_role` VALUES (4, 2);
+INSERT INTO `user_role` VALUES (5, 2);
+INSERT INTO `user_role` VALUES (6, 3);
 
 SET FOREIGN_KEY_CHECKS = 1;
