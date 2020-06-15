@@ -20,4 +20,8 @@ public interface CourseMapper {
     int updateByPrimaryKey(Course record);
 
     List<Course> selectCourseByCreate(String create);
+
+    List<Course> selectCourseTable(Course course);
+
+    int deleteCourseByIds(Integer[] ids);
 }

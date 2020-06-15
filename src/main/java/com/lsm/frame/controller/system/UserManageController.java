@@ -86,7 +86,7 @@ public class UserManageController extends BaseController {
      */
     @RequiresRoles("root")
     @GetMapping("/add")
-    public String edit(Model m)
+    public String add(Model m)
     {
         return "system/userManage/add";
     }

@@ -24,4 +24,6 @@ public interface UserMapper {
     List<User> selectUserTable(User user);
 
     int deleteUserByIds(Integer[] ids);
+
+    List<User> selectUserByType(String userType);
 }

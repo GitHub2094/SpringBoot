@@ -40,4 +40,10 @@ public interface UserService {
      * 批量删除用户
      */
     int deleteUserByIds(String ids);
+
+    /**
+     * 查找教师用户
+     */
+    List<User> selectUserTeacher();
+
 }

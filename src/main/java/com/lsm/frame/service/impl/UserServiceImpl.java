@@ -91,4 +91,9 @@ public class UserServiceImpl implements UserService {
         }
         return userMapper.deleteUserByIds(userIds);
     }
+
+    @Override
+    public List<User> selectUserTeacher() {
+        return userMapper.selectUserByType("02");
+    }
 }

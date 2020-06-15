@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('发布作业')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: select2-css" />
+
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="addCourseForm" th:object="${course}">
+        <input name="userId"  type="hidden"  th:field="*{id}" />
+        <div class="form-group">
+            <label class="col-sm-3 control-label">课程名称：</label>
+            <div class="col-sm-8">
+                <input id="courseName" name="courseName" placeholder="请输入课程名称" class="form-control" type="text"
+                       th:field="*{courseName}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">授课教师：</label>
+            <div class="col-sm-8">
+                <select  name="createBy" class="form-control m-b">
+                    <div th:each="teacher:${teacherList}">
+                        <option th:value="${teacher.getUserName()}" th:text="${teacher.getUserName()}" th:field="*{createBy}"></option>
+                    </div>
+                </select>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 目前版本只支持一次一班级发布</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">开课时间：</label>
+            <div class="col-sm-9">
+                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="startTime" class="form-control timePicker"  placeholder="yyyy-MM-dd HH:mm"
+                           th:field="*{startTime}">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">结课时间：</label>
+            <div class="col-sm-9">
+                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="endTime" class="form-control timePicker"  placeholder="yyyy-MM-dd HH:mm"
+                           th:field="*{endTime}">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-9">
+                <textarea name="remark" maxlength="500" class="form-control" rows="3" th:field="*{remark}"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<th:block th:include="include :: select2-js" />
+<script type="text/javascript">
+    //时间控件
+    $(function () {
+        <!-- datetimepicker示例 -->
+        $(".timePicker").datetimepicker();
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+
+            laydate.render({
+                elem: '#laydate-demo-1'
+            });
+        });
+    })
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(ctx + "system/courseManage/edit", $('#addCourseForm').serialize());
+        }
+    }
+</script>
+</body>
+</html>
