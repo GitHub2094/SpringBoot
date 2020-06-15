@@ -29,4 +29,9 @@ public interface CourseUserService {
     College selectCollegeByPrimaryKey(Integer id);
 
     List<Course> selectCourseByUserId(Integer id);
+
+    /**
+     * 将用户加入课程
+     */
+    int insertSelective(CourseUser record);
 }

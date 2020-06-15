@@ -3,8 +3,10 @@ package com.lsm.frame.controller.system;
 import com.lsm.frame.controller.BaseController;
 import com.lsm.frame.model.dto.TableDataInfo;
 import com.lsm.frame.model.entity.Course;
+import com.lsm.frame.model.entity.CourseUser;
 import com.lsm.frame.model.entity.User;
 import com.lsm.frame.service.intf.CourseService;
+import com.lsm.frame.service.intf.CourseUserService;
 import com.lsm.frame.service.intf.UserService;
 import com.lsm.frame.utils.AjaxResult;
 import com.lsm.frame.utils.ShiroUtils;
@@ -28,6 +30,9 @@ public class CourseManageController extends BaseController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CourseUserService courseUserService;
 
 
     @RequestMapping("/course")
@@ -128,6 +133,42 @@ public class CourseManageController extends BaseController {
         try
         {
             return toAjax(courseService.deleteCourseByIds(ids));
+        }
+        catch (Exception e)
+        {
+            return error(e.getMessage());
+        }
+    }
+
+    /**
+     * 课程用户
+     */
+    @RequiresRoles("root")
+    @GetMapping("/addStudent/{id}")
+    public String addStudent(@PathVariable("id") Integer id, Model m)
+    {
+        Course course = courseService.selectByPrimaryKey(id);
+        List<User> studentList = userService.selectUserStudent();
+        m.addAttribute("studentList",studentList);
+        m.addAttribute("course",course);
+        return "system/courseManage/addStudent";
+    }
+
+    /**
+     * 批量删除用户
+     * @param ids
+     * @return
+     */
+    @RequiresRoles("root")
+    @PostMapping("/addStudent")
+    @ResponseBody
+    public AjaxResult addStudentSave(@Validated CourseUser courseUser)
+    {
+        logger.info("添加"+courseUser);
+        try
+        {
+            courseUserService.insertSelective(courseUser);
+            return AjaxResult.success("成功");
         }
         catch (Exception e)
         {

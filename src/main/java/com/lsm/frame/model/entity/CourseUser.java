@@ -1,5 +1,14 @@
 package com.lsm.frame.model.entity;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CourseUser {
     private Integer id;
 
@@ -7,27 +16,7 @@ public class CourseUser {
 
     private Integer userId;
 
-    public Integer getId() {
-        return id;
-    }
+    private Integer[] studentIds;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 }

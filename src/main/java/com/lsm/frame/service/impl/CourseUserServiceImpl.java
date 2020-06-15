@@ -53,5 +53,16 @@ public class CourseUserServiceImpl implements CourseUserService {
         return courseList;
     }
 
+    @Override
+    public int insertSelective(CourseUser record) {
+        for(Integer id : record.getStudentIds()){
+            CourseUser courseUser = new CourseUser();
+            courseUser.setCourseId(record.getCourseId());
+            courseUser.setUserId(id);
+            courseUserMapper.insertSelective(courseUser);
+        }
+        return 1;
+    }
+
 
 }

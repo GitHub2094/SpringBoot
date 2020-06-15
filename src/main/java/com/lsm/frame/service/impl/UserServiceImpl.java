@@ -96,4 +96,9 @@ public class UserServiceImpl implements UserService {
     public List<User> selectUserTeacher() {
         return userMapper.selectUserByType("02");
     }
+
+    @Override
+    public List<User> selectUserStudent() {
+        return userMapper.selectUserByType("01");
+    }
 }

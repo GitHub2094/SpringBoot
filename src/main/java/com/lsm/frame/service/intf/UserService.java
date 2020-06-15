@@ -46,4 +46,9 @@ public interface UserService {
      */
     List<User> selectUserTeacher();
 
+    /**
+     * 查找学生用户
+     */
+    List<User> selectUserStudent();
+
 }

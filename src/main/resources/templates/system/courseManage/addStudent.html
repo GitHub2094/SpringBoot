@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('发布作业')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="addCourseUser">
+        <input name="courseId"  type="hidden"  th:value="${course.getId()}"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">课程名称：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input class="form-control" type="text" readonly="true" th:value="${course.getCourseName()}">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">添加学生：</label>
+            <div class="col-sm-8">
+                <select id="studentIds" class="form-control select2-multiple" multiple>
+                    <option th:each="student:${studentList}" th:value="${student.getUserId()}" th:text="${student.getUserName()}"  ></option>
+                </select>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 目前版本只支持一次一班级发布</span>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<th:block th:include="include :: select2-js" />
+<script type="text/javascript">
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var data = $('#addCourseUser').serializeArray();
+            var studentIds = $.form.selectSelects("studentIds");
+            data.push({"name": "studentIds", "value": studentIds});
+            alert(JSON.stringify(data));
+            $.operate.save(ctx + "system/courseManage/addStudent",data);
+        }
+    }
+
+    $(function() {
+        $('#post').select2({
+            placeholder: "请选择岗位",
+            allowClear: true
+        });
+    })
+</script>
+</body>
+</html>
