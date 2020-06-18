@@ -60,7 +60,7 @@
         </javaClientGenerator>
 
         <!--指定数据表名，可以使用_和%通配符，默认生成EXAMPLE-->
-        <table tableName="course_job_user" domainObjectName="CourseJobUser"
+        <table tableName="file_upload" domainObjectName="FileUpload"
 
                enableCountByExample="false" enableUpdateByExample="false"
 

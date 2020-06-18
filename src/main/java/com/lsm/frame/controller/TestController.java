@@ -6,13 +6,19 @@ import com.lsm.frame.annotation.LoggerManage;
 import com.lsm.frame.model.entity.Job;
 import com.lsm.frame.model.entity.User;
 import com.lsm.frame.utils.AjaxResult;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.*;
 
 /**
  * @author lsm
@@ -49,5 +55,7 @@ public class TestController {
         m.addAttribute("jobList",jobList);
         return "student/course";
     }
+
+
 
 }

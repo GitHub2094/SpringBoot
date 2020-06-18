@@ -3,6 +3,7 @@
 <head>
     <th:block th:include="include :: header('添加作业')" />
     <th:block th:include="include :: summernote-css" />
+    <th:block th:include="include :: bootstrap-fileinput-css" />
 </head>
 <body class="gray-bg">
    <div class="ibox">
@@ -48,6 +49,14 @@
                                                <div class="col-sm-10">
                                                    <input   type="hidden">
                                                    <div class="summernote" id="simpleAnswerContent" name="simpleAnswerContent"></div>
+                                               </div>
+                                           </div>
+                                           <div class="form-group">
+                                               <label class="col-sm-1 control-label">附件上传</label>
+                                               <div class="col-sm-8">
+                                                   <button class="btn btn-success " type="button"  th:onclick="|upload(${job.getId()})|">
+                                                       <i class="fa fa-plus"><i class="fa fa-upload"></i>&nbsp;
+                                                       <span class="bold">上传</span></i></button>
                                                </div>
                                            </div>
                                            <div class="form-group">
@@ -97,7 +106,6 @@
                                               </div>
                                           </div>
                                            <a href="javascript:add()">新增一个选项</a>
-
                                            <div class="form-group">
                                                <div class="col-sm-4"></div>
                                                <div class="col-sm-1">
@@ -121,7 +129,27 @@
    </div>
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: summernote-js" />
+<th:block th:include="include :: bootstrap-fileinput-js" />
 <script>
+    $(document).ready(function () {
+        $("#fileinput-1").fileinput({
+            'theme': 'explorer-fas',
+            'uploadUrl': '#',
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            initialPreview: [
+                "/img/11.png"
+            ]
+        });
+    });
+
+
+    function upload(id){
+        alert(id);
+        var URL = ctx + "student/homework/file?id="+id;
+        $.modal.open("上传附件",URL)
+    }
+
     $('.summernote').summernote({
         placeholder: '请输入题干',
         height : 192,

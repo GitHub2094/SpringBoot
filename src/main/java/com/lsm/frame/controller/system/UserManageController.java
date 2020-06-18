@@ -29,6 +29,13 @@ public class UserManageController extends BaseController {
 
 
     @RequiresRoles("root")
+    @GetMapping("/test")
+    public String test()
+    {
+        return "system/test";
+    }
+
+    @RequiresRoles("root")
     @GetMapping("/user")
     public String userManage()
     {
