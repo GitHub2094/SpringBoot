@@ -3,6 +3,8 @@ package com.lsm.frame.mapper;
 import com.lsm.frame.model.entity.FileUpload;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface FileUploadMapper {
     int deleteByPrimaryKey(Integer id);
@@ -17,5 +19,5 @@ public interface FileUploadMapper {
 
     int updateByPrimaryKey(FileUpload record);
 
-    FileUpload selectByJobId(Integer id);
+    List<FileUpload> selectByJobId(Integer id);
 }

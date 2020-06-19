@@ -57,7 +57,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div >
+                            <h5 class="col-sm-1">作业附件：</h5>
+                                 <span th:each="file : ${fileUploads}" >
+                                    <a th:href="@{/student/homework/download(id=${file.getId()})}">附件</a>&nbsp;
+                                </span>
+                        </div>
                     </div>
+                    <br><br><br><br><br><br>
                     <button type="button" class="btn btn-sm btn-danger" onclick="submitReply()"><i class="fa fa-reply-all"></i>提交 </button>
             </div>
         </div>

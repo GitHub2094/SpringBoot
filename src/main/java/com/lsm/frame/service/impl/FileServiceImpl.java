@@ -6,6 +6,8 @@ import com.lsm.frame.service.intf.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FileServiceImpl implements FileService {
 
@@ -19,7 +21,12 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public FileUpload selectByJobId(Integer id) {
+    public List<FileUpload> selectByJobId(Integer id) {
         return fileUploadMapper.selectByJobId(id);
+    }
+
+    @Override
+    public FileUpload selectByPrimaryKey(Integer id) {
+        return fileUploadMapper.selectByPrimaryKey(id);
     }
 }

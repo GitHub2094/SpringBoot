@@ -8,6 +8,7 @@ import com.lsm.frame.model.entity.*;
 
 import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.service.intf.CourseService;
+import com.lsm.frame.service.intf.FileService;
 import com.lsm.frame.service.intf.SubjectService;
 import com.lsm.frame.utils.AjaxResult;
 import com.lsm.frame.utils.ShiroUtils;
@@ -43,6 +44,9 @@ public class THomeworkController extends BaseController{
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    FileService fileService;
 
 
 
@@ -233,6 +237,8 @@ public class THomeworkController extends BaseController{
             score += subject.getScore();
         }
         logger.info("score:"+score);
+        List<FileUpload> fileUploads = fileService.selectByJobId(job.getId());
+        m.addAttribute("fileUploads",fileUploads);
         m.addAttribute("score",score);
         m.addAttribute("number",subjectList.size());
         m.addAttribute("subjectList",subjectList);

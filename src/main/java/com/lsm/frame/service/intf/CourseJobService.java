@@ -73,4 +73,7 @@ public interface CourseJobService {
      * 灵活插入信息CourseJob
      */
     int insertSelective(CourseJob record);
+
+
+    CourseJob selectByPrimaryKey(Integer id);
 }

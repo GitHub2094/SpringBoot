@@ -1,9 +1,7 @@
 package com.lsm.frame.controller.student;
 
-import com.lsm.frame.model.entity.CourseJobUser;
-import com.lsm.frame.model.entity.FileUpload;
-import com.lsm.frame.model.entity.User;
-import com.lsm.frame.model.entity.UserReply;
+import com.lsm.frame.model.entity.*;
+import com.lsm.frame.service.intf.CourseJobService;
 import com.lsm.frame.service.intf.FileService;
 import com.lsm.frame.service.intf.UserReplyService;
 import com.lsm.frame.utils.AjaxResult;
@@ -13,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveDataAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +37,8 @@ public class HomeworkController {
     @Autowired
     FileService fileService;
 
-
+    @Autowired
+    CourseJobService courseJobService;
 
     /**
      * 编辑作业页面
@@ -50,6 +50,12 @@ public class HomeworkController {
     @RequestMapping("/edit")
     public String edit(Model m,Long id,HttpSession session) {
         List<UserReply> userReplyList = userReplyService.selectByCjuId(id);
+        //附件
+        CourseJobUser courseJobUser = userReplyService.selectCJU(id);
+        CourseJob courseJob = courseJobService.selectByPrimaryKey(courseJobUser.getCourseJobId());
+        List<FileUpload> fileUploads = fileService.selectByJobId(courseJob.getJobId());
+        m.addAttribute("fileUploads",fileUploads);
+
         String courseName = "";
         for (UserReply userReply: userReplyList){
             logger.info("sdfs"+userReply);
@@ -91,6 +97,8 @@ public class HomeworkController {
         return "teacher/homework/file";
     }
 
+
+
     // uploadFile
     @RequestMapping("/uploadFile")
     @ResponseBody
@@ -128,7 +136,7 @@ public class HomeworkController {
     @RequestMapping("/download")
     public AjaxResult  download(HttpServletResponse response , Model model,Integer id) {
 
-        FileUpload fileUpload = fileService.selectByJobId(id);
+        FileUpload fileUpload = fileService.selectByPrimaryKey(id);
         //待下载文件名
         String fileName = fileUpload.getFilepath();
 

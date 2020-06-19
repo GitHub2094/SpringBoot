@@ -154,4 +154,9 @@ public class CourseJobServiceImpl implements CourseJobService {
     public int insertSelective(CourseJob record) {
         return courseJobMapper.insertSelective(record);
     }
+
+    @Override
+    public CourseJob selectByPrimaryKey(Integer id) {
+        return courseJobMapper.selectByPrimaryKey(id);
+    }
 }
