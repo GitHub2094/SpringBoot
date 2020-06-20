@@ -37,14 +37,7 @@
                 </form>
             </div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-info" onclick="$.table.importExcel()">
-                    <i class="fa fa-upload"></i> 导入
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" >
-                    <i class="fa fa-download"></i> 导出
-                </a>
-            </div>
+
 
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -140,7 +133,6 @@
 
     function review(id) {
         var view = ctx+"teacher/review/review?id="+id;
-        alert(id);
         $.modal.openTab('批改作业', view);
     }
 

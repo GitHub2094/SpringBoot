@@ -180,7 +180,6 @@
     });
 
     function upload(id){
-        alert(id);
         var URL = ctx + "student/homework/file?id="+id;
         $.modal.open("上传附件",URL)
     }
@@ -244,7 +243,6 @@
         var title = $("input[name='title']");
         var data = new Job(id.val(),title.val());
         datas.push(data);
-        alert(JSON.stringify(datas));
         $.ajax({
             url:ctx + "teacher/homework/editTitle",
             type:'post',
@@ -286,13 +284,11 @@
                 "content": content.val()
             }
             optList.push(option);
-            alert(JSON.stringify(optList));
         })
         var data = {
             "subject":subject,
             "optionList":optList
         }
-        alert(JSON.stringify(data));
         $.ajax({
             url:ctx + "teacher/homework/addChoiceSubject",
             type:'post',

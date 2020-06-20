@@ -57,8 +57,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div >
+                        <div>
                             <h5 class="col-sm-1">作业附件：</h5>
+                                <div th:if="${fileUploads.size()==0}" class="col-sm-1">
+                                    <h5 >无</h5>
+                                    <br>
+                                </div>
                                  <span th:each="file : ${fileUploads}" >
                                     <a th:href="@{/student/homework/download(id=${file.getId()})}">附件</a>&nbsp;
                                 </span>
@@ -103,14 +107,12 @@
             var reply = summernote.summernote('code');
             var userReply = new Reply(id.val(),reply);
             usesReplyList.push(userReply);
-            alert(JSON.stringify(usesReplyList));
         })
         $.each($("#homeworkEdit").find(".other"),function () {
             var id = $(this).find("input[name='id']");
             var reply = $(this).find("input:checked");
             var userReply = new Reply(id.val(),reply.val());
             usesReplyList.push(userReply);
-            alert(JSON.stringify(usesReplyList));
         })
 
         var data = JSON.stringify(usesReplyList);

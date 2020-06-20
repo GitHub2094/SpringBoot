@@ -31,7 +31,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateByPrimaryKeySelective(User record) {
-        return userMapper.updateByPrimaryKeySelective(record);
+        userMapper.updateByPrimaryKeySelective(record);
+        if(record.getUserType()!=null){
+            String student = "01";
+            String teacher = "02";
+            String root = "00";
+            UserRoleKey userRole = new UserRoleKey();
+            userRole.setUserId(record.getUserId());
+            if(record.getUserType().equals(student)){
+                userRole.setRoleId(2);
+                return userRoleMapper.updateByUserId(userRole);
+            }else if (record.getUserType().equals(teacher)){
+                userRole.setRoleId(3);
+                return userRoleMapper.updateByUserId(userRole);
+            }else if(record.getUserType().equals(root)){
+                userRole.setRoleId(1);
+                return userRoleMapper.updateByUserId(userRole);
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -40,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
         String student = "01";
         String teacher = "02";
-        String root = "01";
+        String root = "00";
         UserRoleKey userRole = new UserRoleKey();
         userRole.setUserId(record.getUserId());
         if(record.getUserType().equals(student)){

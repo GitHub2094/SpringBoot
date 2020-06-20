@@ -109,7 +109,6 @@
             var data = $("#form-user-edit").serializeArray();
             var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
             data.push({"name": "status", "value": status});
-            alert(JSON.stringify(data));
             $.operate.saveTab(prefix + "/edit", data);
         }
     }

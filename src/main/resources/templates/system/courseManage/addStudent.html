@@ -24,7 +24,7 @@
                 <select id="studentIds" class="form-control select2-multiple" multiple>
                     <option th:each="student:${studentList}" th:value="${student.getUserId()}" th:text="${student.getUserName()}"  ></option>
                 </select>
-                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 目前版本只支持一次一班级发布</span>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 目前版本支持多人添加</span>
             </div>
         </div>
     </form>
@@ -39,7 +39,6 @@
             var data = $('#addCourseUser').serializeArray();
             var studentIds = $.form.selectSelects("studentIds");
             data.push({"name": "studentIds", "value": studentIds});
-            alert(JSON.stringify(data));
             $.operate.save(ctx + "system/courseManage/addStudent",data);
         }
     }

@@ -80,7 +80,6 @@
         var currentCourseJob = new CourseJob(courseId.val(),jobId.val(),startTime.val(),endTime.val());
         courseJob.push(currentCourseJob);
         var data = JSON.stringify(courseJob);
-        alert(data);
         $.ajax({
             url:ctx + "teacher/homework/issue",
             type:'post',

@@ -48,8 +48,8 @@
 
   <update id="updateByUserId" parameterType="com.lsm.frame.model.entity.UserRoleKey">
     update user_role
-    set role_id = #{userId,jdbcType=INTEGER}
-    where user_id = #{roleId,jdbcType=INTEGER}
+    set role_id =    #{roleId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
 
 

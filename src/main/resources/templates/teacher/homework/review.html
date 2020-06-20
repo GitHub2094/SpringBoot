@@ -45,10 +45,11 @@
                                     <h4 th:utext="| ${userReply.getSubjectModel().getStem()} |" ></h4>
                                     <p style="color: red" th:text="|分数：${userReply.getSubjectModel().getScore()}
                                   得分：${userReply.getScore()}|"></p>
-                                    <h4>选项:</h4>
+
                                     <div class="form-group">
                                         <div class="col-sm-12">
                                             <div class="radio-box" th:each="option : ${userReply.getSubjectModel().getOptions()}" >
+                                                <h4>选项:</h4>
                                                 <span>
                                                     <p  name="reply" th:text="${option.getContent()}"></p>
                                                 </span>
@@ -97,14 +98,12 @@
             var score = $(this).find("input[name='score']");
             var userReply = new Reply(id.val(),score.val());
             usesReplyList.push(userReply);
-            alert(JSON.stringify(usesReplyList));
         })
         $.each($("#review").find(".other"),function () {
             var id = $(this).find("input[name='id']");
             var score = $(this).find("input[name='score']");
             var userReply = new Reply(id.val(),score.val());
             usesReplyList.push(userReply);
-            alert(JSON.stringify(usesReplyList));
         })
         var data = JSON.stringify(usesReplyList);
         $.ajax({
