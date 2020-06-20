@@ -11,7 +11,7 @@
  Target Server Version : 50527
  File Encoding         : 65001
 
- Date: 14/06/2020 15:55:22
+ Date: 20/06/2020 10:50:07
 */
 
 SET NAMES utf8mb4;
@@ -65,17 +65,19 @@ CREATE TABLE `course`  (
   `create_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
   `code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '邀请码',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `course_college`(`college_id`) USING BTREE,
-  CONSTRAINT `course_college` FOREIGN KEY (`college_id`) REFERENCES `college` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of course
 -- ----------------------------
 INSERT INTO `course` VALUES (1, '概率统计与应用', 1, '2020-04-21 10:26:59', '2020-06-17 10:27:03', '方继潘', '123456', '软件工程专业选修课程\r\n\r\n周五#1班');
 INSERT INTO `course` VALUES (2, '公民与法律', 3, '2020-04-22 09:17:18', '2020-06-22 09:17:21', '张三', '777777', '法学入门课程，比较简单、实用，目的在于培养基本法律意识，学会解决简单法律问题');
-INSERT INTO `course` VALUES (3, 'XML程序设计', 1, '2020-06-05 12:31:03', '2020-07-30 12:31:05', '方继潘', '666666', 'XML程序设计');
+INSERT INTO `course` VALUES (3, 'XML程序设计', 1, '2020-06-05 12:31:03', '2020-07-30 12:31:05', '方继潘', '666666', 'XML程序设计，软件工程专业选修课程 周五#1班');
+INSERT INTO `course` VALUES (4, '新型冠状病毒防疫安全公益课', NULL, '2020-06-15 00:00:00', '2020-06-30 00:00:00', '李清照', NULL, 't内容来自于网络，仅做知识普及免费公益推广，不做任何商业用途。如有侵权，请立即删除');
+INSERT INTO `course` VALUES (5, '测试课程1', NULL, '2020-06-02 14:50:00', '2020-06-23 10:50:00', '测试老师账号1', NULL, '测试课程1，tttttttttttt');
+INSERT INTO `course` VALUES (6, '测试课程444', NULL, '2020-06-19 18:45:00', '2020-06-25 19:45:00', '李清照', NULL, '第三方士大夫士大夫');
+INSERT INTO `course` VALUES (7, '测试课程3', NULL, '2020-06-20 08:40:00', '2020-06-30 17:45:00', '测试老师账号2', NULL, 'ffffffffffffffffffffffffffffffffffffffffff');
 
 -- ----------------------------
 -- Table structure for course_job
@@ -92,16 +94,20 @@ CREATE TABLE `course_job`  (
   INDEX `job_id1`(`job_id`) USING BTREE,
   CONSTRAINT `course_id1` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `job_id1` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of course_job
 -- ----------------------------
-INSERT INTO `course_job` VALUES (1, 1, 1, '2020-04-21 11:14:25', '2020-04-30 11:14:29');
-INSERT INTO `course_job` VALUES (2, 1, 2, '2020-04-22 09:53:32', '2020-04-30 09:53:36');
+INSERT INTO `course_job` VALUES (1, 1, 1, '2020-04-21 11:14:25', '2020-06-30 11:14:29');
+INSERT INTO `course_job` VALUES (2, 1, 2, '2020-04-22 09:53:32', '2020-06-30 09:53:36');
 INSERT INTO `course_job` VALUES (3, 3, 3, '2020-06-10 09:45:00', '2020-06-30 09:45:00');
 INSERT INTO `course_job` VALUES (4, 1, 3, '2020-06-10 09:50:00', '2020-06-30 09:45:00');
 INSERT INTO `course_job` VALUES (5, 1, 5, '2020-06-12 15:35:00', '2020-06-26 15:35:00');
+INSERT INTO `course_job` VALUES (6, 1, 6, '2020-06-19 11:10:00', '2020-06-30 11:10:00');
+INSERT INTO `course_job` VALUES (7, 3, 9, '2020-06-19 18:45:00', '2020-06-30 18:45:00');
+INSERT INTO `course_job` VALUES (8, 3, 13, '2020-06-19 19:35:00', '2020-06-30 15:55:00');
+INSERT INTO `course_job` VALUES (9, 3, 14, '2020-06-19 19:40:00', '2020-06-30 19:40:00');
 
 -- ----------------------------
 -- Table structure for course_job_user
@@ -126,11 +132,15 @@ CREATE TABLE `course_job_user`  (
 -- ----------------------------
 -- Records of course_job_user
 -- ----------------------------
-INSERT INTO `course_job_user` VALUES (1, 1, 1, '3', 100, '2020-06-11 19:34:41', '2020-06-12 10:00:39', '方继潘');
+INSERT INTO `course_job_user` VALUES (1, 1, 1, '2', 100, '2020-06-19 13:13:34', '2020-06-12 10:00:39', '方继潘');
 INSERT INTO `course_job_user` VALUES (2, 2, 1, '2', 13, NULL, NULL, NULL);
 INSERT INTO `course_job_user` VALUES (200610131, 4, 1, '3', 20, '2020-06-10 11:44:46', '2020-06-10 11:48:17', '方继潘');
-INSERT INTO `course_job_user` VALUES (200611331, 3, 1, '3', 20, '2020-06-11 08:18:34', '2020-06-11 08:20:36', '方继潘');
-INSERT INTO `course_job_user` VALUES (200612151, 5, 1, '3', 70, '2020-06-12 20:49:09', '2020-06-12 20:49:39', '方继潘');
+INSERT INTO `course_job_user` VALUES (200611331, 3, 1, '3', 5, '2020-06-11 08:18:34', '2020-06-19 19:36:50', '方继潘');
+INSERT INTO `course_job_user` VALUES (200612151, 5, 1, '3', 50, '2020-06-19 11:03:21', '2020-06-19 13:22:38', '方继潘');
+INSERT INTO `course_job_user` VALUES (200619161, 6, 1, '3', 50, '2020-06-19 12:56:59', '2020-06-19 13:16:46', '方继潘');
+INSERT INTO `course_job_user` VALUES (200619391, 7, 1, '2', 0, '2020-06-19 18:48:36', NULL, NULL);
+INSERT INTO `course_job_user` VALUES (2006193131, 8, 1, '2', 0, '2020-06-19 19:37:33', NULL, NULL);
+INSERT INTO `course_job_user` VALUES (2006193141, 9, 1, '2', 0, '2020-06-19 19:46:50', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for course_user
@@ -145,7 +155,7 @@ CREATE TABLE `course_user`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `course_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of course_user
@@ -153,6 +163,40 @@ CREATE TABLE `course_user`  (
 INSERT INTO `course_user` VALUES (1, 1, 1);
 INSERT INTO `course_user` VALUES (2, 2, 1);
 INSERT INTO `course_user` VALUES (3, 3, 1);
+INSERT INTO `course_user` VALUES (4, 4, 1);
+INSERT INTO `course_user` VALUES (5, 4, 4);
+INSERT INTO `course_user` VALUES (6, 5, 7);
+INSERT INTO `course_user` VALUES (7, 5, 8);
+INSERT INTO `course_user` VALUES (8, 6, 7);
+INSERT INTO `course_user` VALUES (9, 6, 8);
+INSERT INTO `course_user` VALUES (10, 7, 7);
+INSERT INTO `course_user` VALUES (11, 7, 8);
+INSERT INTO `course_user` VALUES (12, 7, 11);
+
+-- ----------------------------
+-- Table structure for file_upload
+-- ----------------------------
+DROP TABLE IF EXISTS `file_upload`;
+CREATE TABLE `file_upload`  (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '流水号',
+  `filePath` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件地址',
+  `job_id` int(20) DEFAULT NULL COMMENT '作业地址',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of file_upload
+-- ----------------------------
+INSERT INTO `file_upload` VALUES (1, NULL, NULL);
+INSERT INTO `file_upload` VALUES (2, '5c9734f3-2702-452e-9e5c-bd4059838302.pdf', 6);
+INSERT INTO `file_upload` VALUES (3, '72d753c8-5ea0-47c3-8208-acae28ec0e71.pdf', 6);
+INSERT INTO `file_upload` VALUES (4, '3684d829-482c-44d5-8b4c-96a828267fbc.pdf', 6);
+INSERT INTO `file_upload` VALUES (5, '4d68b50e-db74-41ea-a69e-0add84cf14f1.pdf', 9);
+INSERT INTO `file_upload` VALUES (6, 'af97824c-8f64-4300-b22f-f222914b7a6a.pdf', 10);
+INSERT INTO `file_upload` VALUES (7, 'ffd5d9d8-7b9c-455b-8a15-81ceaf10ca92.pdf', 13);
+INSERT INTO `file_upload` VALUES (8, 'ea3cf0eb-4baf-4b31-9ea4-0ce318fa5b29.pdf', 14);
+INSERT INTO `file_upload` VALUES (9, '158535ce-e4e4-4b6b-8a87-23eeb003b911.pdf', 13);
+INSERT INTO `file_upload` VALUES (10, '990e1ff2-ff36-4cb5-b44a-eaf6fc149fd4.pdf', 15);
 
 -- ----------------------------
 -- Table structure for job
@@ -164,7 +208,7 @@ CREATE TABLE `job`  (
   `create_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of job
@@ -174,6 +218,16 @@ INSERT INTO `job` VALUES (2, '实验二', '方继潘', '2020-04-22 09:53:14');
 INSERT INTO `job` VALUES (3, '新建作业202006091998', '方继潘', '2020-06-09 16:43:01');
 INSERT INTO `job` VALUES (4, '新建作业20200609192131', '方继潘', '2020-06-09 19:21:31');
 INSERT INTO `job` VALUES (5, 'testOPT', '方继潘', '2020-06-12 15:35:18');
+INSERT INTO `job` VALUES (6, '测试上传', '方继潘', '2020-06-19 11:11:20');
+INSERT INTO `job` VALUES (7, '新建作业20200619131746', '方继潘', '2020-06-19 13:17:46');
+INSERT INTO `job` VALUES (8, '新建作业20200619150825', '测试老师账号1', '2020-06-19 15:08:25');
+INSERT INTO `job` VALUES (9, '测试作业添加t', '方继潘', '2020-06-19 18:43:23');
+INSERT INTO `job` VALUES (10, '新建作业20200619192807', '方继潘', '2020-06-19 19:28:07');
+INSERT INTO `job` VALUES (11, '新建作业20200619193118', '方继潘', '2020-06-19 19:31:18');
+INSERT INTO `job` VALUES (13, '测试作业添加', '方继潘', '2020-06-19 19:33:45');
+INSERT INTO `job` VALUES (14, '测试sss', '方继潘', '2020-06-19 19:43:15');
+INSERT INTO `job` VALUES (15, '测试dddd', '方继潘', '2020-06-20 09:30:29');
+INSERT INTO `job` VALUES (16, '新建作业20200620093844', '方继潘', '2020-06-20 09:38:44');
 
 -- ----------------------------
 -- Table structure for menu
@@ -203,7 +257,7 @@ CREATE TABLE `opt`  (
   `subject_id` int(20) NOT NULL COMMENT '题目ID',
   `content` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '选项内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of opt
@@ -218,6 +272,26 @@ INSERT INTO `opt` VALUES (7, 6, '公安局');
 INSERT INTO `opt` VALUES (8, 7, '对');
 INSERT INTO `opt` VALUES (9, 7, '错');
 INSERT INTO `opt` VALUES (10, 6, 'test');
+INSERT INTO `opt` VALUES (11, 9, '对');
+INSERT INTO `opt` VALUES (12, 9, '错');
+INSERT INTO `opt` VALUES (13, 11, 'A:测试1');
+INSERT INTO `opt` VALUES (14, 11, 'B:测试2');
+INSERT INTO `opt` VALUES (15, 11, 'C:测试3');
+INSERT INTO `opt` VALUES (16, 13, 'A:测试1');
+INSERT INTO `opt` VALUES (17, 13, 'B:测试1');
+INSERT INTO `opt` VALUES (18, 13, 'C:测试2');
+INSERT INTO `opt` VALUES (19, 16, 'test1');
+INSERT INTO `opt` VALUES (20, 16, 'test3');
+INSERT INTO `opt` VALUES (21, 16, 'tset2');
+INSERT INTO `opt` VALUES (22, 16, 'test5');
+INSERT INTO `opt` VALUES (23, 18, 'test5');
+INSERT INTO `opt` VALUES (24, 18, 'test5');
+INSERT INTO `opt` VALUES (25, 18, 'tset3');
+INSERT INTO `opt` VALUES (26, 18, '6eee');
+INSERT INTO `opt` VALUES (27, 20, 'test5');
+INSERT INTO `opt` VALUES (28, 20, '55555');
+INSERT INTO `opt` VALUES (29, 20, '555554444');
+INSERT INTO `opt` VALUES (30, 20, '546877');
 
 -- ----------------------------
 -- Table structure for role
@@ -271,7 +345,7 @@ CREATE TABLE `subject`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `course_subject`(`course_id`) USING BTREE,
   CONSTRAINT `course_subject` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of subject
@@ -282,6 +356,19 @@ INSERT INTO `subject` VALUES (4, '3', '<p><span style=\"color: rgb(51, 51, 51); 
 INSERT INTO `subject` VALUES (5, '3', '<p>test</p>', 1, 4, 20, NULL);
 INSERT INTO `subject` VALUES (6, '1', '<p><span style=\"font-family: 宋体; font-size: 14px;\">下列各项中不具有行政主体资格的是（&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ）。</span><br></p>', 1, 5, 20, NULL);
 INSERT INTO `subject` VALUES (7, '1', '<p><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">有甲乙两盒，每盒都有</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">2</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">个红球，</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">3</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">个白球，从甲盒中取一球放入乙盒，再从乙盒中采用不放回抽样取出</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: &quot;Times New Roman&quot;;\">2</span><span style=\"overflow-wrap: break-word; white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px; font-family: 宋体;\">球，则取到两个球是一红一白的概率为14/25。</span><br></p>', 1, 5, 30, NULL);
+INSERT INTO `subject` VALUES (8, '3', '<span style=\"background-color: rgb(255, 255, 0);\">test ttttt</span>', 1, 6, 20, NULL);
+INSERT INTO `subject` VALUES (9, '1', '<p>testsetsetstest</p>', 1, 6, 30, NULL);
+INSERT INTO `subject` VALUES (10, '3', '<p>测试简单题</p>', 1, 9, 50, NULL);
+INSERT INTO `subject` VALUES (11, '1', '<p>测试选择题</p>', 1, 9, 50, NULL);
+INSERT INTO `subject` VALUES (12, '3', '<p>测试题目添加</p>', 1, 10, 50, NULL);
+INSERT INTO `subject` VALUES (13, '1', '<p>测试题目添加<br></p>', 1, 10, 50, NULL);
+INSERT INTO `subject` VALUES (14, '3', '<p>测试题目添加<br></p>', 1, 11, 50, NULL);
+INSERT INTO `subject` VALUES (15, '3', '<p>测试题目添加ttt<br></p>', 1, 13, 50, NULL);
+INSERT INTO `subject` VALUES (16, '1', '<p>测试题目添加<br></p>', 1, 13, 50, NULL);
+INSERT INTO `subject` VALUES (17, '3', '<p>测试</p>', 1, 14, 50, NULL);
+INSERT INTO `subject` VALUES (18, '1', '<p>测试333</p>', 1, 14, 50, NULL);
+INSERT INTO `subject` VALUES (19, '3', '<p>testttt</p>', 1, 15, 50, NULL);
+INSERT INTO `subject` VALUES (20, '1', '<p>45455454454545</p>', 1, 15, 30, NULL);
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -304,7 +391,7 @@ CREATE TABLE `sys_config`  (
 -- ----------------------------
 -- Records of sys_config
 -- ----------------------------
-INSERT INTO `sys_config` VALUES (00001, '账号初始密码', 'sys.user.initPassword', '111111', 'Y', 'root1', '2020-06-14 15:00:12', NULL, NULL, '初始化密码 111111');
+INSERT INTO `sys_config` VALUES (00001, '账号初始密码', 'sys.user.initPassword', '111111', 'Y', 'root1', '2020-06-14 15:00:12', 'root1', '2020-06-15 11:44:01', '初始化密码 111111');
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -403,17 +490,22 @@ CREATE TABLE `user`  (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, 101, 'student1', '沈安北', '01', 'shenanbei@qq.com', '13954878648', '0', '', '86e09d11ca67bc71b990232c935d8298', 'e5a08d', '0', '0', '', '2020-03-28 23:09:55', 'lsm', '2020-03-28 23:09:10', 'lsm', '2020-06-13 19:59:54', 'tttt');
-INSERT INTO `user` VALUES (2, 102, 'teacher1', '方继潘', '02', 'fangjipan@qq.com', '13959554873', '1', NULL, '0721e5e85ee6f94092ff0951ba2b97c3', '22222222', '0', '0', NULL, NULL, 'lsm', '2020-03-28 23:11:06', NULL, NULL, NULL);
+INSERT INTO `user` VALUES (2, 102, 'teacher1', '方继潘', '02', 'fangjdddn@qq.com', '18434444444', '0', NULL, '0721e5e85ee6f94092ff0951ba2b97c3', '22222222', '0', '0', NULL, NULL, 'lsm', '2020-03-28 23:11:06', NULL, NULL, NULL);
 INSERT INTO `user` VALUES (3, 100, 'root1', 'lsm', '00', '184544849@qq.com', '18354879187', '0', '', '15eb6048f347628cabd0be96c0427382', 'f9dfee', '0', '0', NULL, NULL, 'lsm', '2020-03-28 23:13:29', NULL, NULL, NULL);
 INSERT INTO `user` VALUES (4, NULL, 'dufu', '杜甫', '01', 'dufu@qq.com', '14332423423', '0', NULL, '3fda89500a4c0fb110113c4f79d619e3', '151c19', '0', '0', NULL, NULL, 'lsm', '2020-06-14 15:43:47', 'lsm', '2020-06-14 15:44:09', '测试账号');
-INSERT INTO `user` VALUES (5, NULL, 'libai', '李白', '01', 'libai@qq.com', '14332423423', '0', NULL, 'e56da1924f8e623f9a145d9c6970450e', '22ae70', '0', '0', NULL, NULL, 'lsm', '2020-06-14 15:45:33', NULL, NULL, '测试账号');
-INSERT INTO `user` VALUES (6, NULL, 'liqinzhao', '李清照', '02', 'liqinzhao@qq.com', '14332423423', '1', NULL, 'b7ac5fda4444f13711a87482ae07aa30', 'bc0e12', '1', '0', NULL, NULL, 'lsm', '2020-06-14 15:47:28', NULL, NULL, '测试账号--教师');
+INSERT INTO `user` VALUES (6, NULL, 'liqinzhao', '李清照', '02', 'liqinzhao@qq.com', '14332423423', '1', NULL, 'b7ac5fda4444f13711a87482ae07aa30', 'bc0e12', '0', '0', NULL, NULL, 'lsm', '2020-06-14 15:47:28', 'lsm', '2020-06-15 12:34:21', '测试账号--教师');
+INSERT INTO `user` VALUES (7, NULL, 'test1', '测试学生用户1', '01', 'test1@qq.com', '18345678977', '0', NULL, 'f2b02ec08ccdbc0d925d48b2d61908b5', 'c654b6', '0', '0', NULL, NULL, 'lsm', '2020-06-19 14:48:36', 'lsm', '2020-06-19 18:05:20', '测试账号');
+INSERT INTO `user` VALUES (8, NULL, 'test2', '测试学生用户2', '01', '154950467@qq.com', '18379178807', '1', NULL, 'f5a9c997fd0749292f6105542b34b93d', '199128', '0', '0', NULL, NULL, 'lsm', '2020-06-19 14:50:51', NULL, NULL, '测试账号\r\n');
+INSERT INTO `user` VALUES (9, NULL, 'test3', '测试老师账号1', '02', '154950747@qq.com', '18379178801', '1', NULL, 'c9f24b480c2b924d60e2b6df1b2f6905', '33a3bb', '0', '0', NULL, NULL, 'lsm', '2020-06-19 14:51:53', 'lsm', '2020-06-19 15:07:07', '测试用户');
+INSERT INTO `user` VALUES (10, NULL, 'teacher2', '测试老师账号2', '02', '154950767@qq.com', '18379178809', '0', NULL, '8fe5be6ba141beabbb1baca8ed0e9184', '018d7b', '0', '0', NULL, NULL, 'lsm', '2020-06-19 15:07:42', 'lsm', '2020-06-19 18:05:50', 'ttttttttttttttttttttttt');
+INSERT INTO `user` VALUES (11, NULL, 'test6', '测试学生用户5fff', '01', '154950767@qq.com', '18379178809', '1', NULL, '4dc50fcfb0fa44afcc9f2f0a545b8bc7', '2b8a89', '0', '0', NULL, NULL, 'lsm', '2020-06-19 19:38:15', 'lsm', '2020-06-19 19:38:32', 'se6se6se6dfgdfg');
+INSERT INTO `user` VALUES (12, NULL, 'test4444', '测试学生用户3333', '01', '154950767@qq.com', '18379178809', '1', NULL, 'c533df2eeacb452ac18988e760857004', '637bad', '0', '0', NULL, NULL, 'lsm', '2020-06-19 19:48:00', 'lsm', '2020-06-20 08:44:21', 'dfsfdsfdsf');
 
 -- ----------------------------
 -- Table structure for user_reply
@@ -431,15 +523,25 @@ CREATE TABLE `user_reply`  (
   INDEX `subject`(`subject`) USING BTREE,
   CONSTRAINT `cju_id` FOREIGN KEY (`cju_id`) REFERENCES `course_job_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `subject` FOREIGN KEY (`subject`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user_reply
 -- ----------------------------
-INSERT INTO `user_reply` VALUES (1, 1, 1, '立法', 50, '');
+INSERT INTO `user_reply` VALUES (1, 1, 1, '审判', 50, '');
 INSERT INTO `user_reply` VALUES (2, 1, 2, '<p><span style=\"font-size: 24px;\">test</span></p><p><span style=\"font-size: 24px; background-color: rgb(255, 255, 0);\">test</span></p>', 50, NULL);
 INSERT INTO `user_reply` VALUES (3, 200610131, 4, 'test', 20, NULL);
-INSERT INTO `user_reply` VALUES (5, 200611331, 4, '强奸未遂', 20, NULL);
+INSERT INTO `user_reply` VALUES (5, 200611331, 4, '强奸未遂', 5, NULL);
+INSERT INTO `user_reply` VALUES (6, 200612151, 6, '街道办公室', 20, NULL);
+INSERT INTO `user_reply` VALUES (7, 200612151, 7, '错', 30, NULL);
+INSERT INTO `user_reply` VALUES (8, 200619161, 8, 'ttt', 20, NULL);
+INSERT INTO `user_reply` VALUES (9, 200619161, 9, '错', 30, NULL);
+INSERT INTO `user_reply` VALUES (10, 200619391, 10, 'ttttt', 0, NULL);
+INSERT INTO `user_reply` VALUES (11, 200619391, 11, 'B:测试2', 0, NULL);
+INSERT INTO `user_reply` VALUES (12, 2006193131, 15, 'testestset', 0, NULL);
+INSERT INTO `user_reply` VALUES (13, 2006193131, 16, 'test3', 0, NULL);
+INSERT INTO `user_reply` VALUES (14, 2006193141, 17, '<span style=\"background-color: rgb(255, 255, 0);\">cdsfjosdjfsoifdsfdsfd</span>', 0, NULL);
+INSERT INTO `user_reply` VALUES (15, 2006193141, 18, '6eee', 0, NULL);
 
 -- ----------------------------
 -- Table structure for user_role
@@ -458,7 +560,12 @@ INSERT INTO `user_role` VALUES (1, 2);
 INSERT INTO `user_role` VALUES (2, 3);
 INSERT INTO `user_role` VALUES (3, 1);
 INSERT INTO `user_role` VALUES (4, 2);
-INSERT INTO `user_role` VALUES (5, 2);
 INSERT INTO `user_role` VALUES (6, 3);
+INSERT INTO `user_role` VALUES (7, 2);
+INSERT INTO `user_role` VALUES (8, 2);
+INSERT INTO `user_role` VALUES (9, 3);
+INSERT INTO `user_role` VALUES (10, 3);
+INSERT INTO `user_role` VALUES (11, 2);
+INSERT INTO `user_role` VALUES (12, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
